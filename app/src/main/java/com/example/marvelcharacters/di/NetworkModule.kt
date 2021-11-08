@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package com.example.marvelcharacters.data.di
+package com.example.marvelcharacters.di
 
-import com.example.marvelcharacters.data.network.MarvelService
+import com.example.marvelcharacters.data.MarvelService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

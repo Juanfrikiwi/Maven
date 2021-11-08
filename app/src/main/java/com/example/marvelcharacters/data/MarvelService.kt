@@ -1,4 +1,4 @@
-package com.example.marvelcharacters.data.network
+package com.example.marvelcharacters.data
 
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -8,6 +8,9 @@ import retrofit2.http.GET
 
 
 interface MarvelService {
+
+    @GET("https://gateway.marvel.com:443/v1/public/characters?apikey=3514f3813b164a2099f7dded753edcb0")
+    fun getListCharacters(): CharactersResponse
 
     companion object {
         private const val BASE_URL = "https://gateway.marvel.com:443/v1/public/"
@@ -30,9 +33,5 @@ interface MarvelService {
                 .create(MarvelService::class.java)
         }
     }
-
-    @GET(BASE_URL + GET_CHARACTERS)
-    fun getListCharacters(): List<CharactersResponse>
-
 
 }

@@ -4,13 +4,16 @@ package com.example.marvelcharacters.ui
 import android.content.Intent
 import android.net.Uri
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.findNavController
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.marvelcharacters.data.models.CharactersEntity
 import com.example.marvelcharacters.databinding.ListItemCharacterBinding
 import com.example.marvelcharacters.domain.models.Characters
+import com.example.marvelcharacters.ui.home.HomeFragmentDirections
 
 class HomeAdapter: PagingDataAdapter<CharactersEntity, HomeAdapter.CharactersViewHolder>(CharactersDiffCallback()) {
 
@@ -37,9 +40,14 @@ class HomeAdapter: PagingDataAdapter<CharactersEntity, HomeAdapter.CharactersVie
         init {
             binding.setClickListener { view ->
                 binding.tvName?.let { name ->
-
+                navigateToDetail(binding.character!!.id.toString(), view)
                 }
             }
+        }
+        private fun navigateToDetail(characterId: String, view: View) {
+            val direction = HomeFragmentDirections
+                .actionHomeFragmentToDetailFragment(characterId)
+            view.findNavController().navigate(direction)
         }
 
         fun bind(item: CharactersEntity) {
@@ -48,6 +56,7 @@ class HomeAdapter: PagingDataAdapter<CharactersEntity, HomeAdapter.CharactersVie
                 executePendingBindings()
             }
         }
+
     }
 }
 

@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.example.marvelcharacters.R
 import com.example.marvelcharacters.databinding.FragmentDetailBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -18,6 +19,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 class DetailFragment : Fragment() {
     private var _binding: FragmentDetailBinding? = null
+    private val args: DetailFragmentArgs by navArgs()
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -39,6 +41,7 @@ class DetailFragment : Fragment() {
         binding.buttonSecond.setOnClickListener {
             findNavController().navigate(R.id.action_SecondFragment_to_FirstFragment)
         }
+        binding.textviewSecond.setText(args.characterId)
     }
 
     override fun onDestroyView() {

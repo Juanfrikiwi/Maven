@@ -34,24 +34,22 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         binding.characterList.adapter = adapter
 
         return binding.root
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        chartersJob?.cancel()
+        chartersJob = lifecycleScope.launch {
+            viewModel.getListCharacters().collectLatest {
+                adapter.submitData(it)
+            }
+        }
 
         binding.buttonFirst.setOnClickListener {
-            chartersJob?.cancel()
-            chartersJob = lifecycleScope.launch {
-                viewModel.getListCharacters().collectLatest {
-                    adapter.submitData(it)
-                }
-            }
            // findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
         }
     }

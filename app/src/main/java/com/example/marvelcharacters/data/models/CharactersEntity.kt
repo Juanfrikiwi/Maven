@@ -3,7 +3,7 @@ package com.example.marvelcharacters.data.models
 import com.google.gson.annotations.SerializedName
 import java.util.*
 
-data class Characters(
+data class CharactersEntity(
     @field:SerializedName("id") val id: Int,
     @field:SerializedName("name") val name: String,
     @field:SerializedName("description") val description: String,

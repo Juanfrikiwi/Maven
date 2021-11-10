@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import com.example.marvelcharacters.data.models.Characters
+import com.example.marvelcharacters.data.models.CharactersEntity
 import com.example.marvelcharacters.domain.repository.ListCharacterRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
@@ -14,8 +14,12 @@ import javax.inject.Inject
 class HomeViewModel@Inject constructor(
     private val repository: ListCharacterRepository
 ): ViewModel() {
-    fun getListCharacters(): Flow<PagingData<Characters>> {
-        return repository.getListCharacters().cachedIn(viewModelScope)
+    private var currentSearchResult: Flow<PagingData<CharactersEntity>>? = null
+    fun getListCharacters(): Flow<PagingData<CharactersEntity>> {
+        val newResult: Flow<PagingData<CharactersEntity>> =
+        repository.getListCharacters().cachedIn(viewModelScope)
+        currentSearchResult = newResult
+        return newResult
     }
 
 }

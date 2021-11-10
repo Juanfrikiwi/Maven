@@ -5,18 +5,20 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
+import retrofit2.http.Query
+import java.util.*
 
 
 interface MarvelService {
 
-    @GET("https://gateway.marvel.com:443/v1/public/characters?apikey=3514f3813b164a2099f7dded753edcb0")
-    fun getListCharacters(): CharactersResponse
+    @GET(BASE_URL+CHARACTERS_URL)
+    suspend fun getListCharacters(
+        @Query("") query: String
+        ): CharacterResponse
 
     companion object {
-        private const val BASE_URL = "https://gateway.marvel.com:443/v1/public/"
-        const val apiKey = "?apikey=3514f3813b164a2099f7dded753edcb0"
-        const val GET_CHARACTERS = "characters$apiKey"
-
+        const val CHARACTERS_URL = "characters"
+        const val BASE_URL = "https://gateway.marvel.com/v1/public/"
         fun create(): MarvelService {
             val logger =
                 HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BASIC }

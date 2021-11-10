@@ -11,8 +11,9 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.marvelcharacters.R
-import com.example.marvelcharacters.databinding.FragmentFirstBinding
+import com.example.marvelcharacters.databinding.FragmentHomeBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -22,9 +23,11 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 
 class HomeFragment : Fragment() {
-
+    private val adapter = HomeAdapter()
     private val viewModel: HomeViewModel by viewModels()
-    private var _binding: FragmentFirstBinding? = null
+    private var _binding: FragmentHomeBinding? = null
+    private var chartersJob: Job? = null
+
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -35,7 +38,9 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        _binding = FragmentFirstBinding.inflate(inflater, container, false)
+        _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        binding.characterList.adapter = adapter
+
         return binding.root
 
     }
@@ -44,13 +49,13 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.buttonFirst.setOnClickListener {
-         //  viewModel.getListCharacters()
-            lifecycleScope.launch {
+            chartersJob?.cancel()
+            chartersJob = lifecycleScope.launch {
                 viewModel.getListCharacters().collectLatest {
-                    Log.e(ContentValues.TAG, it.toString())
+                    adapter.submitData(it)
                 }
             }
-            findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
+           // findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
         }
     }
 

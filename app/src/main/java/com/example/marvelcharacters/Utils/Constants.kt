@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2018 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,22 +14,10 @@
  * limitations under the License.
  */
 
-package com.example.marvelcharacters.di
+package com.example.marvelcharacters.Utils
 
-import com.example.marvelcharacters.data.MarvelService
-import dagger.Module
-import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
-import javax.inject.Singleton
+/**
+ * Constants used throughout the app.
+ */
+const val BASE_URL = ""
 
-@InstallIn(SingletonComponent::class)
-@Module
-class NetworkModule {
-    @Singleton
-    @Provides
-    fun provideMarvelService(): MarvelService {
-        return MarvelService.create()
-    }
-
-}

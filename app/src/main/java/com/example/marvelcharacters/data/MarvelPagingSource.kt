@@ -11,19 +11,10 @@ private const val UNSPLASH_STARTING_PAGE_INDEX = 1
 class MarvelPagingSource(
     private val service: MarvelService,
 ) : PagingSource<Int, CharactersEntity>() {
-
-    var ts = "1"
-    val pubkey = "3514f3813b164a2099f7dded753edcb0"
-    val pvtkey = "926b3b0d3a931170235aa149dd59094e7b623bb5"
-    fun md5(input:String): String {
-        val md = MessageDigest.getInstance("MD5")
-        return BigInteger(1, md.digest(input.toByteArray())).toString(16).padStart(32, '0')
-    }
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int,CharactersEntity> {
-        val keyParams = "ts="+ts+"&apikey="+pubkey+"&hash="+md5(ts+pubkey+pvtkey)
         val page = params.key ?: UNSPLASH_STARTING_PAGE_INDEX
         return try {
-            val response = service.getListCharacters(keyParams)
+            val response = service.getListCharacters()
             val characters = response.data.characters
             LoadResult.Page(
                 data = characters,

@@ -1,17 +1,14 @@
-package com.example.marvelcharacters.ui
+package com.example.marvelcharacters.ui.home
 
-import android.content.ContentValues
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
-import com.example.marvelcharacters.R
 import com.example.marvelcharacters.databinding.FragmentHomeBinding
+import com.example.marvelcharacters.ui.HomeAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest

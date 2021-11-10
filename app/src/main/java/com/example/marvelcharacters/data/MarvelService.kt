@@ -1,5 +1,7 @@
 package com.example.marvelcharacters.data
 
+import com.example.marvelcharacters.Utils.Constants
+import com.example.marvelcharacters.Utils.Constants.Companion.toHex
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -11,14 +13,15 @@ import java.util.*
 
 interface MarvelService {
 
-    @GET(BASE_URL+CHARACTERS_URL)
+    @GET(Constants.BASE_URL+Constants.CHARACTERS_URL)
     suspend fun getListCharacters(
-        @Query("") query: String
+        @Query("ts") ts : String = Constants.ts,
+        @Query("apikey") apikey : String = Constants.PUBLIC_KEY,
+        @Query("hash") hash : String = Constants.md5().toHex(),
+        @Query("limit") limit : String = Constants.limit,
         ): CharacterResponse
 
     companion object {
-        const val CHARACTERS_URL = "characters"
-        const val BASE_URL = "https://gateway.marvel.com/v1/public/"
         fun create(): MarvelService {
             val logger =
                 HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BASIC }
@@ -28,7 +31,7 @@ interface MarvelService {
                 .build()
 
             return Retrofit.Builder()
-                .baseUrl(BASE_URL)
+                .baseUrl(Constants.BASE_URL)
                 .client(client)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()

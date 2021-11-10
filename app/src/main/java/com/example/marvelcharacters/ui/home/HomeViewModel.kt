@@ -1,4 +1,4 @@
-package com.example.marvelcharacters.ui
+package com.example.marvelcharacters.ui.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

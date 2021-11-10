@@ -1,20 +1,15 @@
-package com.example.marvelcharacters.ui
+package com.example.marvelcharacters.ui.detail
 
 import android.content.ContentValues.TAG
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.marvelcharacters.R
-import com.example.marvelcharacters.databinding.FragmentSecondBinding
+import com.example.marvelcharacters.databinding.FragmentDetailBinding
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
 
 /**
  * A simple [Fragment] subclass as the second destination in the navigation.
@@ -22,7 +17,7 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 
 class DetailFragment : Fragment() {
-    private var _binding: FragmentSecondBinding? = null
+    private var _binding: FragmentDetailBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -33,7 +28,7 @@ class DetailFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        _binding = FragmentSecondBinding.inflate(inflater, container, false)
+        _binding = FragmentDetailBinding.inflate(inflater, container, false)
         return binding.root
 
     }

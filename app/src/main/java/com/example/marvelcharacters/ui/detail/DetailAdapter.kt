@@ -15,7 +15,7 @@ import com.example.marvelcharacters.databinding.ListItemCharacterBinding
 import com.example.marvelcharacters.domain.models.Characters
 import com.example.marvelcharacters.ui.home.HomeFragmentDirections
 
-class HomeAdapter: PagingDataAdapter<CharactersEntity, HomeAdapter.CharactersViewHolder>(CharactersDiffCallback()) {
+class DetailAdapter: PagingDataAdapter<CharactersEntity, DetailAdapter.CharactersViewHolder>(CharacterByIdDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CharactersViewHolder {
         return CharactersViewHolder(
@@ -40,14 +40,16 @@ class HomeAdapter: PagingDataAdapter<CharactersEntity, HomeAdapter.CharactersVie
         init {
             binding.setClickListener { view ->
                 binding.tvName?.let { name ->
-                    binding.character!!.id?.let { navigateToDetail(it, view) }
+                navigateToDetail(binding.character!!.id, view)
                 }
             }
         }
-        private fun navigateToDetail(characterId: Int, view: View) {
-            val direction = HomeFragmentDirections
-                .actionHomeFragmentToDetailFragment(characterId)
-            view.findNavController().navigate(direction)
+        private fun navigateToDetail(characterId: Int?, view: View) {
+            val direction = characterId?.let {
+                HomeFragmentDirections
+                    .actionHomeFragmentToDetailFragment(it)
+            }
+            direction?.let { view.findNavController().navigate(it) }
         }
 
         fun bind(item: CharactersEntity) {
@@ -60,7 +62,7 @@ class HomeAdapter: PagingDataAdapter<CharactersEntity, HomeAdapter.CharactersVie
     }
 }
 
-private class CharactersDiffCallback : DiffUtil.ItemCallback<CharactersEntity>() {
+private class CharacterByIdDiffCallback : DiffUtil.ItemCallback<CharactersEntity>() {
     override fun areItemsTheSame(oldItem: CharactersEntity, newItem: CharactersEntity): Boolean {
         return oldItem.id == newItem.id
     }

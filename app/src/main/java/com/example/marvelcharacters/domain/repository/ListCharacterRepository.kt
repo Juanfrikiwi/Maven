@@ -21,6 +21,18 @@ class ListCharacterRepository @Inject constructor(service: MarvelService) {
             ).flow
         }
 
+    suspend fun getCharacter(id:Int): List<CharactersEntity> {
+            val response = service.getCharacter(id)
+            CharacterProvider.characters = response.data.characters
+            return response.data.characters
+        }
+
+    class CharacterProvider {
+        companion object {
+            var characters:List<CharactersEntity> = emptyList()
+        }
+    }
+
     companion object {
             private const val NETWORK_PAGE_SIZE = 25
         }

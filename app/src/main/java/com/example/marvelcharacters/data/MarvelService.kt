@@ -21,6 +21,16 @@ interface MarvelService {
         @Query("limit") limit : String = Constants.limit,
         ): CharacterResponse
 
+    @GET(Constants.BASE_URL+Constants.CHARACTERS_URL)
+    suspend fun getCharacter(
+        @Query("id") id : Int,
+        @Query("ts") ts : String = Constants.ts,
+        @Query("apikey") apikey : String = Constants.PUBLIC_KEY,
+        @Query("hash") hash : String = Constants.md5().toHex(),
+        @Query("limit") limit : String = Constants.limit,
+    ): CharacterResponse
+
+
     companion object {
         fun create(): MarvelService {
             val logger =

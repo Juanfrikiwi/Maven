@@ -48,10 +48,6 @@ class HomeFragment : Fragment() {
                 adapter.submitData(it)
             }
         }
-
-        binding.buttonFirst.setOnClickListener {
-           // findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
-        }
     }
 
     override fun onDestroyView() {

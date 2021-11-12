@@ -47,10 +47,10 @@ class DetailFragment : Fragment() {
                 characterEntity.let { itemCharacter ->
                     if (itemCharacter != null) {
                         binding.apply {
-                            plantDetailName.text = itemCharacter.name
+                            tvName.text = itemCharacter.name
                             Glide.with(requireContext()).
-                            load(itemCharacter.thumbnail!!.path.replace("http","https")+"."+itemCharacter.thumbnail.extension).into(detailImage)
-                            plantDescription.text = itemCharacter.description
+                            load(itemCharacter.thumbnail!!.path.replace("http","https")+"."+itemCharacter.thumbnail.extension).into(ivDetailImage)
+                            tvDescription.text = itemCharacter.description
                         }
 
                     }

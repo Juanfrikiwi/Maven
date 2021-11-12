@@ -10,38 +10,48 @@
         <variable
             name="character"
             type="com.example.marvelcharacters.data.models.CharactersEntity"/>
+        <variable
+            name="point"
+            type="String"
+            android:value="."/>
     </data>
 
     <com.example.marvelcharacters.ui.MaskedCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/card_side_margin"
+        android:layout_marginEnd="@dimen/card_side_margin"
+        android:layout_marginBottom="@dimen/card_bottom_margin"
         android:onClick="@{clickListener}"
-        app:cardPreventCornerOverlap="false">
+        app:cardElevation="@dimen/card_elevation"
+        app:cardPreventCornerOverlap="false">>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <ImageView
-                android:id="@+id/plant_photo"
+                android:id="@+id/iv_photo"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:contentDescription="ContentDescription"
+                android:layout_height="@dimen/item_image_height"
                 android:scaleType="centerCrop"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/tv_name"/>
 
             <TextView
                 android:id="@+id/tv_name"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/item_text_height"
+                android:layout_marginBottom="@dimen/margin_normal"
+                android:layout_marginTop="@dimen/margin_normal"
                 android:text="@{character.name}"
                 android:textAppearance="?attr/textAppearanceListItem"
                 android:gravity="center_horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/plant_photo"
+                app:layout_constraintTop_toBottomOf="@id/iv_photo"
                 app:layout_constraintBottom_toBottomOf="parent"
                 tools:text="Sunny F."/>
 

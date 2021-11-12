@@ -10,6 +10,7 @@ import androidx.navigation.findNavController
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.marvelcharacters.data.models.CharactersEntity
 import com.example.marvelcharacters.databinding.ListItemCharacterBinding
 import com.example.marvelcharacters.domain.models.Characters
@@ -53,6 +54,8 @@ class HomeAdapter: PagingDataAdapter<CharactersEntity, HomeAdapter.CharactersVie
         fun bind(item: CharactersEntity) {
             binding.apply {
                 character = item
+                Glide.with(ivPhoto.context).
+                load(item.thumbnail!!.path.replace("http","https")+"."+ item.thumbnail.extension).into(ivPhoto)
                 executePendingBindings()
             }
         }

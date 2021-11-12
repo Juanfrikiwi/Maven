@@ -34,7 +34,7 @@
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/appbar"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/plant_detail_app_bar_height"
+            android:layout_height="@dimen/detail_app_bar_height"
             android:fitsSystemWindows="true"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             android:stateListAnimator="@animator/show_toolbar"
@@ -55,9 +55,9 @@
                 app:toolbarId="@id/toolbar">
 
                 <ImageView
-                    android:id="@+id/detail_image"
+                    android:id="@+id/iv_detail_image"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/plant_detail_app_bar_height"
+                    android:layout_height="@dimen/detail_app_bar_height"
                     android:contentDescription="@string/detail_image_content_description"
                     android:fitsSystemWindows="true"
                     android:scaleType="centerCrop"
@@ -78,7 +78,7 @@
         </com.google.android.material.appbar.AppBarLayout>
 
         <androidx.core.widget.NestedScrollView
-            android:id="@+id/plant_detail_scrollview"
+            android:id="@+id/detail_scrollview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clipToPadding="false"
@@ -91,7 +91,7 @@
                 android:layout_margin="@dimen/margin_normal">
 
                 <TextView
-                    android:id="@+id/plant_detail_name"
+                    android:id="@+id/tv_name"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/margin_small"
@@ -99,15 +99,14 @@
                     android:gravity="center_horizontal"
                     android:clickable="true"
                     android:focusable="true"
-                    android:text="nombre"
                     android:textAppearance="?attr/textAppearanceHeadline5"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    tools:text="nombre" />
+                    tools:text="@string/name_detail" />
 
                 <TextView
-                    android:id="@+id/plant_watering_header"
+                    android:id="@+id/tv_watering_header"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/margin_small"
@@ -119,10 +118,10 @@
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/plant_detail_name" />
+                    app:layout_constraintTop_toBottomOf="@id/tv_name" />
 
                 <TextView
-                    android:id="@+id/plant_watering"
+                    android:id="@+id/tv_watering"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/margin_small"
@@ -130,12 +129,12 @@
                     android:gravity="center_horizontal"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/plant_watering_header"
+                    app:layout_constraintTop_toBottomOf="@id/tv_watering_header"
                     tools:text="every 7 days" />
 
 
                 <TextView
-                    android:id="@+id/plant_description"
+                    android:id="@+id/tv_description"
                     style="?android:attr/textAppearanceMedium"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -146,7 +145,7 @@
                     android:minHeight="@dimen/plant_description_min_height"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/plant_watering"
+                    app:layout_constraintTop_toBottomOf="@id/tv_watering"
                     tools:text="Description"
                     android:text="Description"/>
 

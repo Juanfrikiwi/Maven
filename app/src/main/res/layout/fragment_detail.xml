@@ -28,7 +28,7 @@
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
         android:background="?attr/colorSurface"
-        tools:context="com.google.samples.apps.sunflower.GardenActivity"
+        tools:context="com.example.marvelcharacters.ui.MainActivity"
         tools:ignore="MergeRootFrame">
 
         <com.google.android.material.appbar.AppBarLayout
@@ -97,6 +97,7 @@
                     android:layout_marginStart="@dimen/margin_small"
                     android:layout_marginEnd="@dimen/margin_small"
                     android:gravity="center_horizontal"
+                    android:textColor="@color/white"
                     android:clickable="true"
                     android:focusable="true"
                     android:textAppearance="?attr/textAppearanceHeadline5"
@@ -136,6 +137,7 @@
                 <TextView
                     android:id="@+id/tv_description"
                     style="?android:attr/textAppearanceMedium"
+                    android:textColor="@color/white"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/margin_small"

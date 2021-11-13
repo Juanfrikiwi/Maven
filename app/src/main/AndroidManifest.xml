@@ -30,4 +30,5 @@
             android:theme="@style/Theme.MarvelCharacters.NoActionBar"/>
     </application>
 
+
 </manifest>

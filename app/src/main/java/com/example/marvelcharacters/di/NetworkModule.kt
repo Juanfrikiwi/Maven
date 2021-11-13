@@ -16,7 +16,7 @@
 
 package com.example.marvelcharacters.di
 
-import com.example.marvelcharacters.data.MarvelService
+import com.example.marvelcharacters.data.network.MarvelService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

@@ -1,10 +1,8 @@
-package com.example.marvelcharacters.data
+package com.example.marvelcharacters.data.network
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.example.marvelcharacters.data.models.CharactersEntity
-import java.math.BigInteger
-import java.security.MessageDigest
+import com.example.marvelcharacters.data.network.models.CharactersEntity
 
 private const val UNSPLASH_STARTING_PAGE_INDEX = 1
 

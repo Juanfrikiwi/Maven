@@ -32,10 +32,8 @@ class Constants{
         const val PRIVATE_KEY = "926b3b0d3a931170235aa149dd59094e7b623bb5"
         const val limit = "100"
         val input = "$ts$PRIVATE_KEY$PUBLIC_KEY"
-
         fun md5(): ByteArray = MessageDigest.getInstance("MD5").digest(input.toByteArray(UTF_8))
         fun ByteArray.toHex() = joinToString(separator = "") { byte -> "%02x".format(byte)
-
         }
     }
 

@@ -1,14 +1,14 @@
-package com.example.marvelcharacters.data
+package com.example.marvelcharacters.data.network
 
 import com.example.marvelcharacters.Utils.Constants
 import com.example.marvelcharacters.Utils.Constants.Companion.toHex
+import com.example.marvelcharacters.data.network.models.ResponseEntity
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Query
-import java.util.*
 
 
 interface MarvelService {
@@ -19,7 +19,7 @@ interface MarvelService {
         @Query("apikey") apikey : String = Constants.PUBLIC_KEY,
         @Query("hash") hash : String = Constants.md5().toHex(),
         @Query("limit") limit : String = Constants.limit,
-        ): CharacterResponse
+        ): ResponseEntity
 
     @GET(Constants.BASE_URL+Constants.CHARACTERS_URL)
     suspend fun getCharacter(
@@ -28,7 +28,7 @@ interface MarvelService {
         @Query("apikey") apikey : String = Constants.PUBLIC_KEY,
         @Query("hash") hash : String = Constants.md5().toHex(),
         @Query("limit") limit : String = Constants.limit,
-    ): CharacterResponse
+    ): ResponseEntity
 
 
     companion object {

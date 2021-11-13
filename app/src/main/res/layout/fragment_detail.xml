@@ -21,7 +21,7 @@
     <data>
         <variable
             name="character"
-            type="com.example.marvelcharacters.data.models.CharactersEntity"/> </data>
+            type="com.example.marvelcharacters.data.network.models.CharactersEntity"/> </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"

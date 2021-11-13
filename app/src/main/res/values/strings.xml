@@ -7,8 +7,8 @@
     <string name="next">Next</string>
     <string name="previous">Previous</string>
     <string name="name_detail">Nombre</string>
-
-
+    <string name="message_loading">Cargando los personajes del servidor...</string>
+    <string name="message_error_connection">Ha ocurrido un error!</string>
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="detail_image_content_description">Imagen del personaje</string>

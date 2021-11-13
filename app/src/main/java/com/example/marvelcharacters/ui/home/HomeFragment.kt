@@ -8,8 +8,11 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.paging.LoadState
+import com.example.marvelcharacters.R
 import com.example.marvelcharacters.databinding.FragmentHomeBinding
 import com.example.marvelcharacters.ui.HomeAdapter
+import com.example.marvelcharacters.ui.LoadingStateAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
@@ -21,6 +24,7 @@ class HomeFragment : Fragment() {
     private val adapter = HomeAdapter()
     private val viewModel: HomeViewModel by viewModels()
     private var _binding: FragmentHomeBinding? = null
+    var chartersJob: Job? = null
 
 
     // This property is only valid between onCreateView and
@@ -33,31 +37,57 @@ class HomeFragment : Fragment() {
     ): View? {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         binding.characterList.adapter = adapter
-
+        setLoadingAdapter()
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         getCharters()
-
+        binding.apply {
+            ivReload.setOnClickListener {
+                ivReload.visibility = View.GONE
+                getCharters()
+            }
+        }
     }
 
     private fun getCharters() {
-        var chartersJob: Job? = null
-
+        binding.apply {
+            progressBar.visibility = View.VISIBLE
+            tvMessageLoading.text = getString(R.string.message_loading)
+            tvMessageLoading.visibility = View.VISIBLE
+            characterList.visibility = View.GONE
+        }
         chartersJob?.cancel()
-        binding.progressBar.visibility = View.VISIBLE
         chartersJob = lifecycleScope.launch {
             viewModel.getListCharacters()?.collectLatest {
                 adapter.submitData(it)
             }
         }
-        while(chartersJob.isCancelled) {
-            Toast.makeText(context, "asdasdasdasdasdasd", Toast.LENGTH_SHORT).show()
-        }
 
     }
+    private fun setLoadingAdapter() {
+        binding.characterList.adapter = adapter.withLoadStateFooter(
+            LoadingStateAdapter { adapter.retry() }
+        )
+        adapter.addLoadStateListener {
+            if (it.refresh is LoadState.Error) {
+                binding.apply {
+                    progressBar.visibility = View.GONE
+                    tvMessageLoading.text = getString(R.string.message_error_connection)
+                    ivReload.visibility = View.VISIBLE
+                }
+            }else if (it.refresh is LoadState.NotLoading) {
+                binding.apply {
+                    progressBar.visibility = View.GONE
+                    tvMessageLoading.visibility = View.GONE
+                    characterList.visibility = View.VISIBLE
+                }
+            }
+        }
+    }
+
 
     override fun onDestroyView() {
         super.onDestroyView()

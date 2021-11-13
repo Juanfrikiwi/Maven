@@ -51,8 +51,8 @@ class HomeViewPagerFragment : Fragment() {
 
     private fun getTabIcon(position: Int): Int {
         return when (position) {
-            HOME_PAGE_INDEX -> R.drawable.ic_baseline_home_24
-            FAVOURITES_PAGE_INDEX -> R.drawable.ic_baseline_favorite_24
+            HOME_PAGE_INDEX -> R.drawable.home_tab_selector
+            FAVOURITES_PAGE_INDEX -> R.drawable.favourites_tab_selector
             else -> throw IndexOutOfBoundsException()
         }
     }

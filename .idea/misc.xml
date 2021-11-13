@@ -14,8 +14,11 @@
         <entry key="app/src/main/res/drawable/ic_baseline_home_inactive_24.xml" value="0.2518518518518518" />
         <entry key="app/src/main/res/drawable/pb_style.xml" value="0.2490740740740741" />
         <entry key="app/src/main/res/drawable/progresbar_style.xml" value="0.2015625" />
+        <entry key="app/src/main/res/drawable/spalsh_background.xml" value="0.2518518518518518" />
         <entry key="app/src/main/res/drawable/tab_selector.xml" value="0.2518518518518518" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.2" />
+        <entry key="app/src/main/res/layout/activity_splash.xml" value="0.2578125" />
+        <entry key="app/src/main/res/layout/activity_splash2.xml" value="0.24375" />
         <entry key="app/src/main/res/layout/content_main.xml" value="0.13333333333333333" />
         <entry key="app/src/main/res/layout/fragment_detail.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_detail2.xml" value="0.25" />

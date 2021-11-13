@@ -3,21 +3,27 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/HomeFragment">
+    app:startDestination="@id/HomeViewPagerFragment">
 
     <fragment
-        android:id="@+id/HomeFragment"
-        android:name="com.example.marvelcharacters.ui.home.HomeFragment"
-        android:label="@string/home_fragment_label"
-        tools:layout="@layout/fragment_home">
+        android:id="@+id/HomeViewPagerFragment"
+        android:name="com.example.marvelcharacters.ui.viewpager.HomeViewPagerFragment"
+        tools:layout="@layout/fragment_view_pager">
+
         <action
-            android:id="@+id/action_home_fragment_to_detail_fragment"
+            android:id="@+id/action_view_pager_fragment_to_detail_fragment"
             app:destination="@id/DetailFragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
     </fragment>
+
+    <fragment
+        android:id="@+id/HomeFragment"
+        android:name="com.example.marvelcharacters.ui.home.HomeFragment"
+        android:label="@string/home_fragment_label"
+        tools:layout="@layout/fragment_home"/>
     <fragment
         android:id="@+id/DetailFragment"
         android:name="com.example.marvelcharacters.ui.detail.DetailFragment"

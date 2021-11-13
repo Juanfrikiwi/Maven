@@ -144,7 +144,7 @@
                     android:layout_marginTop="@dimen/margin_small"
                     android:layout_marginEnd="@dimen/margin_small"
                     android:textIsSelectable="true"
-                    android:minHeight="@dimen/plant_description_min_height"
+                    android:minHeight="@dimen/description_min_height"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tv_watering"

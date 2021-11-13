@@ -13,8 +13,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.marvelcharacters.data.models.CharactersEntity
 import com.example.marvelcharacters.databinding.ListItemCharacterBinding
-import com.example.marvelcharacters.domain.models.Characters
-import com.example.marvelcharacters.ui.home.HomeFragmentDirections
+import com.example.marvelcharacters.ui.viewpager.HomeViewPagerFragmentDirections
+
 
 class HomeAdapter: PagingDataAdapter<CharactersEntity, HomeAdapter.CharactersViewHolder>(CharactersDiffCallback()) {
 
@@ -46,8 +46,8 @@ class HomeAdapter: PagingDataAdapter<CharactersEntity, HomeAdapter.CharactersVie
             }
         }
         private fun navigateToDetail(characterId: Int, view: View) {
-            val direction = HomeFragmentDirections
-                .actionHomeFragmentToDetailFragment(characterId)
+            val direction = HomeViewPagerFragmentDirections
+                .actionViewPagerFragmentToDetailFragment(characterId)
             view.findNavController().navigate(direction)
         }
 

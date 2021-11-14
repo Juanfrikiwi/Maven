@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.example.marvelcharacters.databinding.FragmentHomeBinding
+import com.example.marvelcharacters.ui.FavoritesAdapter
 import com.example.marvelcharacters.ui.HomeAdapter
 import com.example.marvelcharacters.ui.home.HomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -20,12 +21,10 @@ import kotlinx.coroutines.launch
  */
 @AndroidEntryPoint
 
-class FavouritesFragment : Fragment() {
-    private val adapter = HomeAdapter()
-    private val viewModel: HomeViewModel by viewModels()
+class FavoritesFragment : Fragment() {
+    private val adapter = FavoritesAdapter()
+    private val viewModel: FavoritesViewModel by viewModels()
     private var _binding: FragmentHomeBinding? = null
-    private var chartersJob: Job? = null
-
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -37,6 +36,7 @@ class FavouritesFragment : Fragment() {
     ): View? {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         binding.characterList.adapter = adapter
+        subscribeUi(adapter)
 
         return binding.root
     }
@@ -44,6 +44,12 @@ class FavouritesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+    }
+
+    private fun subscribeUi(adapter: FavoritesAdapter) {
+        viewModel.characters.observe(viewLifecycleOwner) { characters ->
+            adapter.submitList(characters)
+        }
     }
 
     override fun onDestroyView() {

@@ -43,7 +43,7 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         getCharters()
-        binding.apply {
+        binding.loadingState.apply {
             ivReload.setOnClickListener {
                 ivReload.visibility = View.GONE
                 getCharters()
@@ -53,10 +53,12 @@ class HomeFragment : Fragment() {
 
     private fun getCharters() {
         binding.apply {
-            progressBar.visibility = View.VISIBLE
-            tvMessageLoading.text = getString(R.string.message_loading)
-            tvMessageLoading.visibility = View.VISIBLE
             characterList.visibility = View.GONE
+            loadingState.apply {
+                progressBar.visibility = View.VISIBLE
+                tvMessageLoading.text = getString(R.string.message_loading)
+                tvMessageLoading.visibility = View.VISIBLE
+            }
         }
         chartersJob?.cancel()
         chartersJob = lifecycleScope.launch {
@@ -72,16 +74,18 @@ class HomeFragment : Fragment() {
         )
         adapter.addLoadStateListener {
             if (it.refresh is LoadState.Error) {
-                binding.apply {
+                binding.loadingState.apply {
                     progressBar.visibility = View.GONE
                     tvMessageLoading.text = getString(R.string.message_error_connection)
                     ivReload.visibility = View.VISIBLE
                 }
             }else if (it.refresh is LoadState.NotLoading) {
                 binding.apply {
-                    progressBar.visibility = View.GONE
-                    tvMessageLoading.visibility = View.GONE
                     characterList.visibility = View.VISIBLE
+                    loadingState.apply {
+                        progressBar.visibility = View.GONE
+                        tvMessageLoading.visibility = View.GONE
+                    }
                 }
             }
         }

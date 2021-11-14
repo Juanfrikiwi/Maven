@@ -11,6 +11,10 @@
             name="character"
             type="com.example.marvelcharacters.data.network.models.CharactersResponse"/>
         <variable
+            name="characterEntity"
+            type="com.example.marvelcharacters.data.local.models.CharactersEntity"/>
+
+        <variable
             name="point"
             type="String"
             android:value="."/>

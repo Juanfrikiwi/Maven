@@ -42,5 +42,3 @@ data class CharactersEntity(
     var gardenPlantingId: Long = 0
 }
 
-
-

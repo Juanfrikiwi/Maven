@@ -39,7 +39,6 @@ class Constants{
         fun ByteArray.toHex() = joinToString(separator = "") { byte -> "%02x".format(byte)
         }
 
-
         const val DATABASE_NAME = "characters-db"
         const val PLANT_DATA_FILENAME = "characters.json"
 

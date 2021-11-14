@@ -33,7 +33,7 @@
             android:name="characterId"
             app:argType="integer"/>
         <action
-            android:id="@+id/action_SecondFragment_to_FirstFragment"
+            android:id="@+id/action_DetailFragment_to_HomeFragment"
             app:destination="@id/HomeFragment" />
     </fragment>
 </navigation>

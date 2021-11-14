@@ -29,7 +29,7 @@ interface CharactersDao {
     fun getListCharacters(): Flow<List<CharactersEntity>>
 
     @Query("SELECT * FROM characters WHERE id = :characterId")
-    fun getCharacter(characterId: String): Flow<CharactersEntity>
+    fun getCharacter(characterId: Int): Flow<CharactersEntity>
 
     @Query("SELECT EXISTS(SELECT 1 FROM characters WHERE id = id LIMIT 1)")
     fun isExitsId(): Flow<Boolean>

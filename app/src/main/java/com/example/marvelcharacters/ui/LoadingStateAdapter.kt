@@ -20,7 +20,7 @@ class LoadingStateAdapter(private val retry: () -> Unit) :
 
     override fun onBindViewHolder(holder: LoadStateViewHolder, loadState: LoadState) {
 
-        val progress = holder.binding.progressBar
+        val progress = holder.binding.loadingState.progressBar
         //val txtErrorMessage = holder.binding.errorMsgItem
         //val errorBtn = holder.binding.retryBtn
 

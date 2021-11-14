@@ -5,14 +5,14 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.example.marvelcharacters.data.network.MarvelPagingSource
 import com.example.marvelcharacters.data.network.MarvelService
-import com.example.marvelcharacters.data.network.models.CharactersEntity
+import com.example.marvelcharacters.data.network.models.CharactersResponse
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 
 class MarvelRepository @Inject constructor(service: MarvelService) {
     val service = service
-        fun getListCharacters(): Flow<PagingData<CharactersEntity>> {
+        fun getListCharacters(): Flow<PagingData<CharactersResponse>> {
             return Pager(
                 config = PagingConfig(enablePlaceholders = false, pageSize = NETWORK_PAGE_SIZE),
                 pagingSourceFactory = {
@@ -21,7 +21,7 @@ class MarvelRepository @Inject constructor(service: MarvelService) {
             ).flow
         }
 
-    suspend fun getCharacter(id:Int): List<CharactersEntity> {
+    suspend fun getCharacter(id:Int): List<CharactersResponse> {
             val response = service.getCharacter(id)
             CharacterProvider.characters = response.data.characters
             return response.data.characters
@@ -29,7 +29,7 @@ class MarvelRepository @Inject constructor(service: MarvelService) {
 
     class CharacterProvider {
         companion object {
-            var characters:List<CharactersEntity> = emptyList()
+            var characters:List<CharactersResponse> = emptyList()
         }
     }
 

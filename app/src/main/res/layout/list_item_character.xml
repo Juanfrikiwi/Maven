@@ -9,7 +9,7 @@
             type="android.view.View.OnClickListener"/>
         <variable
             name="character"
-            type="com.example.marvelcharacters.data.network.models.CharactersEntity"/>
+            type="com.example.marvelcharacters.data.network.models.CharactersResponse"/>
         <variable
             name="point"
             type="String"

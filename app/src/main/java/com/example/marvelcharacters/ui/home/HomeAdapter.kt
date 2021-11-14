@@ -9,12 +9,12 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.marvelcharacters.data.network.models.CharactersEntity
+import com.example.marvelcharacters.data.network.models.CharactersResponse
 import com.example.marvelcharacters.databinding.ListItemCharacterBinding
 import com.example.marvelcharacters.ui.viewpager.HomeViewPagerFragmentDirections
 
 
-class HomeAdapter: PagingDataAdapter<CharactersEntity, HomeAdapter.CharactersViewHolder>(CharactersDiffCallback()) {
+class HomeAdapter: PagingDataAdapter<CharactersResponse, HomeAdapter.CharactersViewHolder>(CharactersDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CharactersViewHolder {
         return CharactersViewHolder(
@@ -49,7 +49,7 @@ class HomeAdapter: PagingDataAdapter<CharactersEntity, HomeAdapter.CharactersVie
             view.findNavController().navigate(direction)
         }
 
-        fun bind(item: CharactersEntity) {
+        fun bind(item: CharactersResponse) {
             binding.apply {
                 character = item
                 Glide.with(ivPhoto.context).
@@ -61,12 +61,12 @@ class HomeAdapter: PagingDataAdapter<CharactersEntity, HomeAdapter.CharactersVie
     }
 }
 
-private class CharactersDiffCallback : DiffUtil.ItemCallback<CharactersEntity>() {
-    override fun areItemsTheSame(oldItem: CharactersEntity, newItem: CharactersEntity): Boolean {
+private class CharactersDiffCallback : DiffUtil.ItemCallback<CharactersResponse>() {
+    override fun areItemsTheSame(oldItem: CharactersResponse, newItem: CharactersResponse): Boolean {
         return oldItem.id == newItem.id
     }
 
-    override fun areContentsTheSame(oldItem: CharactersEntity, newItem: CharactersEntity): Boolean {
+    override fun areContentsTheSame(oldItem: CharactersResponse, newItem: CharactersResponse): Boolean {
         return oldItem == newItem
     }
 }

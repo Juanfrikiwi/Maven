@@ -7,8 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
+import com.example.marvelcharacters.data.local.models.CharactersEntity
 import com.example.marvelcharacters.databinding.FragmentDetailBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
@@ -24,6 +26,7 @@ class DetailFragment : Fragment() {
     private val args: DetailFragmentArgs by navArgs()
     private val viewModel: DetailViewModel by viewModels()
     private var chartersJob: Job? = null
+    private var addChartersJob: Job? = null
 
     private val binding get() = _binding!!
 
@@ -39,17 +42,40 @@ class DetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initListeners()
+        getCharacter()
+    }
+
+    private fun initListeners() {
+        binding.btnFavourite.setOnClickListener {
+            chartersJob?.cancel()
+            chartersJob = lifecycleScope.launch {
+                viewModel.addFavourite()
+            }
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
+    private fun getCharacter() {
         chartersJob?.cancel()
         chartersJob = lifecycleScope.launch {
-           val character =  viewModel.getCharacter(args.characterId)
+            val character = viewModel.getCharacter(args.characterId)
             character.let {
                 val characterEntity = it.firstOrNull()
                 characterEntity.let { itemCharacter ->
                     if (itemCharacter != null) {
                         binding.apply {
                             tvName.text = itemCharacter.name
-                            Glide.with(requireContext()).
-                            load(itemCharacter.thumbnail!!.path.replace("http","https")+"."+itemCharacter.thumbnail.extension).into(ivDetailImage)
+                            Glide.with(requireContext()).load(
+                                itemCharacter.thumbnail!!.path.replace(
+                                    "http",
+                                    "https"
+                                ) + "." + itemCharacter.thumbnail.extension
+                            ).into(ivDetailImage)
                             tvDescription.text = itemCharacter.description
                         }
 
@@ -58,10 +84,5 @@ class DetailFragment : Fragment() {
 
             }
         }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 }

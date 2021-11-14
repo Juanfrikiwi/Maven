@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.example.marvelcharacters.Utils
+package com.example.marvelcharacters.utils
 
 import java.nio.charset.StandardCharsets.UTF_8
 import java.security.MessageDigest
@@ -24,7 +24,10 @@ import java.security.MessageDigest
  *
  */
 class Constants{
+
     companion object {
+
+        //Connection web service
         const val BASE_URL = "https://gateway.marvel.com/v1/public/"
         const val CHARACTERS_URL = "characters"
         val ts = System.currentTimeMillis().toString()
@@ -35,6 +38,12 @@ class Constants{
         fun md5(): ByteArray = MessageDigest.getInstance("MD5").digest(input.toByteArray(UTF_8))
         fun ByteArray.toHex() = joinToString(separator = "") { byte -> "%02x".format(byte)
         }
+
+
+        const val DATABASE_NAME = "characters-db"
+        const val PLANT_DATA_FILENAME = "characters.json"
+
+
     }
 
 }

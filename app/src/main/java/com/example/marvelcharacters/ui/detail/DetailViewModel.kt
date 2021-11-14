@@ -26,19 +26,11 @@ class DetailViewModel @Inject constructor(
         }
     }
 
-    suspend fun addFavourite(): Boolean {
+    suspend fun addFavourite(character: CharactersEntity): Boolean {
         try {
             viewModelScope.launch {
                 localRepository.insertFavouriteCharacter(
-                    character = CharactersEntity(
-                        idCharacter = 7,
-                        name = "JuanFran",
-                        description = "descripcion",
-                        modified = "7/7/89",
-                        resourceURI = "www.kiwi.com",
-                        thumbnail_path = "www.kiwi.com",
-                        comics = listOf("1", "2", "3")
-                    )
+                    character = character
                 )
             }
             return true

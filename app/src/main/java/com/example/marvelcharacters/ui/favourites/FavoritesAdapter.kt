@@ -41,6 +41,7 @@ class FavoritesAdapter: ListAdapter<CharactersEntity, FavoritesAdapter.Character
         init {
             binding.setClickListener { view ->
                 binding.tvName?.let { name ->
+                    navigateToDetail(binding.character!!.id, view)
                     binding.character!!.id?.let { navigateToDetail(it, view) }
                 }
             }
@@ -59,7 +60,6 @@ class FavoritesAdapter: ListAdapter<CharactersEntity, FavoritesAdapter.Character
                 executePendingBindings()
             }
         }
-
     }
 }
 

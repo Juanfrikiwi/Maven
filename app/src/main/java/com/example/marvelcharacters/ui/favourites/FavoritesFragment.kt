@@ -7,10 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import com.example.marvelcharacters.R
 import com.example.marvelcharacters.databinding.FragmentHomeBinding
 import com.example.marvelcharacters.ui.FavoritesAdapter
 import com.example.marvelcharacters.ui.HomeAdapter
 import com.example.marvelcharacters.ui.home.HomeViewModel
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
@@ -35,6 +37,8 @@ class FavoritesFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        context ?: return binding.root
+
         binding.characterList.adapter = adapter
         subscribeUi(adapter)
 
@@ -43,12 +47,15 @@ class FavoritesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
     }
 
     private fun subscribeUi(adapter: FavoritesAdapter) {
         viewModel.characters.observe(viewLifecycleOwner) { characters ->
-            adapter.submitList(characters)
+            if (characters.isNotEmpty()){
+                adapter.submitList(characters)
+            }else{
+                Snackbar.make(binding.root, getString(R.string.error_ocurred), Snackbar.LENGTH_LONG).show()
+            }
         }
     }
 

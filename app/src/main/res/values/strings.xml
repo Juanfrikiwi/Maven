@@ -14,7 +14,7 @@
     <string name="detail_image_content_description">Imagen del personaje</string>
     <string name="marvel">Marvel</string>
     <string name="home">Inicio</string>
-    <string name="favourites">Favoritos</string>
+    <string name="favorites">Favoritos</string>
     <string name="charter_added">Personaje añadido a favoritos</string>
     <string name="error_ocurred">Ha ocurrido un error</string>
 </resources>

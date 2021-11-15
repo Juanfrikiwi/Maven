@@ -13,6 +13,7 @@ import com.bumptech.glide.Glide
 import com.example.marvelcharacters.R
 import com.example.marvelcharacters.data.local.models.CharactersEntity
 import com.example.marvelcharacters.data.network.models.CharactersResponse
+import com.example.marvelcharacters.data.network.models.ImageResponse
 import com.example.marvelcharacters.databinding.FragmentDetailBinding
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -87,18 +88,7 @@ class DetailFragment : Fragment() {
                 val characterSelected = character.firstOrNull()
                 characterToAdd = characterSelected?.let { mapperToEntity(characterResponse = it) }
                 characterSelected.let { itemCharacter ->
-                    binding.apply {
-                        loadingState.tvMessageLoading.visibility = View.GONE
-                        loadingState.progressBar.visibility = View.GONE
-                        tvName.text = itemCharacter!!.name
-                        Glide.with(requireContext()).load(
-                            itemCharacter.thumbnail!!.path.replace(
-                                "http",
-                                "https"
-                            ) + "." + itemCharacter.thumbnail.extension
-                        ).into(ivDetailImage)
-                        tvDescription.text = itemCharacter.description
-                    }
+                    bindingData(itemCharacter)
                 }
             } else {
                 binding.apply {
@@ -112,6 +102,24 @@ class DetailFragment : Fragment() {
         }
     }
 
+    private fun bindingData(itemCharacter:CharactersResponse?) {
+        binding.apply {
+            loadingState.tvMessageLoading.visibility = View.GONE
+            loadingState.progressBar.visibility = View.GONE
+            tvName.text = itemCharacter!!.name
+            loadImage(itemCharacter.thumbnail)
+            tvDescription.text = itemCharacter.description
+        }
+    }
+
+    private fun loadImage(thumbnail: ImageResponse) {
+        Glide.with(requireContext()).load(
+            thumbnail!!.path.replace(
+                "http",
+                "https"
+            ) + "." + thumbnail.extension
+        ).into(binding.ivDetailImage)    }
+
     fun mapperToEntity(characterResponse: CharactersResponse): CharactersEntity {
         characterResponse.let {
             return CharactersEntity(
@@ -124,10 +132,6 @@ class DetailFragment : Fragment() {
                 listOf("2", "3")
             )
         }
-    }
-
-    fun extractComicsName() {
-
     }
 
     fun interface Callback {

@@ -28,7 +28,7 @@ interface CharactersDao {
     @Query("SELECT * FROM characters")
     fun getListCharacters(): Flow<List<CharactersEntity>>
 
-    @Query("SELECT * FROM characters WHERE id = :characterId")
+    @Query("SELECT * FROM characters WHERE id_character = :characterId")
     fun getCharacter(characterId: Int): Flow<CharactersEntity>
 
     @Query("SELECT EXISTS(SELECT 1 FROM characters WHERE id = id LIMIT 1)")

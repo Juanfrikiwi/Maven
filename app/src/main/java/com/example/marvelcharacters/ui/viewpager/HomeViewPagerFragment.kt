@@ -60,7 +60,7 @@ class HomeViewPagerFragment : Fragment() {
     private fun getTabTitle(position: Int): String? {
         return when (position) {
             HOME_PAGE_INDEX -> getString(R.string.home)
-            FAVOURITES_PAGE_INDEX -> getString(R.string.favourites)
+            FAVOURITES_PAGE_INDEX -> getString(R.string.favorites)
             else -> null
         }
     }

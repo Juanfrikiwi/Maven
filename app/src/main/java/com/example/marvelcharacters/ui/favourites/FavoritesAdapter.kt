@@ -40,15 +40,12 @@ class FavoritesAdapter: ListAdapter<CharactersEntity, FavoritesAdapter.Character
     ) : RecyclerView.ViewHolder(binding.root) {
         init {
             binding.setClickListener { view ->
-                binding.tvName?.let { name ->
-                    navigateToDetail(binding.character!!.id, view)
-                    binding.character!!.id?.let { navigateToDetail(it, view) }
-                }
+                    navigateToDetail(binding.characterEntity!!.idCharacter, view)
             }
         }
         private fun navigateToDetail(characterId: Int, view: View) {
             val direction = HomeViewPagerFragmentDirections
-                .actionViewPagerFragmentToDetailFragment(characterId)
+                .actionViewPagerFragmentToDetailFavoritesFragment(characterId)
             view.findNavController().navigate(direction)
         }
 

@@ -70,7 +70,6 @@
 
         </com.google.android.material.appbar.AppBarLayout>
 
-        <include android:id="@+id/loading_state" layout="@layout/layout_loading_detail"/>
 
         <androidx.core.widget.NestedScrollView
             android:id="@+id/detail_scrollview"
@@ -84,6 +83,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="@dimen/margin_normal">
+                <include android:id="@+id/loading_state" layout="@layout/layout_loading_detail"/>
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/btn_favorite"

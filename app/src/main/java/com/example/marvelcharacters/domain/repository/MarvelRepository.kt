@@ -36,4 +36,6 @@ class MarvelRepository @Inject constructor(service: MarvelService) {
     companion object {
             private const val NETWORK_PAGE_SIZE = 25
         }
+
+
     }

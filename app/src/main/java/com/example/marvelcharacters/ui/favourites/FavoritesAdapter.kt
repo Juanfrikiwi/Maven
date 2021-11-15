@@ -5,18 +5,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.findNavController
-import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.marvelcharacters.data.local.models.CharactersEntity
-import com.example.marvelcharacters.data.network.models.CharactersResponse
 import com.example.marvelcharacters.databinding.ListItemCharacterBinding
 import com.example.marvelcharacters.ui.viewpager.HomeViewPagerFragmentDirections
 
 
-class FavoritesAdapter: ListAdapter<CharactersEntity, FavoritesAdapter.CharactersViewHolder>(CharactersFavoritesDiffCallback()) {
+class FavoritesAdapter(
+    val listItemClickListener: ListItemClickListener
+): ListAdapter<CharactersEntity, FavoritesAdapter.CharactersViewHolder>(CharactersFavoritesDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CharactersViewHolder {
         return CharactersViewHolder(
@@ -32,13 +32,18 @@ class FavoritesAdapter: ListAdapter<CharactersEntity, FavoritesAdapter.Character
         val character = getItem(position)
         if (character != null) {
             holder.bind(character)
+            holder.btnDelete.setOnClickListener {
+                listItemClickListener.onDeleteItem(character)
+            }
         }
     }
 
     class CharactersViewHolder(
         private val binding: ListItemCharacterBinding
     ) : RecyclerView.ViewHolder(binding.root) {
+        val btnDelete = binding.ivDelete
         init {
+            binding.ivDelete.visibility = View.VISIBLE
             binding.setClickListener { view ->
                     navigateToDetail(binding.characterEntity!!.idCharacter, view)
             }
@@ -58,6 +63,10 @@ class FavoritesAdapter: ListAdapter<CharactersEntity, FavoritesAdapter.Character
             }
         }
     }
+    interface ListItemClickListener{
+        fun onDeleteItem(charactersEntity: CharactersEntity)
+    }
+
 }
 
 private class CharactersFavoritesDiffCallback : DiffUtil.ItemCallback<CharactersEntity>() {

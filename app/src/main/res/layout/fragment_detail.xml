@@ -86,7 +86,7 @@
                 android:layout_margin="@dimen/margin_normal">
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/btn_favourite"
+                    android:id="@+id/btn_favorite"
                     style="@style/Widget.MaterialComponents.FloatingActionButton"
                     android:layout_width="wrap_content"
                     android:onClick="@{() -> callback.add(viewModel.character)}"

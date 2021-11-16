@@ -27,8 +27,8 @@ class DetailFavoritesViewModel @Inject constructor(
         }
     }
 
-    fun getCharacter(characterId: Int) {
-        character = localRepository.getFavouriteCharacter(characterId).asLiveData()
+    fun getCharacter(characterId: Int): LiveData<CharactersEntity> {
+        return  localRepository.getFavouriteCharacter(characterId).asLiveData()
     }
 
 }

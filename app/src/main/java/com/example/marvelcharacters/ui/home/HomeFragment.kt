@@ -22,18 +22,14 @@ import kotlinx.coroutines.launch
 class HomeFragment : Fragment() {
     private val adapter = HomeAdapter()
     private val viewModel: HomeViewModel by viewModels()
-    private var _binding: FragmentHomeBinding? = null
+    lateinit var binding: FragmentHomeBinding
     var chartersJob: Job? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
-    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        binding = FragmentHomeBinding.inflate(inflater, container, false)
         binding.characterList.adapter = adapter
         return binding.root
     }
@@ -89,4 +85,10 @@ class HomeFragment : Fragment() {
             }
         }
     }
+    override fun onDestroyView() {
+        super.onDestroyView()
+
+    }
+
+
 }

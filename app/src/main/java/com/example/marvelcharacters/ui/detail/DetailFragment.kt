@@ -26,18 +26,17 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 
 class DetailFragment : Fragment() {
-    private var _binding: FragmentDetailBinding? = null
+    lateinit var binding: FragmentDetailBinding
     private val args: DetailFragmentArgs by navArgs()
     private val detailViewModel: DetailViewModel by viewModels()
     private var chartersJob: Job? = null
-    private val binding get() = _binding!!
     var characterToAdd: CharactersEntity? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = DataBindingUtil.inflate<FragmentDetailBinding>(
+        binding = DataBindingUtil.inflate<FragmentDetailBinding>(
             inflater,
             R.layout.fragment_detail,
             container,
@@ -120,7 +119,7 @@ class DetailFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        _binding = null
+
     }
 
     private fun getCharacter() {

@@ -12,7 +12,6 @@ import javax.inject.Inject
 @HiltViewModel
 class DetailFavoritesViewModel @Inject constructor(
     private val localRepository: CharactersFavouritesRepository,
-    savedStateHandle: SavedStateHandle
 ) : ViewModel() {
     lateinit var character: LiveData<CharactersEntity>
     suspend fun addFavourite(character: CharactersEntity): Boolean {
@@ -30,10 +29,6 @@ class DetailFavoritesViewModel @Inject constructor(
 
     fun getCharacter(characterId: Int) {
         character = localRepository.getFavouriteCharacter(characterId).asLiveData()
-    }
-
-    companion object {
-        private const val PLANT_ID_SAVED_STATE_KEY = "characterId"
     }
 
 }

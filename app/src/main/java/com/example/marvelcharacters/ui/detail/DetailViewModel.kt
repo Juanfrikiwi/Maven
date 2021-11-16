@@ -43,6 +43,7 @@ class DetailViewModel @Inject constructor(
         }
     }
 
+
     companion object {
         private const val PLANT_ID_SAVED_STATE_KEY = "characterId"
     }

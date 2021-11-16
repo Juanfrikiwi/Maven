@@ -14,7 +14,6 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     private val repository: MarvelRepository
 ) : ViewModel() {
-
     fun getListCharacters(): Flow<PagingData<CharactersResponse>>? {
             val newResult: Flow<PagingData<CharactersResponse>> =
                 repository.getListCharacters().cachedIn(viewModelScope)

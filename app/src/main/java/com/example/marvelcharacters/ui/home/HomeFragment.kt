@@ -61,7 +61,6 @@ class HomeFragment : Fragment() {
                 adapter.submitData(it)
             }
         }
-
     }
     private fun setLoadingAdapter() {
         binding.characterList.adapter = adapter.withLoadStateFooter(

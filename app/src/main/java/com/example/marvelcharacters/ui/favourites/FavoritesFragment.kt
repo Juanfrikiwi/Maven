@@ -35,7 +35,11 @@ class FavoritesFragment : Fragment() {
     ): View? {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         context ?: return binding.root
+        return binding.root
+    }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         adapter = FavoritesAdapter(
             object : FavoritesAdapter.ListItemClickListener {
                 override fun onDeleteItem(charactersEntity: CharactersEntity) {
@@ -54,13 +58,6 @@ class FavoritesFragment : Fragment() {
         )
         binding.characterList.adapter = adapter
         subscribeUi(adapter)
-
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
     }
 
     private fun subscribeUi(adapter: FavoritesAdapter) {

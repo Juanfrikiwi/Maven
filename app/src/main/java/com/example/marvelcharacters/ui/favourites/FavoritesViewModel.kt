@@ -35,5 +35,4 @@ class FavoritesViewModel @Inject constructor(
             false
         }
     }
-
 }

@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.example.marvelcharacters.R
@@ -77,13 +78,16 @@ class DetailFragment : Fragment() {
                 }
             }
         }
-
         initListeners()
         initObservers()
         getCharacter()
     }
 
     private fun initListeners() {
+        binding.toolbar.setNavigationOnClickListener { view ->
+            view.findNavController().navigateUp()
+        }
+
         binding.loadingState.ivReload.setOnClickListener {
             it.visibility = View.GONE
             getCharacter()
@@ -100,7 +104,7 @@ class DetailFragment : Fragment() {
             }
         }
         detailViewModel.isFavorite.observe(viewLifecycleOwner) { isFavorite ->
-            if (isFavorite){
+            if (isFavorite) {
                 binding.btnFavorite.visibility = View.GONE
             }
         }

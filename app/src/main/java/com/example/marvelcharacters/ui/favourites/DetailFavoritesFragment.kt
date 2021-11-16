@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.example.marvelcharacters.R
@@ -39,6 +40,13 @@ class DetailFavoritesFragment : Fragment() {
                 Snackbar.make(binding.root, getString(R.string.error_ocurred), Snackbar.LENGTH_LONG)
                     .show()
             }
+        }
+        initListeners()
+    }
+
+    private fun initListeners() {
+        binding.toolbar.setNavigationOnClickListener { view ->
+            view.findNavController().navigateUp()
         }
     }
 

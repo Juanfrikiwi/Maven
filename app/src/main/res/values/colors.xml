@@ -10,5 +10,7 @@
     <color name="yellow">#E6E82D</color>
     <color name="red">#790000</color>
     <color name="red_dark">#580000</color>
+    <color name="red_light">#DF0101</color>
+    <color name="gray_dark">#2E2E2E</color>
     <color name="trans">#00000000 </color>
 </resources>

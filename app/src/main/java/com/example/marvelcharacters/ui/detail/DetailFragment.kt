@@ -51,6 +51,8 @@ class DetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initListeners()
+        initObservers()
         getCharacter()
         binding.loadingState.apply {
             ivReload.setOnClickListener {
@@ -78,9 +80,6 @@ class DetailFragment : Fragment() {
                 }
             }
         }
-        initListeners()
-        initObservers()
-        getCharacter()
     }
 
     private fun initListeners() {
@@ -101,11 +100,13 @@ class DetailFragment : Fragment() {
             characterToAdd = characterSelected?.let { mapperToEntity(characterResponse = it) }
             characterSelected.let { itemCharacter ->
                 bindingData(itemCharacter)
-            }
-        }
-        detailViewModel.isFavorite.observe(viewLifecycleOwner) { isFavorite ->
-            if (isFavorite) {
-                binding.btnFavorite.visibility = View.GONE
+                detailViewModel.isFavorite.observe(viewLifecycleOwner) { isFavorite ->
+                    if (isFavorite) {
+                        binding.btnFavorite.visibility = View.GONE
+                    }else{
+                        binding.btnFavorite.visibility = View.VISIBLE
+                    }
+                }
             }
         }
 

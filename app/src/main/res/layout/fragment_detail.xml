@@ -83,7 +83,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="@dimen/margin_normal">
-
                 <include android:id="@+id/loading_state" layout="@layout/layout_loading_detail"/>
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -95,10 +94,11 @@
                     android:layout_margin="@dimen/fab_margin"
                     android:tint="@color/white"
                     app:layout_anchorGravity="bottom|end"
+                    app:backgroundTint="@color/red_light"
                     app:srcCompat="@drawable/ic_baseline_favorite_24"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    android:visibility="visible"
+                    android:visibility="gone"
                     tools:visibility="visible"/>
 
 
@@ -110,7 +110,6 @@
                     android:layout_marginStart="@dimen/margin_small"
                     android:layout_marginEnd="@dimen/margin_small"
                     android:gravity="center_horizontal"
-                    android:textColor="@color/white"
                     android:clickable="true"
                     android:focusable="true"
                     android:textAppearance="?attr/textAppearanceHeadline5"
@@ -150,7 +149,6 @@
                 <TextView
                     android:id="@+id/tv_description"
                     style="?android:attr/textAppearanceMedium"
-                    android:textColor="@color/white"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/margin_small"

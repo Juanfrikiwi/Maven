@@ -13,14 +13,15 @@
     <dimen name="margin_small">8dp</dimen>
     <dimen name="margin_extra_small">4dp</dimen>
 
-    <dimen name="font_very_big">48</dimen>
+    <dimen name="font_very_big">48dp</dimen>
+    <dimen name="font_big">32dp</dimen>
     <dimen name="font_normal">16dp</dimen>
     <dimen name="font_small">8dp</dimen>
     <dimen name="font_extra_small">4dp</dimen>
 
     <dimen name="item_image_height">150dp</dimen>
 
-    <dimen name="item_text_height">35dp</dimen>
+    <dimen name="item_text_height">24dp</dimen>
 
     <dimen name="progressbar_size">50dp</dimen>
 

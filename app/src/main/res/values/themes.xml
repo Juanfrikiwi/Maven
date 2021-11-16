@@ -21,4 +21,12 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
+    <style name="ShapeAppearance.MarvelCharacters.Button.Add" parent="ShapeAppearance.MaterialComponents">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeTopLeft">0dp</item>
+        <item name="cornerSizeTopRight">@dimen/card_corner_radius</item>
+        <item name="cornerSizeBottomRight">0dp</item>
+        <item name="cornerSizeBottomLeft">@dimen/card_corner_radius</item>
+        <item name="backgroundColor">@color/red_dark</item>
+    </style>
 </resources>

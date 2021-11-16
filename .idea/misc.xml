@@ -11,7 +11,9 @@
         <entry key="app/src/main/res/drawable/ic_baseline_autorenew_24.xml" value="0.3101851851851852" />
         <entry key="app/src/main/res/drawable/ic_baseline_autorenew_48.xml" value="0.3101851851851852" />
         <entry key="app/src/main/res/drawable/ic_baseline_autorenew_white_48.xml" value="0.2734375" />
+        <entry key="app/src/main/res/drawable/ic_baseline_favorite_24.xml" value="0.20462962962962963" />
         <entry key="app/src/main/res/drawable/ic_baseline_favorite_24_inactive.xml" value="0.2518518518518518" />
+        <entry key="app/src/main/res/drawable/ic_baseline_favorite_inactive_24.xml" value="0.2692307692307692" />
         <entry key="app/src/main/res/drawable/ic_baseline_home_inactive_24.xml" value="0.2518518518518518" />
         <entry key="app/src/main/res/drawable/pb_style.xml" value="0.2490740740740741" />
         <entry key="app/src/main/res/drawable/pb_style_white.xml" value="0.2734375" />
@@ -35,7 +37,7 @@
         <entry key="app/src/main/res/layout/fragment_view_pager.xml" value="0.25" />
         <entry key="app/src/main/res/layout/layout_loading.xml" value="0.10416666666666667" />
         <entry key="app/src/main/res/layout/layout_loading_detail.xml" value="0.25729166666666664" />
-        <entry key="app/src/main/res/layout/list_item_character.xml" value="0.16457960644007155" />
+        <entry key="app/src/main/res/layout/list_item_character.xml" value="0.25" />
         <entry key="app/src/main/res/layout/list_item_photo.xml" value="0.1" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.27395833333333336" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.1" />

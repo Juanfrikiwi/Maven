@@ -15,27 +15,31 @@ class DetailViewModel @Inject constructor(
     private val localRepository: CharactersFavouritesRepository,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
+    val errorResponse = MutableLiveData<String>()
+    val successResponse = MutableLiveData<List<CharactersResponse>>()
+
     val characterId: Int = savedStateHandle.get<Int>(PLANT_ID_SAVED_STATE_KEY)!!
     val character = localRepository.getFavouriteCharacter(characterId).asLiveData()
+    val isFavorite = localRepository.isExistId(characterId).asLiveData()
 
-    suspend fun getCharacter(id: Int): List<CharactersResponse>? {
-        return try {
-            repository.getCharacter(id)
+
+    suspend fun getCharacter(id: Int){
+        try {
+            successResponse.value = repository.getCharacter(id)
         } catch (e: Exception) {
-            null
+            errorResponse.value = e.message
         }
     }
-
     suspend fun addFavourite(character: CharactersEntity): Boolean {
-        try {
+        return try {
             viewModelScope.launch {
                 localRepository.insertFavouriteCharacter(
                     character = character
                 )
             }
-            return true
+            true
         } catch (e: Exception) {
-            return false
+            false
         }
     }
 

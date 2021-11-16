@@ -26,8 +26,9 @@ import kotlin.collections.ArrayList
 
 @Entity(
     tableName = "characters",
-    indices = [Index("id_character")]
+    indices = [Index(value = ["id_character"])]
 )
+
 data class CharactersEntity(
     @ColumnInfo(name = "id_character") val idCharacter: Int,
     @ColumnInfo(name = "name") val name: String,

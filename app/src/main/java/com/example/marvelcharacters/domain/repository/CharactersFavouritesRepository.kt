@@ -11,7 +11,7 @@ class CharactersFavouritesRepository @Inject constructor(private val charactersD
 
     fun getFavouritesCharacters() = charactersDao.getListCharacters()
 
-    fun isExistId() = charactersDao.isExitsId()
+    fun isExistId(characterId: Int) = charactersDao.isExitsId(characterId)
 
     fun getFavouriteCharacter(characterId: Int) = charactersDao.getCharacter(characterId)
 

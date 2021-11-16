@@ -29,6 +29,24 @@
                 app:spanCount="2"
                 tools:listitem="@layout/list_item_character" />
 
+
+            <TextView
+                android:id="@+id/tv_empty_list"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_big"
+                android:layout_marginEnd="@dimen/margin_big"
+                android:layout_marginTop="@dimen/margin_xxl"
+                android:gravity="center_horizontal"
+                android:textAppearance="?attr/textAppearanceBody1"
+                android:textColor="@color/white"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:text="@string/empty_list" />
+
             <include android:id="@+id/loading_state" layout="@layout/layout_loading_home"/>
 
 

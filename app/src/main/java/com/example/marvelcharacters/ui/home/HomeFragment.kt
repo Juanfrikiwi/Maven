@@ -35,12 +35,12 @@ class HomeFragment : Fragment() {
     ): View? {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         binding.characterList.adapter = adapter
-        setLoadingAdapter()
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setLoadingAdapter()
         getCharters()
         binding.loadingState.apply {
             ivReload.setOnClickListener {

@@ -27,7 +27,6 @@ class FavoritesFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
     private var chartersJob: Job? = null
-    var characterToDelete: CharactersEntity? = null
     lateinit var adapter: FavoritesAdapter
     lateinit var listCharacters: List<CharactersEntity>
     override fun onCreateView(
@@ -68,11 +67,11 @@ class FavoritesFragment : Fragment() {
         viewModel.characters.observe(viewLifecycleOwner) { characters ->
             listCharacters = characters
             if (characters.isNotEmpty()) {
+                binding.tvEmptyList.visibility = View.GONE
                 adapter.submitList(characters)
             } else {
                 adapter.submitList(emptyList())
-                Snackbar.make(binding.root, getString(R.string.empty_list), Snackbar.LENGTH_LONG)
-                    .show()
+                binding.tvEmptyList.visibility = View.VISIBLE
             }
         }
     }

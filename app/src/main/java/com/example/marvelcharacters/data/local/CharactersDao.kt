@@ -31,8 +31,8 @@ interface CharactersDao {
     @Query("SELECT * FROM characters WHERE id_character = :characterId")
     fun getCharacter(characterId: Int): Flow<CharactersEntity>
 
-    @Query("SELECT EXISTS(SELECT 1 FROM characters WHERE id = id LIMIT 1)")
-    fun isExitsId(): Flow<Boolean>
+    @Query("SELECT EXISTS(SELECT 1 FROM characters WHERE id_character = :id LIMIT 1)")
+    fun isExitsId(id:Int): Flow<Boolean>
 
     @Insert
     suspend fun insertCharacter(charactersEntity: CharactersEntity): Long

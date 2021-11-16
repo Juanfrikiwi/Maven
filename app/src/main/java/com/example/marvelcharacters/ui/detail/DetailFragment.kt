@@ -45,22 +45,6 @@ class DetailFragment : Fragment() {
         ).apply {
             viewModel = detailViewModel
             lifecycleOwner = viewLifecycleOwner
-            callback = Callback { character ->
-                chartersJob?.cancel()
-                chartersJob = lifecycleScope.launch {
-                    if (characterToAdd?.let { detailViewModel.addFavourite(it) } == true) {
-                        Snackbar.make(root, getString(R.string.charter_added), Snackbar.LENGTH_LONG)
-                            .show()
-                    } else {
-                        Snackbar.make(root, getString(R.string.error_ocurred), Snackbar.LENGTH_LONG)
-                            .show()
-                    }
-                }
-            }
-        }
-        binding.loadingState.ivReload.setOnClickListener {
-            it.visibility = View.GONE
-            getCharacter()
         }
         return binding.root
     }
@@ -68,6 +52,70 @@ class DetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         getCharacter()
+        binding.loadingState.apply {
+            ivReload.setOnClickListener {
+                ivReload.visibility = View.GONE
+                getCharacter()
+            }
+        }
+        binding.callback = Callback { character ->
+            chartersJob?.cancel()
+            chartersJob = lifecycleScope.launch {
+                if (characterToAdd?.let { detailViewModel.addFavourite(it) } == true) {
+                    Snackbar.make(
+                        binding.root,
+                        getString(R.string.charter_added),
+                        Snackbar.LENGTH_LONG
+                    )
+                        .show()
+                } else {
+                    Snackbar.make(
+                        binding.root,
+                        getString(R.string.error_ocurred),
+                        Snackbar.LENGTH_LONG
+                    )
+                        .show()
+                }
+            }
+        }
+
+        initListeners()
+        initObservers()
+        getCharacter()
+    }
+
+    private fun initListeners() {
+        binding.loadingState.ivReload.setOnClickListener {
+            it.visibility = View.GONE
+            getCharacter()
+        }
+    }
+
+    private fun initObservers() {
+        // Observer that runs when there is a correct response in the getCharacter call
+        detailViewModel.successResponse.observe(viewLifecycleOwner) { characters ->
+            val characterSelected = characters.firstOrNull()
+            characterToAdd = characterSelected?.let { mapperToEntity(characterResponse = it) }
+            characterSelected.let { itemCharacter ->
+                bindingData(itemCharacter)
+            }
+        }
+        detailViewModel.isFavorite.observe(viewLifecycleOwner) { isFavorite ->
+            if (isFavorite){
+                binding.btnFavorite.visibility = View.GONE
+            }
+        }
+
+        //Observer that runs when there is a failed response on the getCharacter call
+        detailViewModel.errorResponse.observe(viewLifecycleOwner) { msg ->
+            binding.apply {
+                loadingState.tvMessageLoading.text =
+                    getString(R.string.message_error_connection)
+                loadingState.tvMessageLoading.visibility = View.VISIBLE
+                loadingState.ivReload.visibility = View.VISIBLE
+                loadingState.progressBar.visibility = View.GONE
+            }
+        }
     }
 
     override fun onDestroyView() {
@@ -81,31 +129,16 @@ class DetailFragment : Fragment() {
             loadingState.tvMessageLoading.text = getString(R.string.message_loading)
             loadingState.tvMessageLoading.visibility = View.VISIBLE
         }
-        chartersJob?.cancel()
-        chartersJob = lifecycleScope.launch {
-            val character = detailViewModel.getCharacter(args.characterId)
-            if (character != null) {
-                val characterSelected = character.firstOrNull()
-                characterToAdd = characterSelected?.let { mapperToEntity(characterResponse = it) }
-                characterSelected.let { itemCharacter ->
-                    bindingData(itemCharacter)
-                }
-            } else {
-                binding.apply {
-                    loadingState.tvMessageLoading.text =
-                        getString(R.string.message_error_connection)
-                    loadingState.tvMessageLoading.visibility = View.VISIBLE
-                    loadingState.ivReload.visibility = View.VISIBLE
-                    loadingState.progressBar.visibility = View.GONE
-                }
-            }
+        lifecycleScope.launch {
+            detailViewModel.getCharacter(args.characterId)
         }
     }
 
-    private fun bindingData(itemCharacter:CharactersResponse?) {
+    private fun bindingData(itemCharacter: CharactersResponse?) {
         binding.apply {
             loadingState.tvMessageLoading.visibility = View.GONE
             loadingState.progressBar.visibility = View.GONE
+            loadingState.ivReload.visibility = View.GONE
             tvName.text = itemCharacter!!.name
             loadImage(itemCharacter.thumbnail)
             tvDescription.text = itemCharacter.description
@@ -118,7 +151,8 @@ class DetailFragment : Fragment() {
                 "http",
                 "https"
             ) + "." + thumbnail.extension
-        ).into(binding.ivDetailImage)    }
+        ).into(binding.ivDetailImage)
+    }
 
     fun mapperToEntity(characterResponse: CharactersResponse): CharactersEntity {
         characterResponse.let {

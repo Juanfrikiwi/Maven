@@ -57,7 +57,7 @@ class DetailFragment : Fragment() {
                 getCharacter()
             }
         }
-        binding.callback = Callback { character ->
+        binding.callback = Callback {
             chartersJob?.cancel()
             chartersJob = lifecycleScope.launch {
                 if (characterToAdd?.let { detailViewModel.addFavourite(it) } == true) {
@@ -106,7 +106,7 @@ class DetailFragment : Fragment() {
         }
 
         //Observer that runs when there is a failed response on the getCharacter call
-        detailViewModel.errorResponse.observe(viewLifecycleOwner) { msg ->
+        detailViewModel.errorResponse.observe(viewLifecycleOwner) {
             binding.apply {
                 loadingState.tvMessageLoading.text =
                     getString(R.string.message_error_connection)
@@ -146,7 +146,7 @@ class DetailFragment : Fragment() {
 
     private fun loadImage(thumbnail: ImageResponse) {
         Glide.with(requireContext()).load(
-            thumbnail!!.path.replace(
+            thumbnail.path.replace(
                 "http",
                 "https"
             ) + "." + thumbnail.extension

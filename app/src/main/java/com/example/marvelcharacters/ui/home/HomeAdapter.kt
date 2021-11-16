@@ -38,9 +38,7 @@ class HomeAdapter: PagingDataAdapter<CharactersResponse, HomeAdapter.CharactersV
     ) : RecyclerView.ViewHolder(binding.root) {
         init {
             binding.setClickListener { view ->
-                binding.tvName?.let { name ->
-                    binding.character!!.id?.let { navigateToDetail(it, view) }
-                }
+                navigateToDetail(binding.character!!.id, view)
             }
         }
         private fun navigateToDetail(characterId: Int, view: View) {
@@ -53,7 +51,7 @@ class HomeAdapter: PagingDataAdapter<CharactersResponse, HomeAdapter.CharactersV
             binding.apply {
                 character = item
                 Glide.with(ivPhoto.context).
-                load(item.thumbnail!!.path.replace("http","https")+"."+ item.thumbnail.extension).into(ivPhoto)
+                load(item.thumbnail.path.replace("http","https")+"."+ item.thumbnail.extension).into(ivPhoto)
                 executePendingBindings()
             }
         }

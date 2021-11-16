@@ -28,7 +28,7 @@ class HomeFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
         binding.characterList.adapter = adapter
         return binding.root
@@ -57,7 +57,7 @@ class HomeFragment : Fragment() {
         }
         chartersJob?.cancel()
         chartersJob = lifecycleScope.launch {
-            viewModel.getListCharacters()?.collectLatest {
+            viewModel.getListCharacters().collectLatest {
                 adapter.submitData(it)
             }
         }

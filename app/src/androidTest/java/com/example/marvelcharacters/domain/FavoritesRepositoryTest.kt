@@ -21,7 +21,7 @@ import javax.inject.Named
 @ExperimentalCoroutinesApi
 @SmallTest
 @HiltAndroidTest
-class CharactersFavoritesRepository {
+class FavoritesRepositoryTest {
     @Inject
     @Named("test_db")
     lateinit var database: MarvelDatabase
@@ -41,6 +41,13 @@ class CharactersFavoritesRepository {
         repository.insertAll(listOf(characterA,characterB,characterC))
     }
 
+    @After
+    fun tearDown() {
+        repository.deleteAllFavouriteCharacter()
+        database.close()
+    }
+
+
     @Test
     fun testRepositoryIsExistId() = runBlocking {
         assertEquals(repository.isExistId(3).first(), true)
@@ -50,6 +57,8 @@ class CharactersFavoritesRepository {
     @Test
     fun testRepositoryGetListCharacters() = runBlocking {
         assertEquals(repository.getFavouritesCharacters().first()[0], characterA)
+        assertEquals(repository.getFavouritesCharacters().first()[1], characterB)
+        assertEquals(repository.getFavouritesCharacters().first()[2], characterC)
     }
 
     @Test
@@ -67,8 +76,10 @@ class CharactersFavoritesRepository {
         repository.deleteFavouriteCharacter(characterD)
     }
 
-    @After
-    fun clean() {
+    @Test
+    fun testRepositoryDeleteAllCharacter() = runBlocking {
+        repository.deleteAllFavouriteCharacter()
     }
+
 
 }

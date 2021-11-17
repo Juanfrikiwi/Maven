@@ -43,7 +43,7 @@ class CharactersDaoTest {
     fun setup() = runBlocking {
         hiltRule.inject()
         characterDao = database.charactersDao()
-        characterDao.insertAll(listOf(characterA,characterB,characterC))
+        characterDao.insertAll(listOf(characterA, characterB, characterC))
     }
 
     @Test
@@ -68,17 +68,26 @@ class CharactersDaoTest {
     @Test
     fun testInsertCharacter() = runBlocking {
         characterDao.insertCharacter(characterD)
-        assertEquals(characterDao.getListCharacters().first().size,4)
+        assertEquals(characterDao.getListCharacters().first().size, 4)
     }
 
     @Test
     fun testDeleteCharacter() = runBlocking {
         characterDao.deleteCharacter(characterD)
-        assertEquals(characterDao.getListCharacters().first().size,3)
+        assertEquals(characterDao.getListCharacters().first().size, 3)
     }
 
-    @After
-    fun clean() {
+    @Test
+    fun testDeleteAllCharacter() = runBlocking {
+        characterDao.deleteListCharacters()
+        assertEquals(characterDao.getListCharacters().first().size, 0)
     }
+
+
+    @After
+    fun tearDown() {
+        database.close()
+    }
+
 
 }

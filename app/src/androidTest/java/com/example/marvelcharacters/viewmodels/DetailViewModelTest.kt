@@ -18,6 +18,7 @@ package com.example.marvelcharacters.viewmodels
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.asFlow
 import androidx.room.Room
 import androidx.test.filters.SmallTest
 import androidx.test.platform.app.InstrumentationRegistry
@@ -34,6 +35,7 @@ import io.reactivex.internal.util.NotificationLite.getValue
 import junit.framework.TestCase
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
@@ -75,10 +77,6 @@ class DetailViewModelTest {
     @Before
     fun setUp() {
         hiltRule.inject()
-
-        val context = InstrumentationRegistry.getInstrumentation().targetContext
-        appDatabase = Room.inMemoryDatabaseBuilder(context, MarvelDatabase::class.java).build()
-
         val savedStateHandle: SavedStateHandle = SavedStateHandle().apply {
             set("characterId", characterA.idCharacter)
         }
@@ -94,7 +92,7 @@ class DetailViewModelTest {
     @Test
     @Throws(InterruptedException::class)
     fun testDetailViewModel() = coroutineRule.runBlockingTest {
-        viewModel.addFavourite(characterA)
-        assertEquals(viewModel.addFavourite(characterA), true)
+        assertFalse(getValue(viewModel.isFavorite.asFlow().first()))
     }
+
 }

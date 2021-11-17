@@ -1,4 +1,4 @@
-package com.example.marvelcharacters
+package com.example.marvelcharacters.data
 
 import android.app.Application
 import android.content.Context

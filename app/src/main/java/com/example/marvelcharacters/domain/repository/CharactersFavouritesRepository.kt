@@ -23,4 +23,7 @@ class CharactersFavouritesRepository @Inject constructor(private val charactersD
         charactersDao.deleteCharacter(character)
     }
 
+    suspend fun insertAll(characters: List<CharactersEntity>) {
+        charactersDao.insertAll(characters)
+    }
 }

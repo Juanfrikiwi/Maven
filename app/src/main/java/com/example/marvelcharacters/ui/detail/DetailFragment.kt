@@ -63,14 +63,20 @@ class DetailFragment : Fragment() {
         binding.callback = Callback {
             chartersJob?.cancel()
             chartersJob = lifecycleScope.launch {
-                if (characterToAdd?.let { detailViewModel.addFavourite(it) } == true) {
+                if (characterToAdd?.let {
+                        binding.btnFavorite.isEnabled = false
+                        detailViewModel.addFavourite(it) } == true) {
+
                     Snackbar.make(
                         binding.root,
                         getString(R.string.charter_added),
                         Snackbar.LENGTH_LONG
                     )
                         .show()
+                    binding.btnFavorite.isEnabled = false
+
                 } else {
+                    binding.btnFavorite.isEnabled = true
                     Snackbar.make(
                         binding.root,
                         getString(R.string.error_ocurred),

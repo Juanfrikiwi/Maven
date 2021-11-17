@@ -86,9 +86,6 @@ dependencies {
     androidTestImplementation "android.arch.core:core-testing:1.1.0"
     kaptAndroidTest "com.google.dagger:hilt-android-compiler:$dagerVersion"
     androidTestImplementation "com.google.dagger:hilt-android-testing:$dagerVersion"
-    implementation "androidx.work:work-runtime-ktx:2.5.0"
-    implementation "androidx.hilt:hilt-work:1.0.0-alpha03"
-    testImplementation 'org.robolectric:robolectric:4.6'
 
     testImplementation "junit:junit:4.12"
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'

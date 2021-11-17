@@ -1,10 +1,7 @@
 package com.example.marvelcharacters.data
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.room.Room
-import androidx.test.core.app.ApplicationProvider
 import androidx.test.filters.SmallTest
-import androidx.test.platform.app.InstrumentationRegistry
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import com.example.marvelcharacters.data.local.CharactersDao
@@ -12,7 +9,6 @@ import com.example.marvelcharacters.data.local.MarvelDatabase
 import com.example.marvelcharacters.data.local.models.CharactersEntity
 import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import org.junit.*

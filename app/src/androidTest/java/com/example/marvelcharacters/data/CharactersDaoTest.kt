@@ -23,7 +23,6 @@ import javax.inject.Named
 @SmallTest
 @HiltAndroidTest
 class CharactersDaoTest {
-
     @Inject
     @Named("test_db")
     lateinit var database: MarvelDatabase

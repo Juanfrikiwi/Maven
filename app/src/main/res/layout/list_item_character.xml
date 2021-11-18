@@ -8,9 +8,6 @@
             name="clickListener"
             type="android.view.View.OnClickListener"/>
         <variable
-            name="character"
-            type="com.example.marvelcharacters.data.network.models.CharactersResponse"/>
-        <variable
             name="characterEntity"
             type="com.example.marvelcharacters.data.local.models.CharactersEntity"/>
 
@@ -28,7 +25,7 @@
         android:layout_marginBottom="@dimen/card_bottom_margin"
         android:onClick="@{clickListener}"
         app:cardElevation="@dimen/card_elevation"
-        app:cardPreventCornerOverlap="false">>
+        app:cardPreventCornerOverlap="false">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -36,6 +33,7 @@
             android:background="@color/white">
 
             <ImageView
+                android:contentDescription="@string/character_image"
                 android:id="@+id/iv_photo"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/item_image_height"
@@ -69,7 +67,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:scaleType="centerCrop"
-                android:text="Borrar"
+                android:text="@string/delete"
                 android:layout_marginStart="@dimen/margin_extra_small"
                 android:layout_marginEnd="@dimen/margin_extra_small"
                 android:textAlignment="center"

@@ -7,7 +7,7 @@
     <string name="next">Next</string>
     <string name="previous">Previous</string>
     <string name="name_detail">Nombre</string>
-    <string name="message_loading">Cargando datos del servidor...</string>
+    <string name="message_loading">Cargando datos del servidor.</string>
     <string name="message_error_connection">Ha ocurrido un error!</string>
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
@@ -29,6 +29,8 @@
     <string name="accept">Aceptar</string>
     <string name="check_delete">¿Desea borrarlo de favoritos?</string>
     <string name="warning">¡Atención!</string>
+    <string name="delete">Borrar</string>
+    <string name="character_image">Imagen del personaje</string>
 
     "Este personaje no contiene ninguna descripción"
 </resources>

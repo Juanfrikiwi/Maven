@@ -53,7 +53,7 @@ class HomeAdapter: PagingDataAdapter<CharactersResponse, HomeAdapter.CharactersV
                 Glide.with(ivPhoto.context).
                 load(item.thumbnail.path.replace(
                     ivPhoto.context.applicationContext.getString(R.string.http_string),
-                    ivPhoto.context.applicationContext.getString(R.string.http_string)
+                    ivPhoto.context.applicationContext.getString(R.string.https_string)
                 )+"."+ item.thumbnail.extension)
                     .into(ivPhoto)
                 executePendingBindings()

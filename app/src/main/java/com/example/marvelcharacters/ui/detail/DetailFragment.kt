@@ -109,7 +109,9 @@ class DetailFragment : Fragment() {
         // Observer that runs when there is a correct response in the getCharacter call
         detailViewModel.successResponse.observe(viewLifecycleOwner) { characters ->
             val characterSelected = characters.firstOrNull()
-            characterToAdd = characterSelected?.let { Mappers.mapperToEntity(characterResponse = it) }
+            characterToAdd = characterSelected?.let {
+                Mappers.mapperToEntity(characterResponse = it)
+            }
             characterSelected.let { itemCharacter ->
                 bindingData(itemCharacter)
                 detailViewModel.isFavorite.observe(viewLifecycleOwner) { isFavorite ->

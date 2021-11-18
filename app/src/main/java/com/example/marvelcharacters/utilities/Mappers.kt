@@ -1,10 +1,7 @@
 package com.example.marvelcharacters.utilities
 
-
 import com.example.marvelcharacters.data.local.models.CharactersEntity
 import com.example.marvelcharacters.data.network.models.CharactersResponse
-import java.text.SimpleDateFormat
-import java.util.*
 
 //TODO igual que el del modulo DATA.  Ver un sitio comun para...
 object Mappers {
@@ -18,9 +15,17 @@ object Mappers {
                 DateUtils.getDateFormatted(it.modified.time),
                 it.resourceURI,
                 it.thumbnail.path + "." + it.thumbnail.extension,
-                listOf("2", "3")
+                extractComics(it)
             )
         }
     }
 
+
+    fun extractComics(characterResponse: CharactersResponse):List<String>{
+        val comicsList : MutableList<String> = emptyList<String>().toMutableList()
+        characterResponse.comics.items.forEach{
+            comicsList.add(it.name)
+        }
+        return comicsList
+    }
 }

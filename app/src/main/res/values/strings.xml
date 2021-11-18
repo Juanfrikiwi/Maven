@@ -25,6 +25,10 @@
     <string name="http_string">http</string>
     <string name="https_string">https</string>
     <string name="comics"><u>Comics</u></string>
+    <string name="cancel">Cancelar</string>
+    <string name="accept">Aceptar</string>
+    <string name="check_delete">¿Desea borrarlo de favoritos?</string>
+    <string name="warning">¡Atención!</string>
 
     "Este personaje no contiene ninguna descripción"
 </resources>

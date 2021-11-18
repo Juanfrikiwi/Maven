@@ -11,6 +11,7 @@ import com.example.marvelcharacters.R
 import com.example.marvelcharacters.data.local.models.CharactersEntity
 import com.example.marvelcharacters.databinding.FragmentHomeBinding
 import com.example.marvelcharacters.ui.FavoritesAdapter
+import com.example.marvelcharacters.ui.dialogs.GenericDialog
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
@@ -39,16 +40,22 @@ class FavoritesFragment : Fragment() {
         adapter = FavoritesAdapter(
             object : FavoritesAdapter.ListItemClickListener {
                 override fun onDeleteItem(charactersEntity: CharactersEntity) {
-                    chartersJob?.cancel()
-                    chartersJob = lifecycleScope.launch {
-                        if (viewModel.deleteCharacter(charactersEntity)) {
-                            Snackbar.make(binding.root, getString(R.string.favorite_character_deleted), Snackbar.LENGTH_LONG)
-                                .show()
-                        } else {
-                            Snackbar.make(binding.root, getString(R.string.error_ocurred), Snackbar.LENGTH_LONG)
-                                .show()
+                    val dialog = GenericDialog
+                    dialog.open(
+                        onAccept = {
+                            chartersJob?.cancel()
+                            chartersJob = lifecycleScope.launch {
+                                if (viewModel.deleteCharacter(charactersEntity)) {
+                                    Snackbar.make(binding.root, getString(R.string.favorite_character_deleted), Snackbar.LENGTH_LONG)
+                                        .show()
+                                } else {
+                                    Snackbar.make(binding.root, getString(R.string.error_ocurred), Snackbar.LENGTH_LONG)
+                                        .show()
+                                }
+                            }
                         }
-                    }
+                    ).show(childFragmentManager,tag)
+
                 }
             }
         )

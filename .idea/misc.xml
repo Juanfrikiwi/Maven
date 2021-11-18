@@ -5,6 +5,8 @@
       <map>
         <entry key="../../../../layout/custom_preview.xml" value="0.1234375" />
         <entry key="app/src/main/res/drawable-v24/ic_detail_back.xml" value="0.2518518518518518" />
+        <entry key="app/src/main/res/drawable-v24/round_radius20_background.xml" value="0.23148148148148148" />
+        <entry key="app/src/main/res/drawable-v24/round_radius_top.xml" value="0.23148148148148148" />
         <entry key="app/src/main/res/drawable/cabecera_marvel.xml" value="0.24444444444444444" />
         <entry key="app/src/main/res/drawable/favourites_tab_selector.xml" value="0.2518518518518518" />
         <entry key="app/src/main/res/drawable/home_tab_selector.xml" value="0.2518518518518518" />
@@ -26,6 +28,7 @@
         <entry key="app/src/main/res/layout/activity_splash.xml" value="0.2578125" />
         <entry key="app/src/main/res/layout/activity_splash2.xml" value="0.24375" />
         <entry key="app/src/main/res/layout/content_main.xml" value="0.13333333333333333" />
+        <entry key="app/src/main/res/layout/dialog_generic_alert.xml" value="0.3759124087591241" />
         <entry key="app/src/main/res/layout/fragment_detail.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_detail2.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_detail_favorites.xml" value="0.15707620528771385" />

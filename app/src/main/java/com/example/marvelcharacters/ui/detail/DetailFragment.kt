@@ -133,7 +133,7 @@ class DetailFragment : Fragment() {
             characterSelected?.let {
                 characterToAdd = Mappers.mapperToEntity(characterResponse = it)
             }
-            characterSelected.let { itemCharacter ->
+            characterSelected.let {
                 bindingData(characterToAdd)
                 detailViewModel.isFavorite.observe(viewLifecycleOwner) { isFavorite ->
                     if (isFavorite) {

@@ -19,4 +19,7 @@
     <string name="error_ocurred">Ha ocurrido un error</string>
     <string name="favorite_character_deleted">Personaje favorito eliminado</string>
     <string name="empty_list">No hay personajes en la lista de favoritos</string>
+    <string name="add_to_favs">Añadir a favoritos</string>
+    <string name="character_without_description">"Este personaje no contiene ninguna descripción.</string>
+    "Este personaje no contiene ninguna descripción"
 </resources>

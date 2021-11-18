@@ -85,19 +85,21 @@
                 android:layout_margin="@dimen/margin_normal">
                 <include android:id="@+id/loading_state" layout="@layout/layout_loading_detail"/>
 
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                <Button
                     android:id="@+id/btn_favorite"
                     style="@style/Widget.MaterialComponents.FloatingActionButton"
                     android:layout_width="wrap_content"
                     android:onClick="@{() -> callback.add(viewModel.character)}"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/fab_margin"
                     android:tint="@color/white"
+                    android:text="@string/add_to_favs"
+                    android:textSize="@dimen/font_s"
                     app:layout_anchorGravity="bottom|end"
-                    app:backgroundTint="@color/red_light"
-                    app:srcCompat="@drawable/ic_baseline_favorite_24"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    app:backgroundTint="@color/green"
+                    android:drawableEnd="@drawable/ic_baseline_add_24"                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toTopOf="@id/tv_name"
+                    app:layout_constraintStart_toStartOf="parent"
                     android:visibility="gone"
                     tools:visibility="visible"/>
 
@@ -112,39 +114,13 @@
                     android:gravity="center_horizontal"
                     android:clickable="true"
                     android:focusable="true"
+                    android:textSize="@dimen/font_xl"
                     android:textAppearance="?attr/textAppearanceHeadline5"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/btn_favorite"
+                    app:layout_constraintBottom_toTopOf="@id/tv_description"
                     tools:text="@string/name_detail" />
-
-                <TextView
-                    android:id="@+id/tv_watering_header"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/margin_small"
-                    android:layout_marginTop="@dimen/margin_normal"
-                    android:layout_marginEnd="@dimen/margin_small"
-                    android:gravity="center_horizontal"
-                    android:text=""
-                    android:textColor="?attr/colorAccent"
-                    android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tv_name" />
-
-                <TextView
-                    android:id="@+id/tv_watering"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/margin_small"
-                    android:layout_marginEnd="@dimen/margin_small"
-                    android:gravity="center_horizontal"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tv_watering_header"
-                    tools:text="every 7 days" />
-
 
                 <TextView
                     android:id="@+id/tv_description"
@@ -154,13 +130,30 @@
                     android:layout_marginStart="@dimen/margin_small"
                     android:layout_marginTop="@dimen/margin_small"
                     android:layout_marginEnd="@dimen/margin_small"
-                    android:textIsSelectable="true"
                     android:minHeight="@dimen/description_min_height"
+                    android:textSize="@dimen/font_l"
+                    android:textIsSelectable="true"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tv_watering"
-                    tools:text="Description"
-                    android:text="Description"/>
+                    app:layout_constraintTop_toBottomOf="@id/tv_name"
+                    app:layout_constraintBottom_toTopOf="@id/tv_modified"
+                    tools:text="Description" />
+
+                <TextView
+                    android:id="@+id/tv_modified"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_small"
+                    android:layout_marginTop="@dimen/margin_normal"
+                    android:layout_marginEnd="@dimen/margin_small"
+                    android:gravity="end"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_description"
+                    tools:text="every 7 days" />
+
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

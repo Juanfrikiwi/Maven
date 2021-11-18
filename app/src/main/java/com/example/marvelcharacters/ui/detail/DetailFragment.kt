@@ -12,6 +12,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.example.marvelcharacters.R
+import com.example.marvelcharacters.Utils.DateUtils
 import com.example.marvelcharacters.data.local.models.CharactersEntity
 import com.example.marvelcharacters.data.network.models.CharactersResponse
 import com.example.marvelcharacters.data.network.models.ImageResponse
@@ -151,7 +152,8 @@ class DetailFragment : Fragment() {
             loadingState.ivReload.visibility = View.GONE
             tvName.text = itemCharacter!!.name
             loadImage(itemCharacter.thumbnail)
-            tvDescription.text = itemCharacter.description
+            tvDescription.text = if(itemCharacter.description != "") itemCharacter.description else getString(R.string.character_without_description)
+            tvModified.text = "Actualizado el: "+ DateUtils.getDateFormatted(itemCharacter.modified.time,DateUtils.DATE_FORMAT)
         }
     }
 

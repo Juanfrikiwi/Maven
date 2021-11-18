@@ -49,7 +49,7 @@ class HomeAdapter: PagingDataAdapter<CharactersResponse, HomeAdapter.CharactersV
 
         fun bind(item: CharactersResponse) {
             binding.apply {
-                character = item
+                tvName.text = item.name
                 Glide.with(ivPhoto.context).
                 load(item.thumbnail.path.replace("http","https")+"."+ item.thumbnail.extension).into(ivPhoto)
                 executePendingBindings()

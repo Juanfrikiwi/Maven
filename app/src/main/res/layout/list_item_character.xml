@@ -46,7 +46,6 @@
                 android:visibility="gone"
                 />
 
-
             <ImageView
                 android:id="@+id/iv_photo"
                 android:layout_width="0dp"
@@ -63,7 +62,6 @@
                 android:layout_height="@dimen/item_text_height"
                 android:layout_marginBottom="@dimen/margin_normal"
                 android:layout_marginTop="@dimen/margin_normal"
-                android:text="@{character.name}"
                 android:textColor="@color/black"
                 android:textStyle="bold"
                 android:textSize="@dimen/font_s"

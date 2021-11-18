@@ -17,6 +17,7 @@ import com.example.marvelcharacters.data.network.models.CharactersResponse
 import com.example.marvelcharacters.data.network.models.ImageResponse
 import com.example.marvelcharacters.databinding.FragmentDetailBinding
 import com.example.marvelcharacters.utilities.DateUtils
+import com.example.marvelcharacters.utilities.Mappers
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
@@ -104,10 +105,11 @@ class DetailFragment : Fragment() {
     }
 
     private fun initObservers() {
+
         // Observer that runs when there is a correct response in the getCharacter call
         detailViewModel.successResponse.observe(viewLifecycleOwner) { characters ->
             val characterSelected = characters.firstOrNull()
-            characterToAdd = characterSelected?.let { mapperToEntity(characterResponse = it) }
+            characterToAdd = characterSelected?.let { Mappers.mapperToEntity(characterResponse = it) }
             characterSelected.let { itemCharacter ->
                 bindingData(itemCharacter)
                 detailViewModel.isFavorite.observe(viewLifecycleOwner) { isFavorite ->
@@ -166,19 +168,6 @@ class DetailFragment : Fragment() {
         ).into(binding.ivDetailImage)
     }
 
-    fun mapperToEntity(characterResponse: CharactersResponse): CharactersEntity {
-        characterResponse.let {
-            return CharactersEntity(
-                it.id,
-                it.name,
-                it.description,
-                DateUtils.getDateFormatted(it.modified.time),
-                it.resourceURI,
-                it.thumbnail.path + "." + it.thumbnail.extension,
-                listOf("2", "3")
-            )
-        }
-    }
 
     fun interface Callback {
         fun add(character: CharactersEntity?)

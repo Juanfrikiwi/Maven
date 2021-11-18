@@ -11,7 +11,7 @@ import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.example.marvelcharacters.R
 import com.example.marvelcharacters.data.local.models.CharactersEntity
-import com.example.marvelcharacters.databinding.FragmentDetailFavoritesBinding
+import com.example.marvelcharacters.databinding.FragmentDetailBinding
 import com.example.marvelcharacters.ui.detail.DetailFragmentArgs
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -19,7 +19,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 
 class DetailFavoritesFragment : Fragment() {
-    lateinit var binding: FragmentDetailFavoritesBinding
+    lateinit var binding: FragmentDetailBinding
     private val detailFavoritesViewModel: DetailFavoritesViewModel by viewModels()
     private val args: DetailFragmentArgs by navArgs()
 
@@ -27,7 +27,7 @@ class DetailFavoritesFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentDetailFavoritesBinding.inflate(inflater, container, false)
+        binding = FragmentDetailBinding.inflate(inflater, container, false)
         return binding.root
     }
 

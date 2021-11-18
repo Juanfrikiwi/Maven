@@ -49,7 +49,7 @@
         android:id="@+id/DetailFavoritesFragment"
         android:name="com.example.marvelcharacters.ui.favourites.DetailFavoritesFragment"
         android:label="@string/favorites"
-        tools:layout="@layout/fragment_detail_favorites">
+        tools:layout="@layout/fragment_detail">
         <argument
             android:name="characterId"
             app:argType="integer"/>

@@ -122,6 +122,7 @@
                     android:layout_marginBottom="@dimen/margin_small"
                     android:clickable="true"
                     android:focusable="true"
+                    android:fontFamily="sans-serif"
                     android:gravity="center_horizontal"
                     android:textAppearance="?attr/textAppearanceHeadline5"
                     android:textSize="@dimen/font_xl"

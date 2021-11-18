@@ -17,9 +17,6 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import okhttp3.internal.notifyAll
 
-/**
- * A simple [Fragment] subclass as the default destination in the navigation.
- */
 @AndroidEntryPoint
 
 class FavoritesFragment : Fragment() {

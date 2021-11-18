@@ -13,21 +13,24 @@ import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.example.marvelcharacters.R
 import com.example.marvelcharacters.data.local.models.CharactersEntity
-import com.example.marvelcharacters.data.network.models.CharactersResponse
-import com.example.marvelcharacters.data.network.models.ImageResponse
 import com.example.marvelcharacters.databinding.FragmentDetailBinding
-import com.example.marvelcharacters.utilities.DateUtils
+import com.example.marvelcharacters.ui.ComicsAdapter
+import com.example.marvelcharacters.ui.FavoritesAdapter
 import com.example.marvelcharacters.utilities.Mappers
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import android.net.Uri
+
+import android.content.Intent
 
 
 @AndroidEntryPoint
 
 class DetailFragment : Fragment() {
     lateinit var binding: FragmentDetailBinding
+    lateinit var adapter: ComicsAdapter
     private val args: DetailFragmentArgs by navArgs()
     private val detailViewModel: DetailViewModel by viewModels()
     private var chartersJob: Job? = null
@@ -54,6 +57,7 @@ class DetailFragment : Fragment() {
         initListeners()
         initObservers()
         getCharacter()
+        initComicAdapter()
         binding.loadingState.apply {
             ivReload.setOnClickListener {
                 ivReload.visibility = View.GONE
@@ -65,7 +69,8 @@ class DetailFragment : Fragment() {
             chartersJob = lifecycleScope.launch {
                 if (characterToAdd?.let {
                         binding.btnFavorite.isEnabled = false
-                        detailViewModel.addFavourite(it) } == true) {
+                        detailViewModel.addFavourite(it)
+                    } == true) {
 
                     Snackbar.make(
                         binding.root,
@@ -86,6 +91,22 @@ class DetailFragment : Fragment() {
                 }
             }
         }
+
+    }
+
+    fun initComicAdapter() {
+        adapter = ComicsAdapter(
+            object : ComicsAdapter.ListItemComicClickListener {
+                override fun onClickItem(nameComic: String) {
+                    val browserIntent = Intent(
+                        Intent.ACTION_VIEW,
+                        Uri.parse("https://www.google.com/search?q=$nameComic")
+                    )
+                    startActivity(browserIntent)
+                }
+            }
+        )
+        binding.comicsList.adapter = adapter
     }
 
     override fun onDestroyView() {
@@ -117,7 +138,7 @@ class DetailFragment : Fragment() {
                 detailViewModel.isFavorite.observe(viewLifecycleOwner) { isFavorite ->
                     if (isFavorite) {
                         binding.btnFavorite.visibility = View.GONE
-                    }else{
+                    } else {
                         binding.btnFavorite.visibility = View.VISIBLE
                     }
                 }
@@ -135,7 +156,6 @@ class DetailFragment : Fragment() {
             }
         }
     }
-
 
 
     private fun getCharacter() {
@@ -156,8 +176,10 @@ class DetailFragment : Fragment() {
             loadingState.ivReload.visibility = View.GONE
             tvName.text = itemCharacter!!.name
             loadImage(itemCharacter.thumbnail_path)
-            tvDescription.text = if(itemCharacter.description != "") itemCharacter.description else getString(R.string.character_without_description)
-            tvModified.text = getString(R.string.updated_on)+" "+itemCharacter.modified
+            tvDescription.text =
+                if (itemCharacter.description != "") itemCharacter.description else getString(R.string.character_without_description)
+            tvModified.text = getString(R.string.updated_on) + " " + itemCharacter.modified
+            (comicsList.adapter as ComicsAdapter).submitList(itemCharacter.comics)
         }
     }
 

@@ -25,7 +25,7 @@
         <entry key="app/src/main/res/layout/activity_splash.xml" value="0.2578125" />
         <entry key="app/src/main/res/layout/activity_splash2.xml" value="0.24375" />
         <entry key="app/src/main/res/layout/content_main.xml" value="0.13333333333333333" />
-        <entry key="app/src/main/res/layout/fragment_detail.xml" value="0.2" />
+        <entry key="app/src/main/res/layout/fragment_detail.xml" value="0.18" />
         <entry key="app/src/main/res/layout/fragment_detail2.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_detail_favorites.xml" value="0.15707620528771385" />
         <entry key="app/src/main/res/layout/fragment_favourites.xml" value="0.2578125" />
@@ -39,6 +39,7 @@
         <entry key="app/src/main/res/layout/layout_loading.xml" value="0.10416666666666667" />
         <entry key="app/src/main/res/layout/layout_loading_detail.xml" value="0.25729166666666664" />
         <entry key="app/src/main/res/layout/list_item_character.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/list_item_comics.xml" value="0.25677083333333334" />
         <entry key="app/src/main/res/layout/list_item_photo.xml" value="0.1" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.27395833333333336" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.1" />

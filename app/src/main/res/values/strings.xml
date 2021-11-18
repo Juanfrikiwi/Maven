@@ -24,6 +24,7 @@
     <string name="updated_on">Actualizado el:</string>
     <string name="http_string">http</string>
     <string name="https_string">https</string>
+    <string name="comics"><u>Comics</u></string>
 
     "Este personaje no contiene ninguna descripción"
 </resources>

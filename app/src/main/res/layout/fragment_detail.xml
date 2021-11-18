@@ -3,12 +3,15 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="character"
-            type="com.example.marvelcharacters.data.network.models.CharactersResponse"/>
+            type="com.example.marvelcharacters.data.network.models.CharactersResponse" />
+
         <variable
             name="viewModel"
-            type="com.example.marvelcharacters.ui.detail.DetailViewModel"/>
+            type="com.example.marvelcharacters.ui.detail.DetailViewModel" />
+
         <variable
             name="callback"
             type="com.example.marvelcharacters.ui.detail.DetailFragment.Callback" />
@@ -19,8 +22,8 @@
         android:id="@+id/detail_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fitsSystemWindows="true"
         android:background="?attr/colorSurface"
+        android:fitsSystemWindows="true"
         tools:context="com.example.marvelcharacters.ui.MainActivity"
         tools:ignore="MergeRootFrame">
 
@@ -28,21 +31,21 @@
             android:id="@+id/appbar"
             android:layout_width="match_parent"
             android:layout_height="@dimen/detail_app_bar_height"
-            android:fitsSystemWindows="true"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            android:stateListAnimator="@animator/show_toolbar"
+            android:animateLayoutChanges="true"
             android:background="?attr/colorSurface"
-            android:animateLayoutChanges="true">
+            android:fitsSystemWindows="true"
+            android:stateListAnimator="@animator/show_toolbar"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
             <com.google.android.material.appbar.CollapsingToolbarLayout
                 android:id="@+id/toolbar_layout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:fitsSystemWindows="true"
-                app:contentScrim="?attr/colorSurface"
-                app:statusBarScrim="?attr/colorSurface"
                 app:collapsedTitleGravity="center"
+                app:contentScrim="?attr/colorSurface"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed"
+                app:statusBarScrim="?attr/colorSurface"
                 app:title="Titulo"
                 app:titleEnabled="false"
                 app:toolbarId="@id/toolbar">
@@ -61,10 +64,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
                     android:background="@android:color/transparent"
-                    app:titleTextColor="?attr/colorOnSurface"
-                    app:layout_collapseMode="pin"
                     app:contentInsetStartWithNavigation="0dp"
-                    app:navigationIcon="@drawable/ic_detail_back"/>
+                    app:layout_collapseMode="pin"
+                    app:navigationIcon="@drawable/ic_detail_back"
+                    app:titleTextColor="?attr/colorOnSurface" />
 
             </com.google.android.material.appbar.CollapsingToolbarLayout>
 
@@ -83,26 +86,30 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="@dimen/margin_normal">
-                <include android:id="@+id/loading_state" layout="@layout/layout_loading_detail"/>
+
+                <include
+                    android:id="@+id/loading_state"
+                    layout="@layout/layout_loading_detail" />
 
                 <Button
                     android:id="@+id/btn_favorite"
                     style="@style/Widget.MaterialComponents.FloatingActionButton"
                     android:layout_width="wrap_content"
-                    android:onClick="@{() -> callback.add(viewModel.character)}"
                     android:layout_height="wrap_content"
-                    android:tint="@color/white"
+                    android:drawableEnd="@drawable/ic_baseline_add_24"
+                    android:onClick="@{() -> callback.add(viewModel.character)}"
                     android:text="@string/add_to_favs"
+                    android:layout_marginTop="@dimen/margin_normal"
                     android:textSize="@dimen/font_s"
-                    app:layout_anchorGravity="bottom|end"
-                    app:backgroundTint="@color/green"
-                    android:drawableEnd="@drawable/ic_baseline_add_24"                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toTopOf="@id/tv_name"
-                    app:layout_constraintStart_toStartOf="parent"
+                    android:tint="@color/white"
                     android:visibility="gone"
-                    tools:visibility="visible"/>
-
+                    app:backgroundTint="@color/green"
+                    app:layout_anchorGravity="bottom|end"
+                    app:layout_constraintBottom_toTopOf="@id/tv_name"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:visibility="visible" />
 
 
                 <TextView
@@ -111,15 +118,17 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/margin_small"
                     android:layout_marginEnd="@dimen/margin_small"
-                    android:gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/margin_big"
+                    android:layout_marginBottom="@dimen/margin_small"
                     android:clickable="true"
                     android:focusable="true"
-                    android:textSize="@dimen/font_xl"
+                    android:gravity="center_horizontal"
                     android:textAppearance="?attr/textAppearanceHeadline5"
+                    android:textSize="@dimen/font_xl"
+                    app:layout_constraintBottom_toTopOf="@id/tv_description"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/btn_favorite"
-                    app:layout_constraintBottom_toTopOf="@id/tv_description"
                     tools:text="@string/name_detail" />
 
                 <TextView
@@ -129,15 +138,52 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/margin_small"
                     android:layout_marginTop="@dimen/margin_small"
+                    android:layout_marginBottom="@dimen/margin_big"
                     android:layout_marginEnd="@dimen/margin_small"
-                    android:minHeight="@dimen/description_min_height"
-                    android:textSize="@dimen/font_l"
                     android:textIsSelectable="true"
+                    android:textAlignment="center"
+                    android:textSize="@dimen/font_l"
+                    app:layout_constraintBottom_toTopOf="@id/tv_title_comics"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tv_name"
-                    app:layout_constraintBottom_toTopOf="@id/tv_modified"
                     tools:text="Description" />
+
+                <TextView
+                    android:id="@+id/tv_title_comics"
+                    android:layout_width="0dp"
+                    style="textDecoration"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_small"
+                    android:layout_marginTop="@dimen/margin_small"
+                    android:layout_marginEnd="@dimen/margin_small"
+                    android:textIsSelectable="true"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/font_l"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toTopOf="@id/comics_list"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_description"
+                    android:text="@string/comics" />
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/comics_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_normal"
+                    android:clipToPadding="false"
+                    android:minHeight="@dimen/comics_height"
+                    android:background="@color/gray"
+                    app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
+                    app:layout_constraintBottom_toTopOf="@id/tv_modified"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_title_comics"
+                    app:spanCount="1"
+                    tools:listitem="@layout/list_item_comics" />
 
                 <TextView
                     android:id="@+id/tv_modified"
@@ -148,10 +194,10 @@
                     android:layout_marginEnd="@dimen/margin_small"
                     android:gravity="end"
                     android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tv_description"
+                    app:layout_constraintTop_toBottomOf="@id/comics_list"
                     tools:text="every 7 days" />
 
 

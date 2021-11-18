@@ -18,7 +18,7 @@ package com.example.marvelcharacters.ui.viewpager
 
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.example.marvelcharacters.ui.favourites.FavoritesFragment
+import com.example.marvelcharacters.ui.favorites.FavoritesFragment
 import com.example.marvelcharacters.ui.home.HomeFragment
 
 const val HOME_PAGE_INDEX = 0

@@ -47,7 +47,7 @@
 
     <fragment
         android:id="@+id/DetailFavoritesFragment"
-        android:name="com.example.marvelcharacters.ui.favourites.DetailFavoritesFragment"
+        android:name="com.example.marvelcharacters.ui.detail.DetailFavoritesFragment"
         android:label="@string/favorites"
         tools:layout="@layout/fragment_detail">
         <argument

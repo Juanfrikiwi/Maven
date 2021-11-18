@@ -1,4 +1,4 @@
-package com.example.marvelcharacters.ui.favourites
+package com.example.marvelcharacters.ui.detail
 
 import androidx.lifecycle.*
 import com.example.marvelcharacters.data.local.models.CharactersEntity

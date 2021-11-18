@@ -1,4 +1,4 @@
-package com.example.marvelcharacters.ui.favourites
+package com.example.marvelcharacters.ui.detail
 
 import android.content.Intent
 import android.net.Uri
@@ -15,7 +15,6 @@ import com.example.marvelcharacters.R
 import com.example.marvelcharacters.data.local.models.CharactersEntity
 import com.example.marvelcharacters.databinding.FragmentDetailBinding
 import com.example.marvelcharacters.ui.ComicsAdapter
-import com.example.marvelcharacters.ui.detail.DetailFragmentArgs
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 

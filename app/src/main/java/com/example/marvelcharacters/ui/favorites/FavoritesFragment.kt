@@ -1,4 +1,4 @@
-package com.example.marvelcharacters.ui.favourites
+package com.example.marvelcharacters.ui.favorites
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -15,7 +15,6 @@ import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
-import okhttp3.internal.notifyAll
 
 @AndroidEntryPoint
 

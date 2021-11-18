@@ -9,6 +9,7 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.marvelcharacters.R
 import com.example.marvelcharacters.data.network.models.CharactersResponse
 import com.example.marvelcharacters.databinding.ListItemCharacterBinding
 import com.example.marvelcharacters.ui.viewpager.HomeViewPagerFragmentDirections
@@ -36,11 +37,7 @@ class HomeAdapter: PagingDataAdapter<CharactersResponse, HomeAdapter.CharactersV
     class CharactersViewHolder(
         private val binding: ListItemCharacterBinding
     ) : RecyclerView.ViewHolder(binding.root) {
-        init {
-            binding.setClickListener { view ->
-                navigateToDetail(binding.character!!.id, view)
-            }
-        }
+
         private fun navigateToDetail(characterId: Int, view: View) {
             val direction = HomeViewPagerFragmentDirections
                 .actionViewPagerFragmentToDetailFragment(characterId)
@@ -49,9 +46,16 @@ class HomeAdapter: PagingDataAdapter<CharactersResponse, HomeAdapter.CharactersV
 
         fun bind(item: CharactersResponse) {
             binding.apply {
+                binding.setClickListener { view ->
+                    navigateToDetail(item.id, view)
+                }
                 tvName.text = item.name
                 Glide.with(ivPhoto.context).
-                load(item.thumbnail.path.replace("http","https")+"."+ item.thumbnail.extension).into(ivPhoto)
+                load(item.thumbnail.path.replace(
+                    ivPhoto.context.applicationContext.getString(R.string.http_string),
+                    ivPhoto.context.applicationContext.getString(R.string.http_string)
+                )+"."+ item.thumbnail.extension)
+                    .into(ivPhoto)
                 executePendingBindings()
             }
         }

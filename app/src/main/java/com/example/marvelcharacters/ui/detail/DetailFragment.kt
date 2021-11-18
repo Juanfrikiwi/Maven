@@ -12,19 +12,17 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.example.marvelcharacters.R
-import com.example.marvelcharacters.Utils.DateUtils
 import com.example.marvelcharacters.data.local.models.CharactersEntity
 import com.example.marvelcharacters.data.network.models.CharactersResponse
 import com.example.marvelcharacters.data.network.models.ImageResponse
 import com.example.marvelcharacters.databinding.FragmentDetailBinding
+import com.example.marvelcharacters.utilities.DateUtils
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
-/**
- * A simple [Fragment] subclass as the second destination in the navigation.
- */
+
 @AndroidEntryPoint
 
 class DetailFragment : Fragment() {
@@ -89,6 +87,11 @@ class DetailFragment : Fragment() {
         }
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+
+    }
+
     private fun initListeners() {
         binding.toolbar.setNavigationOnClickListener { view ->
             view.findNavController().navigateUp()
@@ -129,10 +132,7 @@ class DetailFragment : Fragment() {
         }
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
 
-    }
 
     private fun getCharacter() {
         binding.apply {
@@ -153,15 +153,15 @@ class DetailFragment : Fragment() {
             tvName.text = itemCharacter!!.name
             loadImage(itemCharacter.thumbnail)
             tvDescription.text = if(itemCharacter.description != "") itemCharacter.description else getString(R.string.character_without_description)
-            tvModified.text = "Actualizado el: "+ DateUtils.getDateFormatted(itemCharacter.modified.time,DateUtils.DATE_FORMAT)
+            tvModified.text = getString(R.string.updated_on)+" "+ DateUtils.getDateFormatted(itemCharacter.modified.time)
         }
     }
 
     private fun loadImage(thumbnail: ImageResponse) {
         Glide.with(requireContext()).load(
             thumbnail.path.replace(
-                "http",
-                "https"
+                getString(R.string.http_string),
+                getString(R.string.https_string)
             ) + "." + thumbnail.extension
         ).into(binding.ivDetailImage)
     }
@@ -172,7 +172,7 @@ class DetailFragment : Fragment() {
                 it.id,
                 it.name,
                 it.description,
-                it.modified.toString(),
+                DateUtils.getDateFormatted(it.modified.time),
                 it.resourceURI,
                 it.thumbnail.path + "." + it.thumbnail.extension,
                 listOf("2", "3")

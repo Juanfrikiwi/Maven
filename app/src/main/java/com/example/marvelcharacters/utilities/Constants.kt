@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.example.marvelcharacters.utils
+package com.example.marvelcharacters.utilities
 
 import java.nio.charset.StandardCharsets.UTF_8
 import java.security.MessageDigest

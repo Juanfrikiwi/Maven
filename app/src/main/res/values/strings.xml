@@ -21,5 +21,9 @@
     <string name="empty_list">No hay personajes en la lista de favoritos</string>
     <string name="add_to_favs">Añadir a favoritos</string>
     <string name="character_without_description">"Este personaje no contiene ninguna descripción.</string>
+    <string name="updated_on">Actualizado el:</string>
+    <string name="http_string">http</string>
+    <string name="https_string">https</string>
+
     "Este personaje no contiene ninguna descripción"
 </resources>

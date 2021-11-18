@@ -1,8 +1,8 @@
 package com.example.marvelcharacters.data.network
 
 import com.example.marvelcharacters.data.network.models.BaseResponse
-import com.example.marvelcharacters.utils.Constants
-import com.example.marvelcharacters.utils.Constants.Companion.toHex
+import com.example.marvelcharacters.utilities.Constants
+import com.example.marvelcharacters.utilities.Constants.Companion.toHex
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -13,7 +13,7 @@ import retrofit2.http.Query
 
 interface MarvelService {
 
-    @GET(Constants.BASE_URL+Constants.CHARACTERS_URL)
+    @GET(Constants.BASE_URL+ Constants.CHARACTERS_URL)
     suspend fun getListCharacters(
         @Query("ts") ts : String = Constants.ts,
         @Query("apikey") apikey : String = Constants.PUBLIC_KEY,
@@ -21,7 +21,7 @@ interface MarvelService {
         @Query("limit") limit : String = Constants.limit,
         ): BaseResponse
 
-    @GET(Constants.BASE_URL+Constants.CHARACTERS_URL)
+    @GET(Constants.BASE_URL+ Constants.CHARACTERS_URL)
     suspend fun getCharacter(
         @Query("id") id : Int,
         @Query("ts") ts : String = Constants.ts,

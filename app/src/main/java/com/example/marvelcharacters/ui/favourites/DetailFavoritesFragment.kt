@@ -55,6 +55,8 @@ class DetailFavoritesFragment : Fragment() {
         binding.apply {
             tvName.text = characters.name
             loadImage(characters.thumbnail_path)
+            tvDescription.text = if(characters.description != "") characters.description else getString(R.string.character_without_description)
+            tvModified.text = getString(R.string.updated_on)+" "+ characters.modified
         }
 
     }
@@ -62,8 +64,8 @@ class DetailFavoritesFragment : Fragment() {
     private fun loadImage(thumbnailPath: String) {
         Glide.with(requireContext()).load(
             thumbnailPath.replace(
-                "http",
-                "https"
+                getString(R.string.http_string),
+                getString(R.string.https_string)
             )
         ).into(binding.ivDetailImage)
     }

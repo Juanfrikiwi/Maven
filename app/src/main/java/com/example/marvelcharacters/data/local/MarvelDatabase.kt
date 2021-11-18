@@ -12,7 +12,7 @@ import androidx.work.WorkManager
 import androidx.work.workDataOf
 import com.example.marvelcharacters.data.local.CharactersDatabaseWorker.Companion.KEY_FILENAME
 import com.example.marvelcharacters.data.local.models.CharactersEntity
-import com.example.marvelcharacters.utils.Constants
+import com.example.marvelcharacters.utilities.Constants
 
 @Database(entities = [CharactersEntity::class], version = 1, exportSchema = false)
 @TypeConverters(com.example.marvelcharacters.data.local.Converters::class)

@@ -109,11 +109,11 @@ class DetailFragment : Fragment() {
         // Observer that runs when there is a correct response in the getCharacter call
         detailViewModel.successResponse.observe(viewLifecycleOwner) { characters ->
             val characterSelected = characters.firstOrNull()
-            characterToAdd = characterSelected?.let {
-                Mappers.mapperToEntity(characterResponse = it)
+            characterSelected?.let {
+                characterToAdd = Mappers.mapperToEntity(characterResponse = it)
             }
             characterSelected.let { itemCharacter ->
-                bindingData(itemCharacter)
+                bindingData(characterToAdd)
                 detailViewModel.isFavorite.observe(viewLifecycleOwner) { isFavorite ->
                     if (isFavorite) {
                         binding.btnFavorite.visibility = View.GONE
@@ -149,24 +149,24 @@ class DetailFragment : Fragment() {
         }
     }
 
-    private fun bindingData(itemCharacter: CharactersResponse?) {
+    private fun bindingData(itemCharacter: CharactersEntity?) {
         binding.apply {
             loadingState.tvMessageLoading.visibility = View.GONE
             loadingState.progressBar.visibility = View.GONE
             loadingState.ivReload.visibility = View.GONE
             tvName.text = itemCharacter!!.name
-            loadImage(itemCharacter.thumbnail)
+            loadImage(itemCharacter.thumbnail_path)
             tvDescription.text = if(itemCharacter.description != "") itemCharacter.description else getString(R.string.character_without_description)
-            tvModified.text = getString(R.string.updated_on)+" "+ DateUtils.getDateFormatted(itemCharacter.modified.time)
+            tvModified.text = getString(R.string.updated_on)+" "+itemCharacter.modified
         }
     }
 
-    private fun loadImage(thumbnail: ImageResponse) {
+    private fun loadImage(thumbnail: String) {
         Glide.with(requireContext()).load(
-            thumbnail.path.replace(
+            thumbnail.replace(
                 getString(R.string.http_string),
                 getString(R.string.https_string)
-            ) + "." + thumbnail.extension
+            )
         ).into(binding.ivDetailImage)
     }
 

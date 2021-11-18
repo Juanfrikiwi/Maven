@@ -41,6 +41,6 @@
 
     <!-- minimum height of detail page so that the collapsing toolbar can be shown on every page -->
     <dimen name="description_min_height">555dp</dimen>
-    <dimen name="comics_height">666dp</dimen>
+    <dimen name="comics_height">600dp</dimen>
 
 </resources>

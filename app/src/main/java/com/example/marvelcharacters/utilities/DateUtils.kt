@@ -4,7 +4,6 @@ package com.example.marvelcharacters.utilities
 import java.text.SimpleDateFormat
 import java.util.*
 
-//TODO igual que el del modulo DATA.  Ver un sitio comun para...
 object DateUtils {
     const val DATE_FORMAT = "dd/MM/yyyy HH:mm"
 

@@ -13,6 +13,7 @@ import com.example.marvelcharacters.R
 import com.example.marvelcharacters.data.network.models.CharactersResponse
 import com.example.marvelcharacters.databinding.ListItemCharacterBinding
 import com.example.marvelcharacters.ui.viewpager.HomeViewPagerFragmentDirections
+import com.example.marvelcharacters.utilities.ImageUtils
 
 
 class HomeAdapter: PagingDataAdapter<CharactersResponse, HomeAdapter.CharactersViewHolder>(CharactersDiffCallback()) {
@@ -50,12 +51,7 @@ class HomeAdapter: PagingDataAdapter<CharactersResponse, HomeAdapter.CharactersV
                     navigateToDetail(item.id, view)
                 }
                 tvName.text = item.name
-                Glide.with(ivPhoto.context).
-                load(item.thumbnail.path.replace(
-                    ivPhoto.context.applicationContext.getString(R.string.http_string),
-                    ivPhoto.context.applicationContext.getString(R.string.https_string)
-                )+"."+ item.thumbnail.extension)
-                    .into(ivPhoto)
+                ImageUtils.loadImage(ivPhoto.context,item.thumbnail.path+"."+item.thumbnail.extension,ivPhoto)
                 executePendingBindings()
             }
         }

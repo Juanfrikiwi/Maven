@@ -15,6 +15,7 @@ import com.example.marvelcharacters.R
 import com.example.marvelcharacters.data.local.models.CharactersEntity
 import com.example.marvelcharacters.databinding.FragmentDetailBinding
 import com.example.marvelcharacters.ui.ComicsAdapter
+import com.example.marvelcharacters.utilities.ImageUtils
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -78,7 +79,7 @@ class DetailFavoritesFragment : Fragment() {
         detailFavoritesViewModel.getCharacter(args.characterId)
         binding.apply {
             tvName.text = characters.name
-            loadImage(characters.thumbnail_path)
+            ImageUtils.loadImage(requireContext(),characters.thumbnail_path,binding.ivDetailImage)
             tvDescription.text =
                 if (characters.description != "") characters.description else getString(R.string.character_without_description)
             tvModified.text = getString(R.string.updated_on) + " " + characters.modified
@@ -86,19 +87,8 @@ class DetailFavoritesFragment : Fragment() {
         }
     }
 
-    private fun loadImage(thumbnailPath: String) {
-        Glide.with(requireContext()).load(
-            thumbnailPath.replace(
-                getString(R.string.http_string),
-                getString(R.string.https_string)
-            )
-        ).into(binding.ivDetailImage)
-    }
-
-
     override fun onDestroyView() {
         super.onDestroyView()
-
     }
 
 

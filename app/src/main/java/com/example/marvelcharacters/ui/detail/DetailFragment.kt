@@ -24,6 +24,8 @@ import kotlinx.coroutines.launch
 import android.net.Uri
 
 import android.content.Intent
+import android.widget.ImageView
+import com.example.marvelcharacters.utilities.ImageUtils
 
 
 @AndroidEntryPoint
@@ -175,23 +177,13 @@ class DetailFragment : Fragment() {
             loadingState.progressBar.visibility = View.GONE
             loadingState.ivReload.visibility = View.GONE
             tvName.text = itemCharacter!!.name
-            loadImage(itemCharacter.thumbnail_path)
+            ImageUtils.loadImage(requireContext(),itemCharacter.thumbnail_path,binding.ivDetailImage)
             tvDescription.text =
                 if (itemCharacter.description != "") itemCharacter.description else getString(R.string.character_without_description)
             tvModified.text = getString(R.string.updated_on) + " " + itemCharacter.modified
             (comicsList.adapter as ComicsAdapter).submitList(itemCharacter.comics)
         }
     }
-
-    private fun loadImage(thumbnail: String) {
-        Glide.with(requireContext()).load(
-            thumbnail.replace(
-                getString(R.string.http_string),
-                getString(R.string.https_string)
-            )
-        ).into(binding.ivDetailImage)
-    }
-
 
     fun interface Callback {
         fun add(character: CharactersEntity?)

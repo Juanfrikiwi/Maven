@@ -14,6 +14,7 @@ import com.example.marvelcharacters.R
 import com.example.marvelcharacters.data.local.models.CharactersEntity
 import com.example.marvelcharacters.databinding.ListItemCharacterBinding
 import com.example.marvelcharacters.ui.viewpager.HomeViewPagerFragmentDirections
+import com.example.marvelcharacters.utilities.ImageUtils
 
 
 class FavoritesAdapter(
@@ -58,12 +59,8 @@ class FavoritesAdapter(
 
         fun bind(item: CharactersEntity) {
             binding.apply {
+                ImageUtils.loadImage(ivPhoto.context,item.thumbnail_path,ivPhoto)
                 characterEntity = item
-                Glide.with(ivPhoto.context).
-                load(item.thumbnail_path.replace(
-                    ivPhoto.context.applicationContext.getString(R.string.http_string),
-                    ivPhoto.context.applicationContext.getString(R.string.https_string)))
-                    .into(ivPhoto)
                 tvName.text = item.name
                 executePendingBindings()
             }

@@ -1,5 +1,13 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
+    ext {
+        lifecycleVersion = "2.4.0"
+        dagerVersion = "2.40"
+        paging_version = "2.1.2"
+        nav_version = "2.4.0-alpha02"
+        room_version = "2.3.0"
+    }
+
     repositories {
         google()
         mavenCentral()
@@ -9,8 +17,6 @@ buildscript {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.30"
         classpath 'com.google.dagger:hilt-android-gradle-plugin:2.40'
         classpath("androidx.navigation:navigation-safe-args-gradle-plugin:2.4.0-alpha02")
-
-
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }

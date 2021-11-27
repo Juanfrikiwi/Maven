@@ -37,6 +37,8 @@ class DetailFavoritesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+
         detailFavoritesViewModel.getCharacter(args.characterId)
             .observe(viewLifecycleOwner) { characters ->
                 if (characters != null) {
@@ -78,6 +80,8 @@ class DetailFavoritesFragment : Fragment() {
     fun bindingData(characters: CharactersEntity) {
         detailFavoritesViewModel.getCharacter(args.characterId)
         binding.apply {
+            loadingState.loadingContent.visibility = View.GONE
+            groupDetail.visibility = View.VISIBLE
             tvName.text = characters.name
             ImageUtils.loadImage(requireContext(),characters.thumbnail_path,binding.ivDetailImage)
             tvDescription.text =

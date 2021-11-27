@@ -173,9 +173,8 @@ class DetailFragment : Fragment() {
 
     private fun bindingData(itemCharacter: CharactersEntity?) {
         binding.apply {
-            loadingState.tvMessageLoading.visibility = View.GONE
-            loadingState.progressBar.visibility = View.GONE
-            loadingState.ivReload.visibility = View.GONE
+            loadingState.loadingContent.visibility = View.GONE
+            groupDetail.visibility = View.VISIBLE
             tvName.text = itemCharacter!!.name
             ImageUtils.loadImage(requireContext(),itemCharacter.thumbnail_path,binding.ivDetailImage)
             tvDescription.text =

@@ -13,6 +13,7 @@ import androidx.work.workDataOf
 import com.example.marvelcharacters.data.local.CharactersDatabaseWorker.Companion.KEY_FILENAME
 import com.example.marvelcharacters.data.local.models.CharactersEntity
 import com.example.marvelcharacters.utilities.Constants
+import com.example.marvelcharacters.utilities.Constants.Companion.DATA_FILENAME
 
 @Database(entities = [CharactersEntity::class], version = 1, exportSchema = false)
 @TypeConverters(com.example.marvelcharacters.data.local.Converters::class)
@@ -39,7 +40,7 @@ abstract class MarvelDatabase : RoomDatabase() {
                         override fun onCreate(db: SupportSQLiteDatabase) {
                             super.onCreate(db)
                             val request = OneTimeWorkRequestBuilder<CharactersDatabaseWorker>()
-                                .setInputData(workDataOf(KEY_FILENAME to Constants.PLANT_DATA_FILENAME))
+                                .setInputData(workDataOf(KEY_FILENAME to DATA_FILENAME))
                                 .build()
                             WorkManager.getInstance(context).enqueue(request)
                         }

@@ -28,6 +28,7 @@
         app:cardPreventCornerOverlap="false">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/ly_item_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white">

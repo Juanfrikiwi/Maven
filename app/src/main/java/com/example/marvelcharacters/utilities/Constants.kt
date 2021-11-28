@@ -38,10 +38,8 @@ class Constants{
         fun md5(): ByteArray = MessageDigest.getInstance("MD5").digest(input.toByteArray(UTF_8))
         fun ByteArray.toHex() = joinToString(separator = "") { byte -> "%02x".format(byte)
         }
-
         const val DATABASE_NAME = "characters-db"
-        const val PLANT_DATA_FILENAME = "characters.json"
-
+        const val DATA_FILENAME = "characters.json"
 
     }
 

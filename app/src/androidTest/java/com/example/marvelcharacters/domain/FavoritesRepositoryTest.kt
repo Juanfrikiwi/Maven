@@ -69,17 +69,19 @@ class FavoritesRepositoryTest {
     @Test
     fun testRepositoryInsertCharacter() = runBlocking {
         repository.insertFavouriteCharacter(characterD)
+        assertEquals(repository.getFavouriteCharacter(4).first(), characterD)
     }
 
     @Test
     fun testRepositoryDeleteCharacter() = runBlocking {
         repository.deleteFavouriteCharacter(characterD)
+        assertEquals(repository.getFavouritesCharacters().first().size, 3)
     }
 
     @Test
     fun testRepositoryDeleteAllCharacter() = runBlocking {
         repository.deleteAllFavouriteCharacter()
+        assertEquals(repository.getFavouritesCharacters().first().size, 0)
     }
-
 
 }

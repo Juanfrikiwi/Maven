@@ -5,25 +5,31 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SearchView
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
+import androidx.paging.PagingData
+import androidx.paging.filter
 import com.example.marvelcharacters.R
+import com.example.marvelcharacters.data.network.models.CharactersResponse
 import com.example.marvelcharacters.databinding.FragmentHomeBinding
 import com.example.marvelcharacters.ui.HomeAdapter
 import com.example.marvelcharacters.ui.LoadingStateAdapter
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import java.util.*
 
 @AndroidEntryPoint
 
 class HomeFragment : Fragment() {
-    private val adapter = HomeAdapter()
+    private var adapter = HomeAdapter()
     private val viewModel: HomeViewModel by viewModels()
     lateinit var binding: FragmentHomeBinding
-    var chartersJob: Job? = null
+    lateinit var listCharacters: PagingData<CharactersResponse>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,12 +44,53 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setLoadingAdapter()
         getCharters()
+        initListeners()
+    }
+
+    private fun initListeners() {
+
+        // Listener reload button
         binding.loadingState.apply {
             ivReload.setOnClickListener {
                 ivReload.visibility = View.GONE
                 getCharters()
             }
         }
+
+        // Listener searchView searchCharacters
+        binding.searchCharacter.setOnQueryTextListener(object :
+            androidx.appcompat.widget.SearchView.OnQueryTextListener {
+            override fun onQueryTextChange(searchText: String): Boolean {
+                if (searchText.length > 2) {
+                    val listFilter = listCharacters.filter {
+                        it.name.lowercase().contains(searchText.lowercase())
+                    }
+                    lifecycleScope.launch {
+                        adapter.submitData(listFilter)
+                    }
+                    if (adapter.itemCount == 0) {
+                        binding.tvEmptyList.apply {
+                            visibility = View.VISIBLE
+                            text = context.getString(R.string.without_result)
+                        }
+                    } else {
+                        binding.tvEmptyList.visibility = View.GONE
+                    }
+                } else {
+                    lifecycleScope.launch {
+                        binding.tvEmptyList.visibility = View.GONE
+                        adapter.submitData(listCharacters)
+                    }
+                }
+                adapter.notifyDataSetChanged()
+                return true
+            }
+
+            override fun onQueryTextSubmit(query: String): Boolean {
+                return false
+            }
+        })
+        binding.searchCharacter.visibility = View.GONE
     }
 
     private fun getCharters() {
@@ -55,13 +102,14 @@ class HomeFragment : Fragment() {
                 tvMessageLoading.visibility = View.VISIBLE
             }
         }
-        chartersJob?.cancel()
-        chartersJob = lifecycleScope.launch {
+        lifecycleScope.launch {
             viewModel.getListCharacters().collectLatest {
+                listCharacters = it
                 adapter.submitData(it)
             }
         }
     }
+
     private fun setLoadingAdapter() {
         binding.characterList.adapter = adapter.withLoadStateFooter(
             LoadingStateAdapter { adapter.retry() }
@@ -73,8 +121,9 @@ class HomeFragment : Fragment() {
                     tvMessageLoading.text = getString(R.string.message_error_connection)
                     ivReload.visibility = View.VISIBLE
                 }
-            }else if (it.refresh is LoadState.NotLoading) {
+            } else if (it.refresh is LoadState.NotLoading) {
                 binding.apply {
+                    searchCharacter.visibility = View.VISIBLE
                     characterList.visibility = View.VISIBLE
                     loadingState.apply {
                         progressBar.visibility = View.GONE
@@ -84,6 +133,7 @@ class HomeFragment : Fragment() {
             }
         }
     }
+
     override fun onDestroyView() {
         super.onDestroyView()
 

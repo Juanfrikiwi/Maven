@@ -14,6 +14,21 @@
             android:background="@color/red"
             tools:context=".ui.home.HomeFragment">
 
+
+            <androidx.appcompat.widget.SearchView
+                android:id="@+id/search_character"
+                style="@style/Theme.MarvelCharacters.Widget"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:layout_margin="@dimen/margin_normal"
+                android:visibility="gone"
+                tools:visibility="visible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/character_list"
                 android:layout_width="match_parent"
@@ -24,7 +39,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/search_character"
                 app:spanCount="2"
                 tools:listitem="@layout/list_item_character" />
 
@@ -34,19 +49,24 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_big"
-                android:layout_marginEnd="@dimen/margin_big"
                 android:layout_marginTop="@dimen/margin_xxl"
+                android:layout_marginEnd="@dimen/margin_big"
                 android:gravity="center_horizontal"
+                android:text="@string/empty_list"
                 android:textAppearance="?attr/textAppearanceBody1"
                 android:textColor="@color/white"
                 android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:text="@string/empty_list" />
+                app:layout_constraintTop_toTopOf="parent" />
 
-            <include android:id="@+id/loading_state" layout="@layout/layout_loading_home"/>
+
+
+            <include
+                android:id="@+id/loading_state"
+                layout="@layout/layout_loading_home" />
+
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

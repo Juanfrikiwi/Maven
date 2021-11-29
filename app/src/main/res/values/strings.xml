@@ -31,6 +31,7 @@
     <string name="warning">¡Atención!</string>
     <string name="delete">Borrar</string>
     <string name="character_image">Imagen del personaje</string>
+    <string name="without_result">No hay resultados en la búsqueda</string>
 
     "Este personaje no contiene ninguna descripción"
 </resources>

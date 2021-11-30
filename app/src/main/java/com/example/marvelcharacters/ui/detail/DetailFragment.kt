@@ -10,21 +10,16 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
-import com.bumptech.glide.Glide
 import com.example.marvelcharacters.R
 import com.example.marvelcharacters.data.local.models.CharactersEntity
 import com.example.marvelcharacters.databinding.FragmentDetailBinding
 import com.example.marvelcharacters.ui.ComicsAdapter
-import com.example.marvelcharacters.ui.FavoritesAdapter
 import com.example.marvelcharacters.utilities.Mappers
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import android.net.Uri
-
 import android.content.Intent
-import android.widget.ImageView
 import com.example.marvelcharacters.utilities.ImageUtils
 
 
@@ -35,7 +30,6 @@ class DetailFragment : Fragment() {
     lateinit var adapter: ComicsAdapter
     private val args: DetailFragmentArgs by navArgs()
     private val detailViewModel: DetailViewModel by viewModels()
-    private var chartersJob: Job? = null
     var characterToAdd: CharactersEntity? = null
 
     override fun onCreateView(
@@ -67,8 +61,7 @@ class DetailFragment : Fragment() {
             }
         }
         binding.callback = Callback {
-            chartersJob?.cancel()
-            chartersJob = lifecycleScope.launch {
+            lifecycleScope.launch {
                 if (characterToAdd?.let {
                         binding.btnFavorite.isEnabled = false
                         detailViewModel.addFavourite(it)
@@ -109,11 +102,6 @@ class DetailFragment : Fragment() {
             }
         )
         binding.comicsList.adapter = adapter
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-
     }
 
     private fun initListeners() {

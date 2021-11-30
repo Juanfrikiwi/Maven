@@ -38,6 +38,12 @@
         <item name="cornerSizeBottomLeft">@dimen/card_corner_radius</item>
         <item name="backgroundColor">@color/red_dark</item>
     </style>
-
+    <style name="MySearchView" parent="Widget.AppCompat.SearchView">
+        <item name="queryHint">@string/search_characters</item>
+        <item name="android:text">@string/search_characters</item>
+        <item name="android:background">@color/white</item>
+        <item name="android:layout_margin">@dimen/margin_normal</item>
+        <item name="android:iconifiedByDefault">false</item>
+    </style>
 
 </resources>

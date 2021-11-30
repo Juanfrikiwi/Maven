@@ -17,11 +17,9 @@
 
             <androidx.appcompat.widget.SearchView
                 android:id="@+id/search_character"
-                style="@style/Theme.MarvelCharacters.Widget"
+                style="@style/MySearchView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:layout_margin="@dimen/margin_normal"
                 android:visibility="gone"
                 tools:visibility="visible"
                 app:layout_constraintEnd_toEndOf="parent"

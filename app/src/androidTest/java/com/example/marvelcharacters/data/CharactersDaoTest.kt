@@ -7,6 +7,10 @@ import dagger.hilt.android.testing.HiltAndroidTest
 import com.example.marvelcharacters.data.local.CharactersDao
 import com.example.marvelcharacters.data.local.MarvelDatabase
 import com.example.marvelcharacters.data.local.models.CharactersEntity
+import com.example.marvelcharacters.utils.characterA
+import com.example.marvelcharacters.utils.characterB
+import com.example.marvelcharacters.utils.characterC
+import com.example.marvelcharacters.utils.characterD
 import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
@@ -24,15 +28,6 @@ class CharactersDaoTest {
     lateinit var database: MarvelDatabase
     private lateinit var characterDao: CharactersDao
 
-    private val characterA =
-        CharactersEntity(1, "A", "Prueba1", "07/07/89", "www.kiwi.es", "www.kiwi.es", listOf("1"))
-    private val characterB =
-        CharactersEntity(2, "B", "Prueba2", "07/07/89", "www.kiwi.es", "www.kiwi.es", listOf("1"))
-    private val characterC =
-        CharactersEntity(3, "C", "Prueba3", "07/07/89", "www.kiwi.es", "www.kiwi.es", listOf("1"))
-    private val characterD =
-        CharactersEntity(4, "D", "Prueba4", "07/07/89", "www.kiwi.es", "www.kiwi.es", listOf("1"))
-
     @get:Rule
     var hiltRule = HiltAndroidRule(this)
 
@@ -48,7 +43,7 @@ class CharactersDaoTest {
 
     @Test
     fun testIsExistId() = runBlocking {
-        assertEquals(characterDao.isExitsId(3).first(), true)
+        assertEquals(characterDao.isExitsId(characterC.idCharacter).first(), true)
     }
 
 

@@ -19,22 +19,32 @@ package com.example.marvelcharacters.viewmodels
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.asFlow
+import androidx.lifecycle.asLiveData
+import androidx.paging.PagingData
+import androidx.paging.filter
 import androidx.room.Room
 import androidx.test.filters.SmallTest
 import androidx.test.platform.app.InstrumentationRegistry
 import com.example.marvelcharacters.MainCoroutineRule
 import com.example.marvelcharacters.data.local.MarvelDatabase
+import com.example.marvelcharacters.data.network.MarvelService
 import com.example.marvelcharacters.domain.repository.CharactersFavouritesRepository
 import com.example.marvelcharacters.domain.repository.MarvelRepository
 import com.example.marvelcharacters.runBlockingTest
+import com.example.marvelcharacters.ui.HomeAdapter
 import com.example.marvelcharacters.ui.detail.DetailViewModel
+import com.example.marvelcharacters.ui.home.HomeViewModel
 import com.example.marvelcharacters.utils.characterA
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import io.reactivex.internal.util.NotificationLite.getValue
 import junit.framework.TestCase
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.count
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.last
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Assert.assertEquals
@@ -43,6 +53,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.RuleChain
+import java.util.*
 import javax.inject.Inject
 import javax.inject.Named
 import kotlin.jvm.Throws
@@ -50,57 +61,49 @@ import kotlin.jvm.Throws
 @ExperimentalCoroutinesApi
 @SmallTest
 @HiltAndroidTest
-class DetailViewModelTest {
-    @Inject
-    @Named("test_db")
-    lateinit var appDatabase: MarvelDatabase
-
-    private val hiltRule = HiltAndroidRule(this)
-    private val coroutineRule = MainCoroutineRule()
-    private val instantTaskExecutorRule = InstantTaskExecutorRule()
-    lateinit var viewModel: DetailViewModel
-
+class HomeViewModelTest {
 
     @get:Rule
-    val rule = RuleChain
-        .outerRule(hiltRule)
-        .around(instantTaskExecutorRule)
-        .around(coroutineRule)
+    var hiltRule = HiltAndroidRule(this)
+
+    @get:Rule
+    var instantTaskExecutorRule = InstantTaskExecutorRule()
 
     @Inject
     lateinit var marvelRepository: MarvelRepository
 
     @Inject
-    lateinit var charactersFavouritesRepository: CharactersFavouritesRepository
+    lateinit var marvelService: MarvelService
 
+    var adapter: HomeAdapter = HomeAdapter()
 
     @Before
     fun setUp() {
         hiltRule.inject()
-        val savedStateHandle: SavedStateHandle = SavedStateHandle().apply {
-            set("characterId", characterA.idCharacter)
-        }
-        viewModel = DetailViewModel(marvelRepository, charactersFavouritesRepository, savedStateHandle)
+        marvelRepository = MarvelRepository(marvelService)
     }
 
     @After
     fun tearDown() {
-        appDatabase.clearAllTables()
-    }
 
-    @Test
-    fun addFavoriteTest() = runBlocking {
-        charactersFavouritesRepository.insertFavouriteCharacter(characterA)
-        TestCase.assertEquals(charactersFavouritesRepository.isExistId(characterA.idCharacter).first(),true)
-        charactersFavouritesRepository.deleteAllFavouriteCharacter()
     }
-
 
     @Test
     fun getCharacterTest() = runBlocking {
-        TestCase.assertEquals(marvelRepository.getCharacter(1011334).first().name,"3-D Man")
+            TestCase.assertEquals(marvelRepository.getCharacter(1011334).first().name,"3-D Man")
     }
 
-
+    @Test
+    fun getListCharactersTest() = runBlocking {
+        // You need to launch here because submitData suspends forever while PagingData is alive
+        val job = launch {
+            marvelRepository.getListCharacters().collectLatest {
+                adapter.submitData(it)
+            }
+            assertEquals(adapter.snapshot().items[0].name,"3-D Man")
+        }
+        // We need to cancel the launched job as coroutines.test framework checks for leaky jobs
+        job.cancel()
+    }
 
 }

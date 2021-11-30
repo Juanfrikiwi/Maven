@@ -14,19 +14,6 @@ class DetailFavoritesViewModel @Inject constructor(
     private val localRepository: CharactersFavouritesRepository,
 ) : ViewModel() {
     lateinit var character: LiveData<CharactersEntity>
-    suspend fun addFavourite(character: CharactersEntity): Boolean {
-        try {
-            viewModelScope.launch {
-                localRepository.insertFavouriteCharacter(
-                    character = character
-                )
-            }
-            return true
-        } catch (e: Exception) {
-            return false
-        }
-    }
-
     fun getCharacter(characterId: Int): LiveData<CharactersEntity> {
         return  localRepository.getFavouriteCharacter(characterId).asLiveData()
     }

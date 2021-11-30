@@ -50,7 +50,7 @@ class FavoritesRepositoryTest {
 
     @Test
     fun testRepositoryIsExistId() = runBlocking {
-        assertEquals(repository.isExistId(3).first(), true)
+        assertEquals(repository.isExistId(characterC.idCharacter).first(), true)
     }
 
 
@@ -63,13 +63,13 @@ class FavoritesRepositoryTest {
 
     @Test
     fun testRepositoryGetCharacter() = runBlocking {
-        assertEquals(repository.getFavouriteCharacter(1).first(), characterA)
+        assertEquals(repository.getFavouriteCharacter(characterA.idCharacter).first(), characterA)
     }
 
     @Test
     fun testRepositoryInsertCharacter() = runBlocking {
         repository.insertFavouriteCharacter(characterD)
-        assertEquals(repository.getFavouriteCharacter(4).first(), characterD)
+        assertEquals(repository.getFavouriteCharacter(characterD.idCharacter).first(), characterD)
     }
 
     @Test

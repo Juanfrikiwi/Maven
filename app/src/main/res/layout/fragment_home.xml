@@ -21,10 +21,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:visibility="gone"
-                tools:visibility="visible"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:visibility="visible" />
 
 
             <androidx.recyclerview.widget.RecyclerView
@@ -59,13 +59,9 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-
-
             <include
                 android:id="@+id/loading_state"
                 layout="@layout/layout_loading_home" />
-
-
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

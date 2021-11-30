@@ -79,7 +79,7 @@ class FavoritesFragment : Fragment() {
                         it.name.lowercase().contains(searchText.lowercase())
                     }
                     adapter.submitList(listFilter)
-                    if (adapter.itemCount == 0) {
+                    if (listFilter.isEmpty()) {
                         binding.tvEmptyList.apply {
                             visibility = View.VISIBLE
                             text = context.getString(R.string.without_result)

@@ -1,4 +1,4 @@
-package com.example.marvelcharacters.data
+package com.example.marvelcharacters.domain
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.test.filters.SmallTest

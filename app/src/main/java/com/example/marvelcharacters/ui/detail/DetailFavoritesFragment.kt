@@ -30,7 +30,7 @@ class DetailFavoritesFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentDetailBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -62,13 +62,13 @@ class DetailFavoritesFragment : Fragment() {
         }
     }
 
-    fun initComicAdapter() {
+    private fun initComicAdapter() {
         adapter = ComicsAdapter(
             object : ComicsAdapter.ListItemComicClickListener {
                 override fun onClickItem(nameComic: String) {
                     val browserIntent = Intent(
                         Intent.ACTION_VIEW,
-                        Uri.parse("https://www.google.com/search?q=$nameComic")
+                        Uri.parse(getString(R.string.search_to_google)+nameComic)
                     )
                     startActivity(browserIntent)
                 }
@@ -77,7 +77,7 @@ class DetailFavoritesFragment : Fragment() {
         binding.comicsList.adapter = adapter
     }
 
-    fun bindingData(characters: CharactersEntity) {
+    private fun bindingData(characters: CharactersEntity) {
         detailFavoritesViewModel.getCharacter(args.characterId)
         binding.apply {
             loadingState.loadingContent.visibility = View.GONE

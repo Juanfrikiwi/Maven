@@ -27,15 +27,15 @@ import com.example.marvelcharacters.utilities.ImageUtils
 
 class DetailFragment : Fragment() {
     lateinit var binding: FragmentDetailBinding
-    lateinit var adapter: ComicsAdapter
+    private lateinit var adapter: ComicsAdapter
     private val args: DetailFragmentArgs by navArgs()
     private val detailViewModel: DetailViewModel by viewModels()
-    var characterToAdd: CharactersEntity? = null
+    private var characterToAdd: CharactersEntity? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = DataBindingUtil.inflate<FragmentDetailBinding>(
             inflater,
             R.layout.fragment_detail,
@@ -43,7 +43,6 @@ class DetailFragment : Fragment() {
             false
         ).apply {
             viewModel = detailViewModel
-            lifecycleOwner = viewLifecycleOwner
         }
         return binding.root
     }
@@ -89,13 +88,13 @@ class DetailFragment : Fragment() {
 
     }
 
-    fun initComicAdapter() {
+    private fun initComicAdapter() {
         adapter = ComicsAdapter(
             object : ComicsAdapter.ListItemComicClickListener {
                 override fun onClickItem(nameComic: String) {
                     val browserIntent = Intent(
                         Intent.ACTION_VIEW,
-                        Uri.parse("https://www.google.com/search?q=$nameComic")
+                        Uri.parse(getString(R.string.search_to_google)+nameComic)
                     )
                     startActivity(browserIntent)
                 }
@@ -116,7 +115,6 @@ class DetailFragment : Fragment() {
     }
 
     private fun initObservers() {
-
         // Observer that runs when there is a correct response in the getCharacter call
         detailViewModel.successResponse.observe(viewLifecycleOwner) { characters ->
             val characterSelected = characters.firstOrNull()

@@ -20,6 +20,17 @@ object Mappers {
         }
     }
 
+    fun mapperToListEntity(list: List<CharactersResponse>): List<CharactersEntity> {
+        list.let {
+            val charactersList : MutableList<CharactersEntity> = emptyList<CharactersEntity>().toMutableList()
+            list.forEach { charactersResponse ->
+                charactersList.add(mapperToEntity(charactersResponse))
+            }
+            return charactersList
+        }
+    }
+
+
 
     fun extractComics(characterResponse: CharactersResponse):List<String>{
         val comicsList : MutableList<String> = emptyList<String>().toMutableList()

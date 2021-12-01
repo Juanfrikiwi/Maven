@@ -2,15 +2,16 @@ package com.example.marvelcharacters.data.network
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.example.marvelcharacters.data.network.models.CharactersResponse
+import com.example.marvelcharacters.data.local.models.CharactersEntity
+import com.example.marvelcharacters.utilities.Mappers
 
 class MarvelPagingSource(
     private val service: MarvelService,
-) : PagingSource<Int, CharactersResponse>() {
-    override suspend fun load(params: LoadParams<Int>): LoadResult<Int,CharactersResponse> {
+) : PagingSource<Int, CharactersEntity>() {
+    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, CharactersEntity> {
         return try {
             val response = service.getListCharacters()
-            val characters = response.data.characters
+            val characters = Mappers.mapperToListEntity(response.data.characters)
             LoadResult.Page(
                 data = characters,
                 prevKey = null,
@@ -21,7 +22,7 @@ class MarvelPagingSource(
         }
     }
 
-    override fun getRefreshKey(state: PagingState<Int, CharactersResponse>): Int? {
+    override fun getRefreshKey(state: PagingState<Int, CharactersEntity>): Int? {
         return state.anchorPosition?.let { anchorPosition ->
             // This loads starting from previous page, but since PagingConfig.initialLoadSize spans
             // multiple pages, the initial load will still load items centered around

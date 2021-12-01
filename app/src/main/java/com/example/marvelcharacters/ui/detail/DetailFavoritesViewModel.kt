@@ -2,11 +2,8 @@ package com.example.marvelcharacters.ui.detail
 
 import androidx.lifecycle.*
 import com.example.marvelcharacters.data.local.models.CharactersEntity
-import com.example.marvelcharacters.data.network.models.CharactersResponse
 import com.example.marvelcharacters.domain.repository.CharactersFavouritesRepository
-import com.example.marvelcharacters.domain.repository.MarvelRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel

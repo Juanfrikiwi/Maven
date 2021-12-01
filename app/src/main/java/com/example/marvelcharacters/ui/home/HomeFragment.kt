@@ -12,16 +12,13 @@ import androidx.paging.LoadState
 import androidx.paging.PagingData
 import androidx.paging.filter
 import com.example.marvelcharacters.R
-import com.example.marvelcharacters.data.network.models.CharactersResponse
+import com.example.marvelcharacters.data.local.models.CharactersEntity
 import com.example.marvelcharacters.databinding.FragmentHomeBinding
 import com.example.marvelcharacters.ui.HomeAdapter
 import com.example.marvelcharacters.ui.LoadingStateAdapter
-import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import java.util.*
 
 @AndroidEntryPoint
 
@@ -29,7 +26,7 @@ class HomeFragment : Fragment() {
     private var adapter = HomeAdapter()
     private val viewModel: HomeViewModel by viewModels()
     lateinit var binding: FragmentHomeBinding
-    lateinit var listCharacters: PagingData<CharactersResponse>
+    lateinit var listCharacters: PagingData<CharactersEntity>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

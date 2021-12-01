@@ -2,7 +2,6 @@ package com.example.marvelcharacters.ui.detail
 
 import androidx.lifecycle.*
 import com.example.marvelcharacters.data.local.models.CharactersEntity
-import com.example.marvelcharacters.data.network.models.CharactersResponse
 import com.example.marvelcharacters.domain.repository.CharactersFavouritesRepository
 import com.example.marvelcharacters.domain.repository.MarvelRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -16,7 +15,7 @@ class DetailViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
     val errorResponse = MutableLiveData<String>()
-    val successResponse = MutableLiveData<List<CharactersResponse>>()
+    val successResponse = MutableLiveData<List<CharactersEntity>>()
 
     val characterId: Int = savedStateHandle.get<Int>(PLANT_ID_SAVED_STATE_KEY)!!
     val character = localRepository.getFavouriteCharacter(characterId).asLiveData()

@@ -8,15 +8,13 @@ import androidx.navigation.findNavController
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.example.marvelcharacters.R
-import com.example.marvelcharacters.data.network.models.CharactersResponse
+import com.example.marvelcharacters.data.local.models.CharactersEntity
 import com.example.marvelcharacters.databinding.ListItemCharacterBinding
 import com.example.marvelcharacters.ui.viewpager.HomeViewPagerFragmentDirections
 import com.example.marvelcharacters.utilities.ImageUtils
 
 
-class HomeAdapter: PagingDataAdapter<CharactersResponse, HomeAdapter.CharactersViewHolder>(CharactersDiffCallback()) {
+class HomeAdapter: PagingDataAdapter<CharactersEntity, HomeAdapter.CharactersViewHolder>(CharactersDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CharactersViewHolder {
         return CharactersViewHolder(
@@ -45,13 +43,13 @@ class HomeAdapter: PagingDataAdapter<CharactersResponse, HomeAdapter.CharactersV
             view.findNavController().navigate(direction)
         }
 
-        fun bind(item: CharactersResponse) {
+        fun bind(item: CharactersEntity) {
             binding.apply {
                 binding.setClickListener { view ->
-                    navigateToDetail(item.id, view)
+                    navigateToDetail(item.idCharacter, view)
                 }
                 tvName.text = item.name
-                ImageUtils.loadImage(ivPhoto.context,item.thumbnail.path+"."+item.thumbnail.extension,ivPhoto)
+                ImageUtils.loadImage(ivPhoto.context,item.thumbnail_path,binding.ivPhoto)
                 executePendingBindings()
             }
         }
@@ -59,12 +57,12 @@ class HomeAdapter: PagingDataAdapter<CharactersResponse, HomeAdapter.CharactersV
     }
 }
 
-private class CharactersDiffCallback : DiffUtil.ItemCallback<CharactersResponse>() {
-    override fun areItemsTheSame(oldItem: CharactersResponse, newItem: CharactersResponse): Boolean {
-        return oldItem.id == newItem.id
+private class CharactersDiffCallback : DiffUtil.ItemCallback<CharactersEntity>() {
+    override fun areItemsTheSame(oldItem: CharactersEntity, newItem: CharactersEntity): Boolean {
+        return oldItem.idCharacter == newItem.idCharacter
     }
 
-    override fun areContentsTheSame(oldItem: CharactersResponse, newItem: CharactersResponse): Boolean {
+    override fun areContentsTheSame(oldItem: CharactersEntity, newItem: CharactersEntity): Boolean {
         return oldItem == newItem
     }
 }

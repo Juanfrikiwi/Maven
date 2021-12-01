@@ -119,7 +119,7 @@ class DetailFragment : Fragment() {
         detailViewModel.successResponse.observe(viewLifecycleOwner) { characters ->
             val characterSelected = characters.firstOrNull()
             characterSelected?.let {
-                characterToAdd = Mappers.mapperToEntity(characterResponse = it)
+                characterToAdd = it
             }
             characterSelected.let {
                 bindingData(characterToAdd)

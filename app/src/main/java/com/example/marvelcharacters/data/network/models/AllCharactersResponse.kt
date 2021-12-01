@@ -1,6 +1,5 @@
-package com.example.marvelcharacters.data
+package com.example.marvelcharacters.data.network.models
 
-import com.example.marvelcharacters.data.network.models.CharactersResponse
 import com.google.gson.annotations.SerializedName
 
 data class AllCharactersResponse(

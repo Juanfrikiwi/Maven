@@ -23,7 +23,7 @@ import kotlinx.coroutines.launch
 
 class HomeFragment : Fragment() {
     private var adapter = HomeAdapter()
-    private val viewModel: HomeViewModel by viewModels()
+    private val viewModel: HomeMainViewModel by viewModels()
     lateinit var binding: FragmentHomeBinding
     lateinit var listCharacters: PagingData<CharactersEntity>
 
@@ -41,10 +41,32 @@ class HomeFragment : Fragment() {
         setLoadingAdapter()
         getCharters()
         initListeners()
+        initObservers()
+    }
+
+    private fun initObservers() {
+        viewModel.successResponse.observe(viewLifecycleOwner) {
+            lifecycleScope.launch {
+                listCharacters = it
+                adapter.submitData(listCharacters)
+            }
+        }
+        viewModel.errorResponse.observe(viewLifecycleOwner) {
+
+        }
+        viewModel.onStart.observe(viewLifecycleOwner) {
+            binding.apply {
+                characterList.visibility = View.GONE
+                loadingState.apply {
+                    progressBar.visibility = View.VISIBLE
+                    tvMessageLoading.text = getString(R.string.message_loading)
+                    tvMessageLoading.visibility = View.VISIBLE
+                }
+            }
+        }
     }
 
     private fun initListeners() {
-
         // Listener reload button
         binding.loadingState.apply {
             ivReload.setOnClickListener {
@@ -90,19 +112,8 @@ class HomeFragment : Fragment() {
     }
 
     private fun getCharters() {
-        binding.apply {
-            characterList.visibility = View.GONE
-            loadingState.apply {
-                progressBar.visibility = View.VISIBLE
-                tvMessageLoading.text = getString(R.string.message_loading)
-                tvMessageLoading.visibility = View.VISIBLE
-            }
-        }
         lifecycleScope.launch {
-            viewModel.getListCharacters().collectLatest {
-                listCharacters = it
-                adapter.submitData(it)
-            }
+            viewModel.getListCharacters()
         }
     }
 

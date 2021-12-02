@@ -16,7 +16,9 @@
 
 package com.example.marvelcharacters.di
 
+import com.example.marvelcharacters.data.dataRepository.CharactersRepositoryImpl
 import com.example.marvelcharacters.data.network.MarvelService
+import com.example.marvelcharacters.domain.repository.CharactersRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -32,4 +34,9 @@ class NetworkModule {
         return MarvelService.create()
     }
 
+    @Singleton
+    @Provides
+    fun provideCharactersRepository(marvelService: MarvelService) : CharactersRepository {
+        return CharactersRepositoryImpl(marvelService)
+    }
 }

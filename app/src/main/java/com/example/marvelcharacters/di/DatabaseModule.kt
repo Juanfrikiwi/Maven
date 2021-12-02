@@ -19,6 +19,8 @@ package com.example.marvelcharacters.di
 import android.content.Context
 import com.example.marvelcharacters.data.local.CharactersDao
 import com.example.marvelcharacters.data.local.MarvelDatabase
+import com.example.marvelcharacters.data.local.localDataRepository.FavoritesRepositoryImpl
+import com.example.marvelcharacters.domain.repository.FavoritesRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -38,5 +40,11 @@ class DatabaseModule {
     @Provides
     fun providePlantDao(marvelDatabase: MarvelDatabase): CharactersDao {
         return marvelDatabase.charactersDao()
+    }
+
+    @Singleton
+    @Provides
+    fun provideFavoritesRepository(marvelDatabase: MarvelDatabase) : FavoritesRepository {
+        return FavoritesRepositoryImpl(marvelDatabase.charactersDao())
     }
 }

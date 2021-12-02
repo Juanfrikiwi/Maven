@@ -6,10 +6,8 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.example.marvelcharacters.data.local.models.CharactersEntity
-import com.example.marvelcharacters.domain.repository.MarvelRepository
-import com.example.marvelcharacters.domain.usecase.GetListCharactersUseCase
+import com.example.marvelcharacters.domain.usecase.characters.GetListCharactersUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onStart

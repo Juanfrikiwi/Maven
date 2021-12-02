@@ -1,4 +1,4 @@
-package com.example.marvelcharacters.domain.usecase
+package com.example.marvelcharacters.domain.usecase.characters
 
 
 import androidx.paging.PagingData

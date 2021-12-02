@@ -16,7 +16,7 @@
 
 package com.example.marvelcharacters.di
 
-import com.example.marvelcharacters.data.dataRepository.CharactersRepositoryImpl
+import com.example.marvelcharacters.data.network.networkDataRepository.CharactersRepositoryImpl
 import com.example.marvelcharacters.data.network.MarvelService
 import com.example.marvelcharacters.domain.repository.CharactersRepository
 import dagger.Module

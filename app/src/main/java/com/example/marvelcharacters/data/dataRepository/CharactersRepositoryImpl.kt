@@ -8,7 +8,6 @@ import com.example.marvelcharacters.data.network.MarvelPagingSource
 import com.example.marvelcharacters.data.network.MarvelService
 import com.example.marvelcharacters.domain.repository.CharactersRepository
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class CharactersRepositoryImpl @Inject constructor(private val service: MarvelService) :

@@ -23,7 +23,7 @@ import kotlinx.coroutines.launch
 
 class HomeFragment : Fragment() {
     private var adapter = HomeAdapter()
-    private val viewModel: HomeMainViewModel by viewModels()
+    private val viewModel: HomeViewModel by viewModels()
     lateinit var binding: FragmentHomeBinding
     lateinit var listCharacters: PagingData<CharactersEntity>
 

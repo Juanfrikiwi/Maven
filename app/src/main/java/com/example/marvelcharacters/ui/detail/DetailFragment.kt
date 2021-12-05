@@ -53,6 +53,7 @@ class DetailFragment : Fragment() {
         initObservers()
         getCharacter()
         initComicAdapter()
+        detailViewModel.isFavorite()
         binding.loadingState.apply {
             ivReload.setOnClickListener {
                 ivReload.visibility = View.GONE
@@ -117,7 +118,7 @@ class DetailFragment : Fragment() {
     private fun initObservers() {
         // Observer that runs when there is a correct response in the getCharacter call
         detailViewModel.successResponse.observe(viewLifecycleOwner) { characters ->
-            val characterSelected = characters.firstOrNull()
+            val characterSelected = characters
             characterSelected?.let {
                 characterToAdd = it
             }

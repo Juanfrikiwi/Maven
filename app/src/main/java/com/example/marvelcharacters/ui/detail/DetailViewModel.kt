@@ -4,37 +4,56 @@ import androidx.lifecycle.*
 import com.example.marvelcharacters.data.local.models.CharactersEntity
 import com.example.marvelcharacters.domain.repository.CharactersFavouritesRepository
 import com.example.marvelcharacters.domain.repository.MarvelRepository
+import com.example.marvelcharacters.domain.usecase.characters.GetCharacterUseCase
+import com.example.marvelcharacters.domain.usecase.favorites.IsFavorites
+import com.example.marvelcharacters.domain.usecase.favorites.AddFavorites
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class DetailViewModel @Inject constructor(
-    private val repository: MarvelRepository,
-    private val localRepository: CharactersFavouritesRepository,
+    private val getCharacterUseCase: GetCharacterUseCase,
+    private val isFavorites: IsFavorites,
+    private val addFavorites: AddFavorites,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
     val errorResponse = MutableLiveData<String>()
-    val successResponse = MutableLiveData<List<CharactersEntity>>()
+    val successResponse = MutableLiveData<CharactersEntity>()
+    val onStart = MutableLiveData<Boolean>()
+    val characterId: Int = savedStateHandle.get<Int>(CHARACTER_ID)!!
+    lateinit var character: CharactersEntity
+    lateinit var isFavorite: LiveData<Boolean>
 
-    val characterId: Int = savedStateHandle.get<Int>(PLANT_ID_SAVED_STATE_KEY)!!
-    val character = localRepository.getFavouriteCharacter(characterId).asLiveData()
-    val isFavorite = localRepository.isExistId(characterId).asLiveData()
-
-
-    suspend fun getCharacter(id: Int){
-        try {
-            successResponse.value = repository.getCharacter(id)
-        } catch (e: Exception) {
-            errorResponse.value = e.message
+    fun getCharacter(id: Int) {
+        viewModelScope.launch {
+            getCharacterUseCase.invoke(id)
+                .onStart {
+                    onStart.postValue(true)
+                }
+                .catch { exception ->
+                    errorResponse.postValue(exception.toString())
+                }
+                .collect { result ->
+                    character = result
+                    successResponse.postValue(result)
+                }
         }
     }
+
+    fun isFavorite() {
+        viewModelScope.launch {
+            isFavorite = isFavorites.invoke(characterId)
+        }
+    }
+
     suspend fun addFavourite(character: CharactersEntity): Boolean {
         return try {
             viewModelScope.launch {
-                localRepository.insertFavouriteCharacter(
-                    character = character
-                )
+                addFavorites.invoke(character)
             }
             true
         } catch (e: Exception) {
@@ -42,9 +61,8 @@ class DetailViewModel @Inject constructor(
         }
     }
 
-
     companion object {
-        private const val PLANT_ID_SAVED_STATE_KEY = "characterId"
+        private const val CHARACTER_ID = "characterId"
     }
 
 }

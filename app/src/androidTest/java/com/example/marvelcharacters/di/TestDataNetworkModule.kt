@@ -1,7 +1,6 @@
 package com.example.marvelcharacters.di
 
 import com.example.marvelcharacters.data.network.MarvelService
-import com.example.marvelcharacters.domain.repository.MarvelRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

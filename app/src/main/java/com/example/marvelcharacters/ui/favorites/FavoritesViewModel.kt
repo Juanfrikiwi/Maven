@@ -1,10 +1,7 @@
 package com.example.marvelcharacters.ui.favorites
 
 import androidx.lifecycle.*
-import androidx.paging.PagingData
-import androidx.paging.cachedIn
 import com.example.marvelcharacters.data.local.models.CharactersEntity
-import com.example.marvelcharacters.domain.repository.CharactersFavouritesRepository
 import com.example.marvelcharacters.domain.usecase.favorites.DeleteFavoritesUseCase
 import com.example.marvelcharacters.domain.usecase.favorites.GetListFavoritesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -16,7 +13,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class FavoritesViewModel @Inject constructor(
-    private val repository: CharactersFavouritesRepository,
     private val getListFavoritesUseCase: GetListFavoritesUseCase,
     private val deleteFavoritesUseCase: DeleteFavoritesUseCase
 ) : ViewModel() {

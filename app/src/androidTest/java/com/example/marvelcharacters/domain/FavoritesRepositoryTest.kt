@@ -5,14 +5,12 @@ import androidx.test.filters.SmallTest
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import com.example.marvelcharacters.data.local.database.MarvelDatabase
-import com.example.marvelcharacters.domain.repository.CharactersFavouritesRepository
 import com.example.marvelcharacters.utils.characterA
 import com.example.marvelcharacters.utils.characterB
 import com.example.marvelcharacters.utils.characterC
 import com.example.marvelcharacters.utils.characterD
 import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import org.junit.*
 import javax.inject.Inject

@@ -37,28 +37,39 @@ class DetailFavoritesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-
-        detailFavoritesViewModel.getCharacter(args.characterId)
-            .observe(viewLifecycleOwner) { characters ->
-                if (characters != null) {
-                    bindingData(characters)
-                } else {
-                    Snackbar.make(
-                        binding.root,
-                        getString(R.string.error_ocurred),
-                        Snackbar.LENGTH_LONG
-                    )
-                        .show()
-                }
-            }
         initComicAdapter()
         initListeners()
+        initObserver()
+        detailFavoritesViewModel.getFavorite(args.characterId)
     }
 
     private fun initListeners() {
         binding.toolbar.setNavigationOnClickListener { view ->
             view.findNavController().navigateUp()
+        }
+    }
+
+    fun initObserver(){
+        detailFavoritesViewModel.errorResponse.observe(viewLifecycleOwner) {
+            Snackbar.make(
+                binding.root,
+                getString(R.string.error_ocurred),
+                Snackbar.LENGTH_LONG
+            )
+                .show()
+        }
+
+        detailFavoritesViewModel.successResponse.observe(viewLifecycleOwner) { characters ->
+            if (characters != null) {
+                bindingData(characters)
+            } else {
+                Snackbar.make(
+                    binding.root,
+                    getString(R.string.error_ocurred),
+                    Snackbar.LENGTH_LONG
+                )
+                    .show()
+            }
         }
     }
 
@@ -68,7 +79,7 @@ class DetailFavoritesFragment : Fragment() {
                 override fun onClickItem(nameComic: String) {
                     val browserIntent = Intent(
                         Intent.ACTION_VIEW,
-                        Uri.parse(getString(R.string.search_to_google)+nameComic)
+                        Uri.parse(getString(R.string.search_to_google) + nameComic)
                     )
                     startActivity(browserIntent)
                 }
@@ -78,12 +89,11 @@ class DetailFavoritesFragment : Fragment() {
     }
 
     private fun bindingData(characters: CharactersEntity) {
-        detailFavoritesViewModel.getCharacter(args.characterId)
         binding.apply {
             loadingState.loadingContent.visibility = View.GONE
             groupDetail.visibility = View.VISIBLE
             tvName.text = characters.name
-            ImageUtils.loadImage(requireContext(),characters.thumbnail_path,binding.ivDetailImage)
+            ImageUtils.loadImage(requireContext(), characters.thumbnail_path, binding.ivDetailImage)
             tvDescription.text =
                 if (characters.description != "") characters.description else getString(R.string.character_without_description)
             tvModified.text = getString(R.string.updated_on) + " " + characters.modified

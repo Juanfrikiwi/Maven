@@ -18,34 +18,26 @@ package com.example.marvelcharacters.viewmodels
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.asFlow
-import androidx.room.Room
 import androidx.test.filters.SmallTest
-import androidx.test.platform.app.InstrumentationRegistry
 import com.example.marvelcharacters.MainCoroutineRule
-import com.example.marvelcharacters.data.local.MarvelDatabase
+import com.example.marvelcharacters.data.local.database.MarvelDatabase
 import com.example.marvelcharacters.domain.repository.CharactersFavouritesRepository
 import com.example.marvelcharacters.domain.repository.MarvelRepository
-import com.example.marvelcharacters.runBlockingTest
 import com.example.marvelcharacters.ui.detail.DetailViewModel
 import com.example.marvelcharacters.utils.characterA
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
-import io.reactivex.internal.util.NotificationLite.getValue
 import junit.framework.TestCase
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import org.junit.After
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertFalse
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.RuleChain
 import javax.inject.Inject
 import javax.inject.Named
-import kotlin.jvm.Throws
 
 @ExperimentalCoroutinesApi
 @SmallTest

@@ -12,7 +12,7 @@ import androidx.fragment.app.DialogFragment
 import com.example.marvelcharacters.R
 import com.example.marvelcharacters.databinding.DialogGenericAlertBinding
 
-class GenericDialog : DialogFragment() {
+open class GenericDialog : DialogFragment() {
     companion object {
         fun open(
             onAccept: (() -> Unit)? = {},
@@ -49,7 +49,6 @@ class GenericDialog : DialogFragment() {
         if (showsDialog){
             dialog!!.window!!.setLayout(WindowManager.LayoutParams.MATCH_PARENT,WindowManager.LayoutParams.WRAP_CONTENT)
         }
-
     }
 
     protected open fun initView() {

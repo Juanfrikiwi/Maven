@@ -1,7 +1,7 @@
 
 package com.example.marvelcharacters.domain.repository
 
-import com.example.marvelcharacters.data.local.CharactersDao
+import com.example.marvelcharacters.data.local.database.CharactersDao
 import com.example.marvelcharacters.data.local.models.CharactersEntity
 import javax.inject.Inject
 import javax.inject.Singleton

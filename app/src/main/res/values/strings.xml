@@ -15,7 +15,7 @@
     <string name="marvel">Marvel</string>
     <string name="home">Inicio</string>
     <string name="favorites">Favoritos</string>
-    <string name="charter_added">Personaje añadido a favoritos</string>
+    <string name="character_added">Personaje añadido a favoritos</string>
     <string name="error_ocurred">Ha ocurrido un error</string>
     <string name="favorite_character_deleted">Personaje favorito eliminado</string>
     <string name="empty_list">No hay personajes en la lista de favoritos</string>

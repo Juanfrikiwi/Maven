@@ -20,15 +20,15 @@ import kotlinx.coroutines.launch
 
 class FavoritesFragment : Fragment() {
     private val viewModel: FavoritesViewModel by viewModels()
-    private var _binding: FragmentHomeBinding? = null
-    private val binding get() = _binding!!
+    lateinit var binding: FragmentHomeBinding
     lateinit var adapter: FavoritesAdapter
     lateinit var listCharacters: List<CharactersEntity>
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        binding = FragmentHomeBinding.inflate(inflater, container, false)
         context ?: return binding.root
         return binding.root
     }
@@ -42,30 +42,70 @@ class FavoritesFragment : Fragment() {
                     dialog.open(
                         onAccept = {
                             lifecycleScope.launch {
-                                if (viewModel.deleteCharacter(charactersEntity)) {
-                                    Snackbar.make(
-                                        binding.root,
-                                        getString(R.string.favorite_character_deleted),
-                                        Snackbar.LENGTH_LONG
-                                    )
-                                        .show()
-                                } else {
-                                    Snackbar.make(
-                                        binding.root,
-                                        getString(R.string.error_ocurred),
-                                        Snackbar.LENGTH_LONG
-                                    )
-                                        .show()
-                                }
+                                viewModel.deleteCharacter(charactersEntity)
                             }
                         }
                     ).show(childFragmentManager, tag)
                 }
             }
         )
+
         binding.characterList.adapter = adapter
-        subscribeUi(adapter)
         initListeners()
+        initObservers()
+        viewModel.getListFavorites()
+    }
+
+    private fun initObservers() {
+        viewModel.successResponse.observe(viewLifecycleOwner) { characters ->
+            listCharacters = characters
+            if (characters.isNotEmpty()) {
+                val searchViewText = binding.searchCharacter.query.toString()
+                if (searchViewText.length > 2) {
+                    filterListFavorites(listCharacters,searchViewText)
+                } else {
+                    binding.tvEmptyList.visibility = View.GONE
+                    binding.searchCharacter.visibility = View.VISIBLE
+                    adapter.submitList(characters)
+                }
+                binding.searchCharacter.visibility = View.VISIBLE
+            } else {
+                adapter.submitList(emptyList())
+                binding.tvEmptyList.visibility = View.VISIBLE
+            }
+        }
+        viewModel.errorResponse.observe(viewLifecycleOwner) {
+            adapter.submitList(emptyList())
+            binding.tvEmptyList.visibility = View.VISIBLE
+        }
+
+        viewModel.deleteResponse.observe(viewLifecycleOwner) { isDeleted ->
+            if (isDeleted) {
+                viewModel.getListFavorites()
+                binding.tvEmptyList.visibility = View.GONE
+            } else {
+                Snackbar.make(
+                    binding.root,
+                    getString(R.string.error_ocurred),
+                    Snackbar.LENGTH_LONG
+                ).show()
+            }
+        }
+    }
+
+    fun filterListFavorites(favorites:List<CharactersEntity>,filterText:String){
+        val listFilter = favorites.filter {
+            it.name.lowercase().contains(filterText.lowercase())
+        }
+        adapter.submitList(listFilter)
+        if (listFilter.isEmpty()) {
+            binding.tvEmptyList.apply {
+                visibility = View.VISIBLE
+                text = context.getString(R.string.without_result)
+            }
+        } else {
+            binding.tvEmptyList.visibility = View.GONE
+        }
     }
 
     private fun initListeners() {
@@ -75,21 +115,19 @@ class FavoritesFragment : Fragment() {
             androidx.appcompat.widget.SearchView.OnQueryTextListener {
             override fun onQueryTextChange(searchText: String): Boolean {
                 if (searchText.length > 2) {
-                    val listFilter = listCharacters.filter {
-                        it.name.lowercase().contains(searchText.lowercase())
-                    }
-                    adapter.submitList(listFilter)
-                    if (listFilter.isEmpty()) {
-                        binding.tvEmptyList.apply {
-                            visibility = View.VISIBLE
-                            text = context.getString(R.string.without_result)
-                        }
-                    } else {
-                        binding.tvEmptyList.visibility = View.GONE
-                    }
+                    filterListFavorites(listCharacters,searchText)
                 } else {
-                    binding.tvEmptyList.visibility = View.GONE
-                    adapter.submitList(listCharacters)
+                    if (::listCharacters.isInitialized) {
+                        if (listCharacters.isEmpty()) {
+                            binding.tvEmptyList.apply {
+                                visibility = View.VISIBLE
+                                text = context.getString(R.string.empty_list)
+                            }
+                        } else {
+                            adapter.submitList(listCharacters)
+                            binding.tvEmptyList.visibility = View.GONE
+                        }
+                    }
                 }
                 adapter.notifyDataSetChanged()
                 return true
@@ -99,20 +137,6 @@ class FavoritesFragment : Fragment() {
                 return false
             }
         })
-    }
-
-    private fun subscribeUi(adapter: FavoritesAdapter) {
-        viewModel.characters.observe(viewLifecycleOwner) { characters ->
-            listCharacters = characters
-            if (characters.isNotEmpty()) {
-                binding.tvEmptyList.visibility = View.GONE
-                binding.searchCharacter.visibility = View.VISIBLE
-                adapter.submitList(characters)
-            } else {
-                adapter.submitList(emptyList())
-                binding.tvEmptyList.visibility = View.VISIBLE
-            }
-        }
     }
 
 }

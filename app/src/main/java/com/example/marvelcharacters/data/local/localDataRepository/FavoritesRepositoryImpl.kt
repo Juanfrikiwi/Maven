@@ -1,5 +1,5 @@
 package com.example.marvelcharacters.data.local.localDataRepository
-import com.example.marvelcharacters.data.local.CharactersDao
+import com.example.marvelcharacters.data.local.database.CharactersDao
 import com.example.marvelcharacters.data.local.models.CharactersEntity
 import com.example.marvelcharacters.domain.repository.FavoritesRepository
 import kotlinx.coroutines.flow.Flow

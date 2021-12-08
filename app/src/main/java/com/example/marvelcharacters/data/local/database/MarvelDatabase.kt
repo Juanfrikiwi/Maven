@@ -1,7 +1,6 @@
-package com.example.marvelcharacters.data.local
+package com.example.marvelcharacters.data.local.database
 
 import android.content.Context
-import androidx.databinding.adapters.Converters
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
@@ -10,13 +9,13 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.workDataOf
-import com.example.marvelcharacters.data.local.CharactersDatabaseWorker.Companion.KEY_FILENAME
+import com.example.marvelcharacters.data.local.database.CharactersDatabaseWorker.Companion.KEY_FILENAME
 import com.example.marvelcharacters.data.local.models.CharactersEntity
 import com.example.marvelcharacters.utilities.Constants
 import com.example.marvelcharacters.utilities.Constants.Companion.DATA_FILENAME
 
 @Database(entities = [CharactersEntity::class], version = 1, exportSchema = false)
-@TypeConverters(com.example.marvelcharacters.data.local.Converters::class)
+@TypeConverters(Converters::class)
 abstract class MarvelDatabase : RoomDatabase() {
     abstract fun charactersDao(): CharactersDao
 

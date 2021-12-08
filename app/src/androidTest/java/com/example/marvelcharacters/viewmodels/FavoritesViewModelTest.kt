@@ -19,7 +19,7 @@ package com.example.marvelcharacters.viewmodels
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.test.filters.SmallTest
 import com.example.marvelcharacters.MainCoroutineRule
-import com.example.marvelcharacters.data.local.MarvelDatabase
+import com.example.marvelcharacters.data.local.database.MarvelDatabase
 import com.example.marvelcharacters.domain.repository.CharactersFavouritesRepository
 import com.example.marvelcharacters.utils.characterA
 import dagger.hilt.android.testing.HiltAndroidRule
@@ -37,7 +37,6 @@ import org.junit.Test
 import org.junit.rules.RuleChain
 import javax.inject.Inject
 import javax.inject.Named
-import kotlin.jvm.Throws
 
 @ExperimentalCoroutinesApi
 @SmallTest

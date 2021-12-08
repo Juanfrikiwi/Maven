@@ -11,10 +11,6 @@
         <variable
             name="viewModel"
             type="com.example.marvelcharacters.ui.detail.DetailViewModel" />
-
-        <variable
-            name="callback"
-            type="com.example.marvelcharacters.ui.detail.DetailFragment.Callback" />
     </data>
 
 
@@ -97,7 +93,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:drawableEnd="@drawable/ic_baseline_add_24"
-                    android:onClick="@{() -> callback.add(viewModel.character)}"
                     android:text="@string/add_to_favs"
                     android:layout_marginTop="@dimen/margin_normal"
                     android:textSize="@dimen/font_s"

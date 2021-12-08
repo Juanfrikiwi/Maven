@@ -2,11 +2,9 @@ package com.example.marvelcharacters.ui.detail
 
 import androidx.lifecycle.*
 import com.example.marvelcharacters.data.local.models.CharactersEntity
-import com.example.marvelcharacters.domain.repository.CharactersFavouritesRepository
-import com.example.marvelcharacters.domain.repository.MarvelRepository
 import com.example.marvelcharacters.domain.usecase.characters.GetCharacterUseCase
-import com.example.marvelcharacters.domain.usecase.favorites.IsFavorites
-import com.example.marvelcharacters.domain.usecase.favorites.AddFavorites
+import com.example.marvelcharacters.domain.usecase.favorites.IsFavoritesUseCase
+import com.example.marvelcharacters.domain.usecase.favorites.AddFavoritesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
@@ -17,12 +15,14 @@ import javax.inject.Inject
 @HiltViewModel
 class DetailViewModel @Inject constructor(
     private val getCharacterUseCase: GetCharacterUseCase,
-    private val isFavorites: IsFavorites,
-    private val addFavorites: AddFavorites,
+    private val isFavorites: IsFavoritesUseCase,
+    private val addFavorites: AddFavoritesUseCase,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
     val errorResponse = MutableLiveData<String>()
     val successResponse = MutableLiveData<CharactersEntity>()
+    val addResponse = MutableLiveData<Boolean>()
+
     val onStart = MutableLiveData<Boolean>()
     val characterId: Int = savedStateHandle.get<Int>(CHARACTER_ID)!!
     lateinit var character: CharactersEntity
@@ -50,14 +50,14 @@ class DetailViewModel @Inject constructor(
         }
     }
 
-    suspend fun addFavourite(character: CharactersEntity): Boolean {
-        return try {
+    suspend fun addFavourite(character: CharactersEntity) {
+       try {
             viewModelScope.launch {
                 addFavorites.invoke(character)
             }
-            true
+            addResponse.postValue(true)
         } catch (e: Exception) {
-            false
+           addResponse.postValue(false)
         }
     }
 

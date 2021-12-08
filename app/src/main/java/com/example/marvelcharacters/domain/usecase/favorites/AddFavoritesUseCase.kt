@@ -7,7 +7,7 @@ import com.example.marvelcharacters.domain.repository.FavoritesRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class AddFavorites @Inject constructor(private val favoritesRepository: FavoritesRepository) {
+class AddFavoritesUseCase @Inject constructor(private val favoritesRepository: FavoritesRepository) {
     suspend fun invoke(character : CharactersEntity){
         favoritesRepository.insertFavouriteCharacter(character)
     }

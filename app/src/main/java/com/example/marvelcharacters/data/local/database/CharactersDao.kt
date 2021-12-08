@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.example.marvelcharacters.data.local
+package com.example.marvelcharacters.data.local.database
 
 import androidx.room.*
 import com.example.marvelcharacters.data.local.models.CharactersEntity

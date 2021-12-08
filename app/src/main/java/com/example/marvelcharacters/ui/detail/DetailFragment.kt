@@ -14,7 +14,6 @@ import com.example.marvelcharacters.R
 import com.example.marvelcharacters.data.local.models.CharactersEntity
 import com.example.marvelcharacters.databinding.FragmentDetailBinding
 import com.example.marvelcharacters.ui.ComicsAdapter
-import com.example.marvelcharacters.utilities.Mappers
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -60,33 +59,6 @@ class DetailFragment : Fragment() {
                 getCharacter()
             }
         }
-        binding.callback = Callback {
-            lifecycleScope.launch {
-                if (characterToAdd?.let {
-                        binding.btnFavorite.isEnabled = false
-                        detailViewModel.addFavourite(it)
-                    } == true) {
-
-                    Snackbar.make(
-                        binding.root,
-                        getString(R.string.charter_added),
-                        Snackbar.LENGTH_LONG
-                    )
-                        .show()
-                    binding.btnFavorite.isEnabled = false
-
-                } else {
-                    binding.btnFavorite.isEnabled = true
-                    Snackbar.make(
-                        binding.root,
-                        getString(R.string.error_ocurred),
-                        Snackbar.LENGTH_LONG
-                    )
-                        .show()
-                }
-            }
-        }
-
     }
 
     private fun initComicAdapter() {
@@ -112,6 +84,13 @@ class DetailFragment : Fragment() {
         binding.loadingState.ivReload.setOnClickListener {
             it.visibility = View.GONE
             getCharacter()
+        }
+
+        binding.btnFavorite.setOnClickListener {
+            it.visibility = View.GONE
+            lifecycleScope.launch {
+                detailViewModel.addFavourite(detailViewModel.character)
+            }
         }
     }
 
@@ -142,6 +121,24 @@ class DetailFragment : Fragment() {
                 loadingState.tvMessageLoading.visibility = View.VISIBLE
                 loadingState.ivReload.visibility = View.VISIBLE
                 loadingState.progressBar.visibility = View.GONE
+            }
+        }
+
+        detailViewModel.addResponse.observe(viewLifecycleOwner){
+            if (it){
+                Snackbar.make(
+                    binding.root,
+                    getString(R.string.character_added),
+                    Snackbar.LENGTH_LONG
+                )
+                    .show()
+            }else{
+                Snackbar.make(
+                    binding.root,
+                    getString(R.string.error_ocurred),
+                    Snackbar.LENGTH_LONG
+                )
+                    .show()
             }
         }
     }

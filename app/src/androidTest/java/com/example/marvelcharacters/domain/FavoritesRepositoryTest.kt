@@ -4,7 +4,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.test.filters.SmallTest
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
-import com.example.marvelcharacters.data.local.MarvelDatabase
+import com.example.marvelcharacters.data.local.database.MarvelDatabase
 import com.example.marvelcharacters.domain.repository.CharactersFavouritesRepository
 import com.example.marvelcharacters.utils.characterA
 import com.example.marvelcharacters.utils.characterB

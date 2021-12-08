@@ -10,11 +10,8 @@ import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.rule.ActivityTestRule
 import com.example.marvelcharacters.R
-import com.example.marvelcharacters.data.local.MarvelDatabase
+import com.example.marvelcharacters.data.local.database.MarvelDatabase
 import com.example.marvelcharacters.ui.Splash.SplashActivity
-import com.example.marvelcharacters.utils.characterA
-import com.example.marvelcharacters.utils.characterB
-import com.example.marvelcharacters.utils.characterC
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.runBlocking
@@ -28,8 +25,6 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.RuleChain
 import javax.inject.Inject
-import javax.inject.Named
-import kotlin.coroutines.coroutineContext
 
 @HiltAndroidTest
 class MainActivityTest {

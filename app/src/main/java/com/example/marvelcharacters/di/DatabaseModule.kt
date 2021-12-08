@@ -17,8 +17,8 @@
 package com.example.marvelcharacters.di
 
 import android.content.Context
-import com.example.marvelcharacters.data.local.CharactersDao
-import com.example.marvelcharacters.data.local.MarvelDatabase
+import com.example.marvelcharacters.data.local.database.CharactersDao
+import com.example.marvelcharacters.data.local.database.MarvelDatabase
 import com.example.marvelcharacters.data.local.localDataRepository.FavoritesRepositoryImpl
 import com.example.marvelcharacters.domain.repository.FavoritesRepository
 import dagger.Module

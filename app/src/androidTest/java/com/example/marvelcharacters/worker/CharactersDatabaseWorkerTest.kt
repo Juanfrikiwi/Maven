@@ -25,7 +25,7 @@ import androidx.work.WorkManager
 import androidx.work.testing.TestListenableWorkerBuilder
 import androidx.work.testing.WorkManagerTestInitHelper
 import androidx.work.workDataOf
-import com.example.marvelcharacters.data.local.CharactersDatabaseWorker
+import com.example.marvelcharacters.data.local.database.CharactersDatabaseWorker
 import com.example.marvelcharacters.utilities.Constants.Companion.DATA_FILENAME
 import org.hamcrest.CoreMatchers.`is`
 import org.junit.Assert.assertThat

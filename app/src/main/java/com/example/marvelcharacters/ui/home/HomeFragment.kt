@@ -96,8 +96,10 @@ class HomeFragment : Fragment() {
                     }
                 } else {
                     lifecycleScope.launch {
-                        binding.tvEmptyList.visibility = View.GONE
-                        adapter.submitData(listCharacters)
+                        if (::listCharacters.isInitialized){
+                            binding.tvEmptyList.visibility = View.GONE
+                            adapter.submitData(listCharacters)
+                        }
                     }
                 }
                 adapter.notifyDataSetChanged()

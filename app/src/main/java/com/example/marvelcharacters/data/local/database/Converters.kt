@@ -14,10 +14,9 @@
  * limitations under the License.
  */
 
-package com.example.marvelcharacters.data.local
+package com.example.marvelcharacters.data.local.database
 
 import androidx.room.TypeConverter
-import java.util.Calendar
 
 /**
  * Type converters to allow Room to reference complex data types.

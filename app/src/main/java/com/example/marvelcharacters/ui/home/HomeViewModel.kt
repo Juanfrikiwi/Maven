@@ -5,7 +5,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import com.example.marvelcharacters.data.local.models.CharactersEntity
 import com.example.marvelcharacters.domain.models.CharacterModel
 import com.example.marvelcharacters.domain.usecase.characters.GetListCharactersUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel

@@ -8,7 +8,6 @@ import androidx.navigation.findNavController
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.example.marvelcharacters.data.local.models.CharactersEntity
 import com.example.marvelcharacters.databinding.ListItemCharacterBinding
 import com.example.marvelcharacters.domain.models.CharacterModel
 import com.example.marvelcharacters.ui.viewpager.HomeViewPagerFragmentDirections

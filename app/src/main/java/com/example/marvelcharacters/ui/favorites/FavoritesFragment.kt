@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.example.marvelcharacters.R
-import com.example.marvelcharacters.data.local.models.CharactersEntity
 import com.example.marvelcharacters.databinding.FragmentHomeBinding
 import com.example.marvelcharacters.domain.models.CharacterModel
 import com.example.marvelcharacters.ui.FavoritesAdapter

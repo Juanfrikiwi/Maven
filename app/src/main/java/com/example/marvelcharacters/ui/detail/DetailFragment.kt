@@ -11,7 +11,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.marvelcharacters.R
-import com.example.marvelcharacters.data.local.models.CharactersEntity
 import com.example.marvelcharacters.databinding.FragmentDetailBinding
 import com.example.marvelcharacters.ui.ComicsAdapter
 import com.google.android.material.snackbar.Snackbar

@@ -1,7 +1,6 @@
 package com.example.marvelcharacters.ui.detail
 
 import androidx.lifecycle.*
-import com.example.marvelcharacters.data.local.models.CharactersEntity
 import com.example.marvelcharacters.domain.models.CharacterModel
 import com.example.marvelcharacters.domain.usecase.characters.GetCharacterUseCase
 import com.example.marvelcharacters.domain.usecase.favorites.IsFavoritesUseCase

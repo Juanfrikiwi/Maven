@@ -1,14 +1,10 @@
 package com.example.marvelcharacters.ui.favorites
 
 import androidx.lifecycle.*
-import com.example.marvelcharacters.data.local.models.CharactersEntity
 import com.example.marvelcharacters.domain.models.CharacterModel
 import com.example.marvelcharacters.domain.usecase.favorites.DeleteFavoritesUseCase
 import com.example.marvelcharacters.domain.usecase.favorites.GetListFavoritesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 

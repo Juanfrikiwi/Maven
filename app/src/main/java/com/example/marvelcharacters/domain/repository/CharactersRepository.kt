@@ -2,7 +2,6 @@ package com.example.marvelcharacters.domain.repository
 
 
 import androidx.paging.PagingData
-import com.example.marvelcharacters.data.local.models.CharactersEntity
 import com.example.marvelcharacters.domain.models.CharacterModel
 import kotlinx.coroutines.flow.Flow
 

@@ -1,7 +1,6 @@
 package com.example.marvelcharacters.ui
 
 
-import android.app.Activity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,9 +8,6 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.example.marvelcharacters.R
-import com.example.marvelcharacters.data.local.models.CharactersEntity
 import com.example.marvelcharacters.databinding.ListItemCharacterBinding
 import com.example.marvelcharacters.domain.models.CharacterModel
 import com.example.marvelcharacters.ui.viewpager.HomeViewPagerFragmentDirections

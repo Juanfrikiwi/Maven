@@ -6,7 +6,7 @@
 
         <variable
             name="character"
-            type="com.example.marvelcharacters.data.local.models.CharactersEntity" />
+            type="com.example.marvelcharacters.domain.models.CharacterModel"/>
 
         <variable
             name="viewModel"

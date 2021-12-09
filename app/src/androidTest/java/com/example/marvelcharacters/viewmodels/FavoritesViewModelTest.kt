@@ -20,6 +20,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.test.filters.SmallTest
 import com.example.marvelcharacters.MainCoroutineRule
 import com.example.marvelcharacters.data.local.database.MarvelDatabase
+import com.example.marvelcharacters.data.local.localDataRepository.FavoritesRepositoryImpl
 import com.example.marvelcharacters.utils.characterA
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
@@ -56,12 +57,14 @@ class FavoritesViewModelTest {
         .around(coroutineRule)
 
     @Inject
-    lateinit var charactersFavouritesRepository: CharactersFavouritesRepository
+    lateinit var favoritesRepositoryImpl: FavoritesRepositoryImpl
 
 
     @Before
     fun setUp() {
         hiltRule.inject()
+        favoritesRepositoryImpl = FavoritesRepositoryImpl(appDatabase.charactersDao())
+
     }
 
     @After
@@ -71,19 +74,19 @@ class FavoritesViewModelTest {
 
     @Test
     fun getFavoritesCharacterTest() = runBlocking {
-        charactersFavouritesRepository.insertFavouriteCharacter(characterA)
-        TestCase.assertEquals(charactersFavouritesRepository.getFavouritesCharacters().first().last().name,characterA.name)
-        charactersFavouritesRepository.deleteAllFavouriteCharacter()
+        favoritesRepositoryImpl.insertFavoriteCharacter(characterA)
+        TestCase.assertEquals(favoritesRepositoryImpl.getListFavoritesCharacters().first().name,characterA.name)
+        favoritesRepositoryImpl.deleteAllFavoriteCharacter()
     }
 
 
     @Test
     fun deleteCharacterTest() = runBlocking {
         val job = launch {
-            charactersFavouritesRepository.insertFavouriteCharacter(characterA)
-            charactersFavouritesRepository.deleteFavouriteCharacter(characterA)
-            assertEquals(charactersFavouritesRepository.getFavouritesCharacters().first().size,0)
-            charactersFavouritesRepository.deleteAllFavouriteCharacter()
+            favoritesRepositoryImpl.insertFavoriteCharacter(characterA)
+            favoritesRepositoryImpl.deleteFavoriteCharacter(characterA)
+            assertEquals(favoritesRepositoryImpl.getListFavoritesCharacters().size,0)
+            favoritesRepositoryImpl.deleteAllFavoriteCharacter()
         }
         job.cancel()
     }

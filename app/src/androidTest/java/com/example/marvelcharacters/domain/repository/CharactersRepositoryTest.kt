@@ -14,23 +14,31 @@
  * limitations under the License.
  */
 
-package com.example.marvelcharacters.viewmodels
+package com.example.marvelcharacters.domain.repository
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import androidx.lifecycle.SavedStateHandle
 import androidx.test.filters.SmallTest
 import com.example.marvelcharacters.MainCoroutineRule
 import com.example.marvelcharacters.data.local.database.MarvelDatabase
-import com.example.marvelcharacters.data.local.localDataRepository.FavoritesRepositoryImpl
+import com.example.marvelcharacters.data.network.MarvelService
+import com.example.marvelcharacters.data.network.networkDataRepository.CharactersRepositoryImpl
+import com.example.marvelcharacters.domain.usecase.characters.GetCharacterUseCase
+import com.example.marvelcharacters.domain.usecase.characters.GetListCharactersUseCase
+import com.example.marvelcharacters.domain.usecase.favorites.AddFavoritesUseCase
+import com.example.marvelcharacters.domain.usecase.favorites.AddFavoritesUseCase_Factory
+import com.example.marvelcharacters.domain.usecase.favorites.IsFavoritesUseCase
+import com.example.marvelcharacters.ui.HomeAdapter
+import com.example.marvelcharacters.ui.detail.DetailViewModel
 import com.example.marvelcharacters.utils.characterA
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import junit.framework.TestCase
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
-import org.junit.After
-import org.junit.Before
-import org.junit.Rule
-import org.junit.Test
+import org.junit.*
 import org.junit.rules.RuleChain
 import javax.inject.Inject
 import javax.inject.Named
@@ -38,14 +46,15 @@ import javax.inject.Named
 @ExperimentalCoroutinesApi
 @SmallTest
 @HiltAndroidTest
-class DetailFavoritesViewModelTest {
+class CharactersRepositoryTest {
+
     @Inject
-    @Named("test_db")
-    lateinit var appDatabase: MarvelDatabase
+    lateinit var marvelService: MarvelService
 
     private val hiltRule = HiltAndroidRule(this)
     private val coroutineRule = MainCoroutineRule()
     private val instantTaskExecutorRule = InstantTaskExecutorRule()
+    var adapter: HomeAdapter = HomeAdapter()
 
 
     @get:Rule
@@ -55,26 +64,32 @@ class DetailFavoritesViewModelTest {
         .around(coroutineRule)
 
     @Inject
-    lateinit var favoritesRepositoryImpl: FavoritesRepositoryImpl
-
+    lateinit var charactersRepositoryImpl: CharactersRepositoryImpl
 
     @Before
     fun setUp() {
         hiltRule.inject()
-        favoritesRepositoryImpl = FavoritesRepositoryImpl(appDatabase.charactersDao())
+        charactersRepositoryImpl = CharactersRepositoryImpl(marvelService)
     }
 
     @After
     fun tearDown() {
-        appDatabase.clearAllTables()
+    }
+
+    @Test
+    fun getListCharactersTest() = runBlocking {
+        val job = launch {
+            adapter.submitData(charactersRepositoryImpl.getListCharacter().first())
+            Assert.assertEquals(adapter.snapshot().items[0].name, "3-D Man")
+        }
+        job.cancel()
     }
 
     @Test
     fun getCharacterTest() = runBlocking {
-        favoritesRepositoryImpl.insertFavoriteCharacter(characterA)
-        TestCase.assertEquals(favoritesRepositoryImpl.getFavoriteCharacter(characterA.idCharacter).name,characterA.name)
-        favoritesRepositoryImpl.deleteAllFavoriteCharacter()
+        val job = launch {
+            Assert.assertEquals(charactersRepositoryImpl.getCharacter(characterA.idCharacter).first().name, "3-D Man")
+        }
+        job.cancel()
     }
-
-
 }

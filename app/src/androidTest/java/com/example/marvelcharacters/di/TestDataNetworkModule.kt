@@ -1,6 +1,8 @@
 package com.example.marvelcharacters.di
 
 import com.example.marvelcharacters.data.network.MarvelService
+import com.example.marvelcharacters.data.network.networkDataRepository.CharactersRepositoryImpl
+import com.example.marvelcharacters.domain.repository.CharactersRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -21,8 +23,8 @@ object TestDataNetworkModule {
     @Provides
     @Singleton
     @Named("test_repository")
-    fun provideMarvelRepository(marvelService: MarvelService): MarvelRepository {
-        return MarvelRepository(marvelService)
+    fun provideMarvelRepositoryImpl(marvelService: MarvelService): CharactersRepositoryImpl {
+        return CharactersRepositoryImpl(marvelService)
     }
 
 

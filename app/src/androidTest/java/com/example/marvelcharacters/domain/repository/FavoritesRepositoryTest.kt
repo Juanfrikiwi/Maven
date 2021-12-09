@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.example.marvelcharacters.viewmodels
+package com.example.marvelcharacters.domain.repository
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.test.filters.SmallTest
@@ -22,10 +22,13 @@ import com.example.marvelcharacters.MainCoroutineRule
 import com.example.marvelcharacters.data.local.database.MarvelDatabase
 import com.example.marvelcharacters.data.local.localDataRepository.FavoritesRepositoryImpl
 import com.example.marvelcharacters.utils.characterA
+import com.example.marvelcharacters.utils.characterB
+import com.example.marvelcharacters.utils.characterC
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import junit.framework.TestCase
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Before
@@ -38,7 +41,7 @@ import javax.inject.Named
 @ExperimentalCoroutinesApi
 @SmallTest
 @HiltAndroidTest
-class DetailFavoritesViewModelTest {
+class FavoritesRepositoryTest {
     @Inject
     @Named("test_db")
     lateinit var appDatabase: MarvelDatabase
@@ -76,5 +79,41 @@ class DetailFavoritesViewModelTest {
         favoritesRepositoryImpl.deleteAllFavoriteCharacter()
     }
 
+    @Test
+    fun isExistIdTest() = runBlocking {
+        favoritesRepositoryImpl.insertFavoriteCharacter(characterA)
+        TestCase.assertEquals(favoritesRepositoryImpl.isExistId(characterA.idCharacter).first(),true)
+        favoritesRepositoryImpl.deleteAllFavoriteCharacter()
+    }
+
+    @Test
+    fun getListFavoritesCharacterTest() = runBlocking {
+        favoritesRepositoryImpl.insertFavoriteCharacter(characterA)
+        TestCase.assertEquals(favoritesRepositoryImpl.getListFavoritesCharacters().size,1)
+        favoritesRepositoryImpl.deleteAllFavoriteCharacter()
+    }
+
+    @Test
+    fun insertFavoritesCharacterTest() = runBlocking {
+        favoritesRepositoryImpl.insertFavoriteCharacter(characterA)
+        favoritesRepositoryImpl.insertFavoriteCharacter(characterB)
+        TestCase.assertEquals(favoritesRepositoryImpl.getListFavoritesCharacters().size,2)
+        favoritesRepositoryImpl.deleteAllFavoriteCharacter()
+    }
+
+    @Test
+    fun deleteFavoritesCharacterTest() = runBlocking {
+        favoritesRepositoryImpl.insertFavoriteCharacter(characterA)
+        favoritesRepositoryImpl.deleteFavoriteCharacter(characterA)
+        TestCase.assertEquals(favoritesRepositoryImpl.getListFavoritesCharacters().size,0)
+        favoritesRepositoryImpl.deleteAllFavoriteCharacter()
+    }
+
+    @Test
+    fun insertAllAndDeleteAllFavoritesCharacterTest() = runBlocking {
+        favoritesRepositoryImpl.insertAll(listOf(characterA,characterB,characterC))
+        favoritesRepositoryImpl.deleteAllFavoriteCharacter()
+        TestCase.assertEquals(favoritesRepositoryImpl.getListFavoritesCharacters().size,0)
+    }
 
 }

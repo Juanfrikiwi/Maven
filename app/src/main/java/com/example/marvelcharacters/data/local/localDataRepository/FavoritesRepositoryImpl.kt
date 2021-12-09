@@ -9,7 +9,7 @@ import javax.inject.Inject
 
 class FavoritesRepositoryImpl @Inject constructor(private val charactersDao: CharactersDao) :
     FavoritesRepository {
-    override suspend fun getFavouritesCharacters(): List<CharacterModel> {
+    override suspend fun getListFavoritesCharacters(): List<CharacterModel> {
         return Mappers.mapperListEntityToListCharacterModel(charactersDao.getListCharacters().first())
     }
 
@@ -17,19 +17,19 @@ class FavoritesRepositoryImpl @Inject constructor(private val charactersDao: Cha
         return charactersDao.isExitsId(characterId)
     }
 
-    override suspend fun getFavouriteCharacter(characterId: Int): CharacterModel{
+    override suspend fun getFavoriteCharacter(characterId: Int): CharacterModel{
         return Mappers.mapperCharacterEntityToCharacterModel(charactersDao.getCharacter(characterId).first())
     }
 
-    override suspend fun insertFavouriteCharacter(character: CharacterModel) {
+    override suspend fun insertFavoriteCharacter(character: CharacterModel) {
         charactersDao.insertCharacter(Mappers.mapperCharacterModelToCharacterEntity(character))
     }
 
-    override suspend fun deleteFavouriteCharacter(character: CharacterModel) {
+    override suspend fun deleteFavoriteCharacter(character: CharacterModel) {
         charactersDao.deleteCharacter(character.idCharacter)
     }
 
-    override suspend fun deleteAllFavouriteCharacter() {
+    override suspend fun deleteAllFavoriteCharacter() {
         charactersDao.deleteListCharacters()
     }
 

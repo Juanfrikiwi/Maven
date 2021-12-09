@@ -21,6 +21,13 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.test.filters.SmallTest
 import com.example.marvelcharacters.MainCoroutineRule
 import com.example.marvelcharacters.data.local.database.MarvelDatabase
+import com.example.marvelcharacters.data.network.MarvelService
+import com.example.marvelcharacters.data.network.networkDataRepository.CharactersRepositoryImpl
+import com.example.marvelcharacters.domain.usecase.characters.GetCharacterUseCase
+import com.example.marvelcharacters.domain.usecase.characters.GetListCharactersUseCase
+import com.example.marvelcharacters.domain.usecase.favorites.AddFavoritesUseCase
+import com.example.marvelcharacters.domain.usecase.favorites.AddFavoritesUseCase_Factory
+import com.example.marvelcharacters.domain.usecase.favorites.IsFavoritesUseCase
 import com.example.marvelcharacters.ui.detail.DetailViewModel
 import com.example.marvelcharacters.utils.characterA
 import dagger.hilt.android.testing.HiltAndroidRule
@@ -44,6 +51,10 @@ class DetailViewModelTest {
     @Named("test_db")
     lateinit var appDatabase: MarvelDatabase
 
+
+    @Inject
+    lateinit var marvelService: MarvelService
+
     private val hiltRule = HiltAndroidRule(this)
     private val coroutineRule = MainCoroutineRule()
     private val instantTaskExecutorRule = InstantTaskExecutorRule()
@@ -57,19 +68,28 @@ class DetailViewModelTest {
         .around(coroutineRule)
 
     @Inject
-    lateinit var marvelRepository: MarvelRepository
+    lateinit var charactersRepositoryImpl: CharactersRepositoryImpl
 
     @Inject
-    lateinit var charactersFavouritesRepository: CharactersFavouritesRepository
+    lateinit var favoritesRepositoryImpl: CharactersRepositoryImpl
 
+    @Inject
+    lateinit var getCharacterUseCase: GetCharacterUseCase
+
+    @Inject
+    lateinit var isFavoriteUseCase : IsFavoritesUseCase
+
+    @Inject
+    lateinit var addFavoritesUseCase: AddFavoritesUseCase
 
     @Before
     fun setUp() {
         hiltRule.inject()
+        charactersRepositoryImpl = CharactersRepositoryImpl(marvelService)
         val savedStateHandle: SavedStateHandle = SavedStateHandle().apply {
             set("characterId", characterA.idCharacter)
         }
-        viewModel = DetailViewModel(marvelRepository, charactersFavouritesRepository, savedStateHandle)
+        viewModel = DetailViewModel(getCharacterUseCase, isFavoriteUseCase,addFavoritesUseCase, savedStateHandle)
     }
 
     @After
@@ -79,15 +99,16 @@ class DetailViewModelTest {
 
     @Test
     fun addFavoriteTest() = runBlocking {
-        charactersFavouritesRepository.insertFavouriteCharacter(characterA)
-        TestCase.assertEquals(charactersFavouritesRepository.isExistId(characterA.idCharacter).first(),true)
-        charactersFavouritesRepository.deleteAllFavouriteCharacter()
+        viewModel.addFavourite(characterA)
+        viewModel.isFavorite()
+        TestCase.assertEquals(viewModel.isFavorite,true)
     }
 
 
     @Test
     fun getCharacterTest() = runBlocking {
-        TestCase.assertEquals(marvelRepository.getCharacter(1011334).first().name,"3-D Man")
+        viewModel.getCharacter(1011334)
+        TestCase.assertEquals(viewModel.character.name, characterA.name)
     }
 
 

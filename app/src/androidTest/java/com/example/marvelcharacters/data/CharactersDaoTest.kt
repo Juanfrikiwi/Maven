@@ -6,6 +6,7 @@ import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import com.example.marvelcharacters.data.local.database.CharactersDao
 import com.example.marvelcharacters.data.local.database.MarvelDatabase
+import com.example.marvelcharacters.utilities.Mappers
 import com.example.marvelcharacters.utils.characterA
 import com.example.marvelcharacters.utils.characterB
 import com.example.marvelcharacters.utils.characterC
@@ -37,7 +38,7 @@ class CharactersDaoTest {
     fun setup() = runBlocking {
         hiltRule.inject()
         characterDao = database.charactersDao()
-        characterDao.insertAll(listOf(characterA, characterB, characterC))
+        characterDao.insertAll(Mappers.mapperListCharacterModelToListCharactersEntity(listOf(characterA, characterB, characterC)))
     }
 
     @Test
@@ -49,25 +50,25 @@ class CharactersDaoTest {
     @Test
     fun testGetListCharacters() = runBlocking {
         assertEquals(characterDao.getListCharacters().first().size, 3)
-        assertEquals(characterDao.getListCharacters().first()[0], characterA)
-        assertEquals(characterDao.getListCharacters().first()[1], characterB)
-        assertEquals(characterDao.getListCharacters().first()[2], characterC)
+        assertEquals(characterDao.getListCharacters().first()[0], Mappers.mapperCharacterModelToCharacterEntity(characterA))
+        assertEquals(characterDao.getListCharacters().first()[1], Mappers.mapperCharacterModelToCharacterEntity(characterB))
+        assertEquals(characterDao.getListCharacters().first()[2], Mappers.mapperCharacterModelToCharacterEntity(characterC))
     }
 
     @Test
     fun testGetCharacter() = runBlocking {
-        assertEquals(characterDao.getCharacter(characterA.idCharacter).first(), characterA)
+        assertEquals(characterDao.getCharacter(characterA.idCharacter).first(), Mappers.mapperCharacterModelToCharacterEntity(characterA))
     }
 
     @Test
     fun testInsertCharacter() = runBlocking {
-        characterDao.insertCharacter(characterD)
+        characterDao.insertCharacter(Mappers.mapperCharacterModelToCharacterEntity(characterD))
         assertEquals(characterDao.getListCharacters().first().size, 4)
     }
 
     @Test
     fun testDeleteCharacter() = runBlocking {
-        characterDao.deleteCharacter(characterD)
+        characterDao.deleteCharacter(characterD.idCharacter)
         assertEquals(characterDao.getListCharacters().first().size, 3)
     }
 

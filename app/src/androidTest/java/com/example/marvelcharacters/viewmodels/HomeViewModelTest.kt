@@ -19,11 +19,16 @@ package com.example.marvelcharacters.viewmodels
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.test.filters.SmallTest
 import com.example.marvelcharacters.data.network.MarvelService
+import com.example.marvelcharacters.data.network.networkDataRepository.CharactersRepositoryImpl
+import com.example.marvelcharacters.domain.usecase.characters.GetListCharactersUseCase
+import com.example.marvelcharacters.domain.usecase.characters.GetListCharactersUseCase_Factory
 import com.example.marvelcharacters.ui.HomeAdapter
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import junit.framework.TestCase
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import org.junit.After
@@ -45,17 +50,13 @@ class HomeViewModelTest {
     var instantTaskExecutorRule = InstantTaskExecutorRule()
 
     @Inject
-    lateinit var marvelRepository: MarvelRepository
-
-    @Inject
-    lateinit var marvelService: MarvelService
+    lateinit var getlistcharactersusecase: GetListCharactersUseCase
 
     var adapter: HomeAdapter = HomeAdapter()
 
     @Before
     fun setUp() {
         hiltRule.inject()
-        marvelRepository = MarvelRepository(marvelService)
     }
 
     @After
@@ -64,17 +65,10 @@ class HomeViewModelTest {
     }
 
     @Test
-    fun getCharacterTest() = runBlocking {
-            TestCase.assertEquals(marvelRepository.getCharacter(1011334).first().name,"3-D Man")
-    }
-
-    @Test
     fun getListCharactersTest() = runBlocking {
         // You need to launch here because submitData suspends forever while PagingData is alive
         val job = launch {
-            marvelRepository.getListCharacters().collectLatest {
-                adapter.submitData(it)
-            }
+                adapter.submitData(getlistcharactersusecase.invoke().first())
             assertEquals(adapter.snapshot().items[0].name,"3-D Man")
         }
         // We need to cancel the launched job as coroutines.test framework checks for leaky jobs

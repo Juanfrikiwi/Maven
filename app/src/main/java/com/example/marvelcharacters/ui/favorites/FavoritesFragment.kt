@@ -10,6 +10,7 @@ import androidx.lifecycle.lifecycleScope
 import com.example.marvelcharacters.R
 import com.example.marvelcharacters.data.local.models.CharactersEntity
 import com.example.marvelcharacters.databinding.FragmentHomeBinding
+import com.example.marvelcharacters.domain.models.CharacterModel
 import com.example.marvelcharacters.ui.FavoritesAdapter
 import com.example.marvelcharacters.ui.dialogs.GenericDialog
 import com.google.android.material.snackbar.Snackbar
@@ -22,7 +23,7 @@ class FavoritesFragment : Fragment() {
     private val viewModel: FavoritesViewModel by viewModels()
     lateinit var binding: FragmentHomeBinding
     lateinit var adapter: FavoritesAdapter
-    lateinit var listCharacters: List<CharactersEntity>
+    lateinit var listCharacters: List<CharacterModel>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,12 +38,12 @@ class FavoritesFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         adapter = FavoritesAdapter(
             object : FavoritesAdapter.ListItemClickListener {
-                override fun onDeleteItem(charactersEntity: CharactersEntity) {
+                override fun onDeleteItem(characterModel: CharacterModel) {
                     val dialog = GenericDialog
                     dialog.open(
                         onAccept = {
                             lifecycleScope.launch {
-                                viewModel.deleteCharacter(charactersEntity)
+                                viewModel.deleteCharacter(characterModel)
                             }
                         }
                     ).show(childFragmentManager, tag)
@@ -93,7 +94,7 @@ class FavoritesFragment : Fragment() {
         }
     }
 
-    fun filterListFavorites(favorites:List<CharactersEntity>,filterText:String){
+    fun filterListFavorites(favorites:List<CharacterModel>,filterText:String){
         val listFilter = favorites.filter {
             it.name.lowercase().contains(filterText.lowercase())
         }

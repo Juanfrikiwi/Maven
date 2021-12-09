@@ -7,6 +7,7 @@ import com.example.marvelcharacters.data.local.models.CharactersEntity
 import com.example.marvelcharacters.data.network.MarvelPagingSource
 import com.example.marvelcharacters.data.network.MarvelService
 import com.example.marvelcharacters.data.network.models.CharactersResponse
+import com.example.marvelcharacters.domain.models.CharacterModel
 import com.example.marvelcharacters.domain.repository.CharactersRepository
 import com.example.marvelcharacters.utilities.Mappers
 import kotlinx.coroutines.flow.Flow
@@ -15,7 +16,7 @@ import javax.inject.Inject
 
 class CharactersRepositoryImpl @Inject constructor(private val service: MarvelService) :
     CharactersRepository {
-    override suspend fun getListCharacter(): Flow<PagingData<CharactersEntity>> {
+    override suspend fun getListCharacter(): Flow<PagingData<CharacterModel>> {
         return Pager(
             config = PagingConfig(enablePlaceholders = false, pageSize = NETWORK_PAGE_SIZE),
             pagingSourceFactory = {
@@ -24,10 +25,10 @@ class CharactersRepositoryImpl @Inject constructor(private val service: MarvelSe
         ).flow
     }
 
-    override suspend fun getCharacter(id:Int): Flow<CharactersEntity> {
+    override suspend fun getCharacter(id:Int): Flow<CharacterModel> {
         val response = service.getCharacter(id)
         CharacterProvider.characters = response.data.characters
-        return Mappers.mapperToListEntity(response.data.characters).asFlow()
+        return Mappers.mapperToListCharacters(response.data.characters).asFlow()
     }
 
     companion object {

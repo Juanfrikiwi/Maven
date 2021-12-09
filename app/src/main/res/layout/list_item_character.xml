@@ -8,8 +8,8 @@
             name="clickListener"
             type="android.view.View.OnClickListener"/>
         <variable
-            name="characterEntity"
-            type="com.example.marvelcharacters.data.local.models.CharactersEntity"/>
+            name="characterModel"
+            type="com.example.marvelcharacters.domain.models.CharacterModel"/>
 
         <variable
             name="point"

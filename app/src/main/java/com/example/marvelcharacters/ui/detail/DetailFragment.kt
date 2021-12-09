@@ -19,6 +19,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import android.net.Uri
 import android.content.Intent
+import com.example.marvelcharacters.domain.models.CharacterModel
 import com.example.marvelcharacters.utilities.ImageUtils
 
 
@@ -29,7 +30,7 @@ class DetailFragment : Fragment() {
     private lateinit var adapter: ComicsAdapter
     private val args: DetailFragmentArgs by navArgs()
     private val detailViewModel: DetailViewModel by viewModels()
-    private var characterToAdd: CharactersEntity? = null
+    private var characterToAdd: CharacterModel? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -155,7 +156,7 @@ class DetailFragment : Fragment() {
         }
     }
 
-    private fun bindingData(itemCharacter: CharactersEntity?) {
+    private fun bindingData(itemCharacter: CharacterModel?) {
         binding.apply {
             loadingState.loadingContent.visibility = View.GONE
             groupDetail.visibility = View.VISIBLE
@@ -166,9 +167,5 @@ class DetailFragment : Fragment() {
             tvModified.text = getString(R.string.updated_on) + " " + itemCharacter.modified
             (comicsList.adapter as ComicsAdapter).submitList(itemCharacter.comics)
         }
-    }
-
-    fun interface Callback {
-        fun add(character: CharactersEntity?)
     }
 }

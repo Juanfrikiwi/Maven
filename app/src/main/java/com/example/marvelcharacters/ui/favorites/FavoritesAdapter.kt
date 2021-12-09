@@ -13,13 +13,14 @@ import com.bumptech.glide.Glide
 import com.example.marvelcharacters.R
 import com.example.marvelcharacters.data.local.models.CharactersEntity
 import com.example.marvelcharacters.databinding.ListItemCharacterBinding
+import com.example.marvelcharacters.domain.models.CharacterModel
 import com.example.marvelcharacters.ui.viewpager.HomeViewPagerFragmentDirections
 import com.example.marvelcharacters.utilities.ImageUtils
 
 
 class FavoritesAdapter(
     val listItemClickListener: ListItemClickListener
-): ListAdapter<CharactersEntity, FavoritesAdapter.CharactersViewHolder>(CharactersFavoritesDiffCallback()) {
+): ListAdapter<CharacterModel, FavoritesAdapter.CharactersViewHolder>(CharactersFavoritesDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CharactersViewHolder {
         return CharactersViewHolder(
@@ -48,7 +49,7 @@ class FavoritesAdapter(
         init {
             binding.ivDelete.visibility = View.VISIBLE
             binding.setClickListener { view ->
-                    navigateToDetail(binding.characterEntity!!.idCharacter, view)
+                    navigateToDetail(binding.characterModel!!.idCharacter, view)
             }
         }
         private fun navigateToDetail(characterId: Int, view: View) {
@@ -57,27 +58,27 @@ class FavoritesAdapter(
             view.findNavController().navigate(direction)
         }
 
-        fun bind(item: CharactersEntity) {
+        fun bind(item: CharacterModel) {
             binding.apply {
                 ImageUtils.loadImage(ivPhoto.context,item.thumbnail_path,ivPhoto)
-                characterEntity = item
+                characterModel = item
                 tvName.text = item.name
                 executePendingBindings()
             }
         }
     }
     interface ListItemClickListener{
-        fun onDeleteItem(charactersEntity: CharactersEntity)
+        fun onDeleteItem(charactersEntity: CharacterModel)
     }
 
 }
 
-private class CharactersFavoritesDiffCallback : DiffUtil.ItemCallback<CharactersEntity>() {
-    override fun areItemsTheSame(oldItem: CharactersEntity, newItem: CharactersEntity): Boolean {
+private class CharactersFavoritesDiffCallback : DiffUtil.ItemCallback<CharacterModel>() {
+    override fun areItemsTheSame(oldItem: CharacterModel, newItem: CharacterModel): Boolean {
         return oldItem.idCharacter == newItem.idCharacter
     }
 
-    override fun areContentsTheSame(oldItem: CharactersEntity, newItem: CharactersEntity): Boolean {
+    override fun areContentsTheSame(oldItem: CharacterModel, newItem: CharacterModel): Boolean {
         return oldItem == newItem
     }
 }

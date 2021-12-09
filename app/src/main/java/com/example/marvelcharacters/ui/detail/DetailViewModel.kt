@@ -2,6 +2,7 @@ package com.example.marvelcharacters.ui.detail
 
 import androidx.lifecycle.*
 import com.example.marvelcharacters.data.local.models.CharactersEntity
+import com.example.marvelcharacters.domain.models.CharacterModel
 import com.example.marvelcharacters.domain.usecase.characters.GetCharacterUseCase
 import com.example.marvelcharacters.domain.usecase.favorites.IsFavoritesUseCase
 import com.example.marvelcharacters.domain.usecase.favorites.AddFavoritesUseCase
@@ -20,12 +21,12 @@ class DetailViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
     val errorResponse = MutableLiveData<String>()
-    val successResponse = MutableLiveData<CharactersEntity>()
+    val successResponse = MutableLiveData<CharacterModel>()
     val addResponse = MutableLiveData<Boolean>()
 
     val onStart = MutableLiveData<Boolean>()
     val characterId: Int = savedStateHandle.get<Int>(CHARACTER_ID)!!
-    lateinit var character: CharactersEntity
+    lateinit var character: CharacterModel
     lateinit var isFavorite: LiveData<Boolean>
 
     fun getCharacter(id: Int) {
@@ -50,7 +51,7 @@ class DetailViewModel @Inject constructor(
         }
     }
 
-    suspend fun addFavourite(character: CharactersEntity) {
+    suspend fun addFavourite(character: CharacterModel) {
        try {
             viewModelScope.launch {
                 addFavorites.invoke(character)

@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.example.marvelcharacters.data.local.models.CharactersEntity
+import com.example.marvelcharacters.domain.models.CharacterModel
 import com.example.marvelcharacters.domain.usecase.characters.GetListCharactersUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.catch
@@ -18,7 +19,7 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     private val getListCharactersUseCase: GetListCharactersUseCase
 ) : ViewModel() {
-    val successResponse = MutableLiveData<PagingData<CharactersEntity>>()
+    val successResponse = MutableLiveData<PagingData<CharacterModel>>()
     val errorResponse = MutableLiveData<Throwable>()
     val onStart = MutableLiveData<Boolean>()
 

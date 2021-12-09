@@ -18,6 +18,7 @@ package com.example.marvelcharacters.data.local.database
 
 import androidx.room.*
 import com.example.marvelcharacters.data.local.models.CharactersEntity
+import com.example.marvelcharacters.utilities.Mappers
 import kotlinx.coroutines.flow.Flow
 
 /**
@@ -37,8 +38,8 @@ interface CharactersDao {
     @Insert
     suspend fun insertCharacter(charactersEntity: CharactersEntity): Long
 
-    @Delete
-    suspend fun deleteCharacter(charactersEntity: CharactersEntity)
+    @Query("DELETE FROM characters WHERE id_character = :id")
+    suspend fun deleteCharacter(id: Int)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(characters: List<CharactersEntity>)

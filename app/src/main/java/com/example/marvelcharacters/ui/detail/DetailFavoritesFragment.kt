@@ -10,10 +10,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
-import com.bumptech.glide.Glide
 import com.example.marvelcharacters.R
-import com.example.marvelcharacters.data.local.models.CharactersEntity
 import com.example.marvelcharacters.databinding.FragmentDetailBinding
+import com.example.marvelcharacters.domain.models.CharacterModel
 import com.example.marvelcharacters.ui.ComicsAdapter
 import com.example.marvelcharacters.utilities.ImageUtils
 import com.google.android.material.snackbar.Snackbar
@@ -88,7 +87,7 @@ class DetailFavoritesFragment : Fragment() {
         binding.comicsList.adapter = adapter
     }
 
-    private fun bindingData(characters: CharactersEntity) {
+    private fun bindingData(characters: CharacterModel) {
         binding.apply {
             loadingState.loadingContent.visibility = View.GONE
             groupDetail.visibility = View.VISIBLE

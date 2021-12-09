@@ -13,6 +13,7 @@ import androidx.paging.filter
 import com.example.marvelcharacters.R
 import com.example.marvelcharacters.data.local.models.CharactersEntity
 import com.example.marvelcharacters.databinding.FragmentHomeBinding
+import com.example.marvelcharacters.domain.models.CharacterModel
 import com.example.marvelcharacters.ui.HomeAdapter
 import com.example.marvelcharacters.ui.LoadingStateAdapter
 import dagger.hilt.android.AndroidEntryPoint
@@ -25,7 +26,7 @@ class HomeFragment : Fragment() {
     private var adapter = HomeAdapter()
     private val viewModel: HomeViewModel by viewModels()
     lateinit var binding: FragmentHomeBinding
-    lateinit var listCharacters: PagingData<CharactersEntity>
+    lateinit var listCharacters: PagingData<CharacterModel>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

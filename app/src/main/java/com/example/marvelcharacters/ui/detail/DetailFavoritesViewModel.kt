@@ -2,6 +2,7 @@ package com.example.marvelcharacters.ui.detail
 
 import androidx.lifecycle.*
 import com.example.marvelcharacters.data.local.models.CharactersEntity
+import com.example.marvelcharacters.domain.models.CharacterModel
 import com.example.marvelcharacters.domain.usecase.favorites.GetFavoriteUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.catch
@@ -14,21 +15,17 @@ import javax.inject.Inject
 class DetailFavoritesViewModel @Inject constructor(
     private val getFavoriteUseCase: GetFavoriteUseCase
 ) : ViewModel() {
-    val successResponse = MutableLiveData<CharactersEntity>()
+    val successResponse = MutableLiveData<CharacterModel>()
     val errorResponse = MutableLiveData<Throwable>()
-    val onStart = MutableLiveData<Boolean>()
     fun getFavorite(characterId: Int) {
         viewModelScope.launch {
-            getFavoriteUseCase.invoke(characterId)
-                .onStart {
-                    onStart.postValue(true)
-                }
-                .catch { exception ->
-                    errorResponse.postValue(exception)
-                }
-                .collect { result ->
-                    successResponse.postValue(result)
-                }
+            try {
+                successResponse.postValue(
+                    getFavoriteUseCase.invoke(characterId)
+                )
+            } catch (e: Exception) {
+                errorResponse.postValue(e)
+            }
         }
     }
 }

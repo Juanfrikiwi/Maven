@@ -21,11 +21,21 @@ import androidx.test.filters.SmallTest
 import com.example.marvelcharacters.MainCoroutineRule
 import com.example.marvelcharacters.data.local.database.MarvelDatabase
 import com.example.marvelcharacters.data.local.localDataRepository.FavoritesRepositoryImpl
+import com.example.marvelcharacters.domain.usecase.favorites.AddFavoritesUseCase
+import com.example.marvelcharacters.domain.usecase.favorites.DeleteFavoritesUseCase
+import com.example.marvelcharacters.domain.usecase.favorites.GetFavoriteUseCase
+import com.example.marvelcharacters.domain.usecase.favorites.GetListFavoritesUseCase
+import com.example.marvelcharacters.ui.favorites.FavoritesViewModel
 import com.example.marvelcharacters.utils.characterA
+import com.example.marvelcharacters.utils.characterB
+import com.example.marvelcharacters.utils.characterC
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
+import hilt_aggregated_deps._dagger_hilt_android_internal_lifecycle_DefaultViewModelFactories_ActivityEntryPoint
 import junit.framework.TestCase
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.asFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import org.junit.After
@@ -49,7 +59,6 @@ class FavoritesViewModelTest {
     private val coroutineRule = MainCoroutineRule()
     private val instantTaskExecutorRule = InstantTaskExecutorRule()
 
-
     @get:Rule
     val rule = RuleChain
         .outerRule(hiltRule)
@@ -57,14 +66,21 @@ class FavoritesViewModelTest {
         .around(coroutineRule)
 
     @Inject
+    lateinit var getListFavoritesUseCase: GetListFavoritesUseCase
+
+    @Inject
+    lateinit var deleteFavoritesUseCase: DeleteFavoritesUseCase
+
+    @Inject
     lateinit var favoritesRepositoryImpl: FavoritesRepositoryImpl
 
+    @Inject
+    lateinit var addFavoritesUseCase: AddFavoritesUseCase
 
     @Before
     fun setUp() {
         hiltRule.inject()
         favoritesRepositoryImpl = FavoritesRepositoryImpl(appDatabase.charactersDao())
-
     }
 
     @After
@@ -73,22 +89,32 @@ class FavoritesViewModelTest {
     }
 
     @Test
-    fun getFavoritesCharacterTest() = runBlocking {
-        favoritesRepositoryImpl.insertFavoriteCharacter(characterA)
-        TestCase.assertEquals(favoritesRepositoryImpl.getListFavoritesCharacters().first().name,characterA.name)
+    fun getListFavoritesTest() = runBlocking {
+        val job = launch {
+            addFavoritesUseCase.invoke(characterA)
+            TestCase.assertEquals(
+                getListFavoritesUseCase.invoke().size,
+                1
+            )
+        }
+        job.cancel()
         favoritesRepositoryImpl.deleteAllFavoriteCharacter()
     }
 
-
     @Test
-    fun deleteCharacterTest() = runBlocking {
+    fun deleteFavoritesTest() = runBlocking {
         val job = launch {
-            favoritesRepositoryImpl.insertFavoriteCharacter(characterA)
-            favoritesRepositoryImpl.deleteFavoriteCharacter(characterA)
-            assertEquals(favoritesRepositoryImpl.getListFavoritesCharacters().size,0)
-            favoritesRepositoryImpl.deleteAllFavoriteCharacter()
+            addFavoritesUseCase.invoke(characterA)
+            addFavoritesUseCase.invoke(characterB)
+            deleteFavoritesUseCase.invoke(characterA)
+            TestCase.assertEquals(
+                getListFavoritesUseCase.invoke().size,
+                1
+            )
         }
         job.cancel()
+        favoritesRepositoryImpl.deleteAllFavoriteCharacter()
     }
+
 
 }

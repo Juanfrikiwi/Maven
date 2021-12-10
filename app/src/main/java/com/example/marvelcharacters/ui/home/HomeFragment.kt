@@ -16,7 +16,6 @@ import com.example.marvelcharacters.domain.models.CharacterModel
 import com.example.marvelcharacters.ui.HomeAdapter
 import com.example.marvelcharacters.ui.LoadingStateAdapter
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -46,9 +45,14 @@ class HomeFragment : Fragment() {
 
     private fun initObservers() {
         viewModel.successResponse.observe(viewLifecycleOwner) {
-            lifecycleScope.launch {
-                listCharacters = it
-                adapter.submitData(listCharacters)
+            val searchViewText = binding.searchCharacter.query.toString()
+            if (searchViewText.length > 2) {
+                filterListCharacters(it,searchViewText)
+            } else {
+                lifecycleScope.launch {
+                    listCharacters = it
+                    adapter.submitData(listCharacters)
+                }
             }
         }
         viewModel.errorResponse.observe(viewLifecycleOwner) {
@@ -80,23 +84,12 @@ class HomeFragment : Fragment() {
             androidx.appcompat.widget.SearchView.OnQueryTextListener {
             override fun onQueryTextChange(searchText: String): Boolean {
                 if (searchText.length > 2) {
-                    val listFilter = listCharacters.filter {
-                        it.name.lowercase().contains(searchText.lowercase())
-                    }
-                    lifecycleScope.launch {
-                        adapter.submitData(listFilter)
-                    }
-                    if (adapter.itemCount == 0) {
-                        binding.tvEmptyList.apply {
-                            visibility = View.VISIBLE
-                            text = context.getString(R.string.without_result)
-                        }
-                    } else {
-                        binding.tvEmptyList.visibility = View.GONE
+                    if (::listCharacters.isInitialized) {
+                        filterListCharacters(listCharacters,searchText)
                     }
                 } else {
                     lifecycleScope.launch {
-                        if (::listCharacters.isInitialized){
+                        if (::listCharacters.isInitialized) {
                             binding.tvEmptyList.visibility = View.GONE
                             adapter.submitData(listCharacters)
                         }
@@ -140,6 +133,24 @@ class HomeFragment : Fragment() {
                     }
                 }
             }
+        }
+    }
+
+    fun filterListCharacters(favorites: PagingData<CharacterModel>, filterText: String) {
+        val listFilter = favorites.filter {
+            it.name.lowercase().contains(filterText.lowercase())
+        }
+        lifecycleScope.launch {
+            adapter.submitData(listFilter)
+        }
+        adapter.notifyDataSetChanged()
+        if (adapter.itemCount == 0) {
+            binding.tvEmptyList.apply {
+                visibility = View.VISIBLE
+                text = context.getString(R.string.without_result)
+            }
+        } else {
+            binding.tvEmptyList.visibility = View.GONE
         }
     }
 

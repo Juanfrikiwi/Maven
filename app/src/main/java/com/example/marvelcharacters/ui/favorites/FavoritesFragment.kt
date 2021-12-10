@@ -115,7 +115,9 @@ class FavoritesFragment : Fragment() {
             androidx.appcompat.widget.SearchView.OnQueryTextListener {
             override fun onQueryTextChange(searchText: String): Boolean {
                 if (searchText.length > 2) {
-                    filterListFavorites(listCharacters,searchText)
+                    if (::listCharacters.isInitialized) {
+                        filterListFavorites(listCharacters, searchText)
+                    }
                 } else {
                     if (::listCharacters.isInitialized) {
                         if (listCharacters.isEmpty()) {

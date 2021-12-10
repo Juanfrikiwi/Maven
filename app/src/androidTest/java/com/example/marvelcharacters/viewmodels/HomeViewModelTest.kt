@@ -50,7 +50,7 @@ class HomeViewModelTest {
     var instantTaskExecutorRule = InstantTaskExecutorRule()
 
     @Inject
-    lateinit var getlistcharactersusecase: GetListCharactersUseCase
+    lateinit var getListCharactersUseCase: GetListCharactersUseCase
 
     var adapter: HomeAdapter = HomeAdapter()
 
@@ -68,7 +68,7 @@ class HomeViewModelTest {
     fun getListCharactersTest() = runBlocking {
         // You need to launch here because submitData suspends forever while PagingData is alive
         val job = launch {
-                adapter.submitData(getlistcharactersusecase.invoke().first())
+                adapter.submitData(getListCharactersUseCase.invoke().first())
             assertEquals(adapter.snapshot().items[0].name,"3-D Man")
         }
         // We need to cancel the launched job as coroutines.test framework checks for leaky jobs

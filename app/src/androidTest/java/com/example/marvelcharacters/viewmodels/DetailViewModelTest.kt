@@ -17,10 +17,12 @@
 package com.example.marvelcharacters.viewmodels
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.SavedStateHandle
 import androidx.test.filters.SmallTest
 import com.example.marvelcharacters.MainCoroutineRule
 import com.example.marvelcharacters.data.local.database.MarvelDatabase
+import com.example.marvelcharacters.data.local.localDataRepository.FavoritesRepositoryImpl
 import com.example.marvelcharacters.data.network.MarvelService
 import com.example.marvelcharacters.data.network.networkDataRepository.CharactersRepositoryImpl
 import com.example.marvelcharacters.domain.usecase.characters.GetCharacterUseCase
@@ -34,11 +36,10 @@ import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import junit.framework.TestCase
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
-import org.junit.After
-import org.junit.Before
-import org.junit.Rule
-import org.junit.Test
+import org.junit.*
 import org.junit.rules.RuleChain
 import javax.inject.Inject
 import javax.inject.Named
@@ -50,10 +51,6 @@ class DetailViewModelTest {
     @Inject
     @Named("test_db")
     lateinit var appDatabase: MarvelDatabase
-
-
-    @Inject
-    lateinit var marvelService: MarvelService
 
     private val hiltRule = HiltAndroidRule(this)
     private val coroutineRule = MainCoroutineRule()
@@ -68,16 +65,13 @@ class DetailViewModelTest {
         .around(coroutineRule)
 
     @Inject
-    lateinit var charactersRepositoryImpl: CharactersRepositoryImpl
-
-    @Inject
-    lateinit var favoritesRepositoryImpl: CharactersRepositoryImpl
+    lateinit var favoritesRepositoryImpl: FavoritesRepositoryImpl
 
     @Inject
     lateinit var getCharacterUseCase: GetCharacterUseCase
 
     @Inject
-    lateinit var isFavoriteUseCase : IsFavoritesUseCase
+    lateinit var isFavoriteUseCase: IsFavoritesUseCase
 
     @Inject
     lateinit var addFavoritesUseCase: AddFavoritesUseCase
@@ -85,11 +79,6 @@ class DetailViewModelTest {
     @Before
     fun setUp() {
         hiltRule.inject()
-        charactersRepositoryImpl = CharactersRepositoryImpl(marvelService)
-        val savedStateHandle: SavedStateHandle = SavedStateHandle().apply {
-            set("characterId", characterA.idCharacter)
-        }
-        viewModel = DetailViewModel(getCharacterUseCase, isFavoriteUseCase,addFavoritesUseCase, savedStateHandle)
     }
 
     @After
@@ -99,18 +88,40 @@ class DetailViewModelTest {
 
     @Test
     fun addFavoriteTest() = runBlocking {
-        viewModel.addFavourite(characterA)
-        viewModel.isFavorite()
-        TestCase.assertEquals(viewModel.isFavorite,true)
+        val job = launch {
+            addFavoritesUseCase.invoke(characterA)
+            TestCase.assertEquals(
+                getCharacterUseCase.invoke(characterA.idCharacter).first().name,
+                characterA.name
+            )
+        }
+        job.cancel()
     }
 
 
     @Test
     fun getCharacterTest() = runBlocking {
-        viewModel.getCharacter(1011334)
-        TestCase.assertEquals(viewModel.character.name, characterA.name)
+        val job = launch {
+            TestCase.assertEquals(
+                getCharacterUseCase.invoke(characterA.idCharacter).first().name,
+                characterA.name
+            )
+        }
+        job.cancel()
+        favoritesRepositoryImpl.deleteAllFavoriteCharacter()
     }
 
-
-
+    @Test
+    fun isFavoriteTest() = runBlocking {
+        val job = launch {
+            addFavoritesUseCase.invoke(characterA)
+            TestCase.assertEquals(
+                isFavoriteUseCase.invoke(characterA.idCharacter),
+                true
+            )
+        }
+        job.cancel()
+        favoritesRepositoryImpl.deleteAllFavoriteCharacter()
+    }
 }
+

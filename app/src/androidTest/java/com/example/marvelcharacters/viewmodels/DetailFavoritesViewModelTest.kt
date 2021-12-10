@@ -21,11 +21,14 @@ import androidx.test.filters.SmallTest
 import com.example.marvelcharacters.MainCoroutineRule
 import com.example.marvelcharacters.data.local.database.MarvelDatabase
 import com.example.marvelcharacters.data.local.localDataRepository.FavoritesRepositoryImpl
+import com.example.marvelcharacters.domain.usecase.favorites.GetFavoriteUseCase
 import com.example.marvelcharacters.utils.characterA
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import junit.framework.TestCase
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Before
@@ -57,6 +60,9 @@ class DetailFavoritesViewModelTest {
     @Inject
     lateinit var favoritesRepositoryImpl: FavoritesRepositoryImpl
 
+    @Inject
+    lateinit var getFavoriteUseCase: GetFavoriteUseCase
+
 
     @Before
     fun setUp() {
@@ -70,11 +76,16 @@ class DetailFavoritesViewModelTest {
     }
 
     @Test
-    fun getCharacterTest() = runBlocking {
-        favoritesRepositoryImpl.insertFavoriteCharacter(characterA)
-        TestCase.assertEquals(favoritesRepositoryImpl.getFavoriteCharacter(characterA.idCharacter).name,characterA.name)
+    fun getFavoriteTest() = runBlocking {
+        val job = launch {
+            favoritesRepositoryImpl.insertFavoriteCharacter(characterA)
+            TestCase.assertEquals(
+                getFavoriteUseCase.invoke(characterA.idCharacter).name,
+                characterA.name
+            )
+        }
+        job.cancel()
         favoritesRepositoryImpl.deleteAllFavoriteCharacter()
     }
-
 
 }

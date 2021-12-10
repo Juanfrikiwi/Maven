@@ -88,8 +88,15 @@ class FavoritesFragment : Fragment() {
                         binding.tvEmptyList.visibility = View.GONE
                     }
                 } else {
-                    binding.tvEmptyList.visibility = View.GONE
-                    adapter.submitList(listCharacters)
+                    if (listCharacters.isEmpty()) {
+                        binding.tvEmptyList.apply {
+                            visibility = View.VISIBLE
+                            text = context.getString(R.string.empty_list)
+                        }
+                    } else {
+                        binding.tvEmptyList.visibility = View.GONE
+                        adapter.submitList(listCharacters)
+                    }
                 }
                 adapter.notifyDataSetChanged()
                 return true

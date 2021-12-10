@@ -97,7 +97,7 @@ class MainActivityTest {
                 isDisplayed()
             )
         )
-        searchAutoComplete.perform(replaceText("baron z"), closeSoftKeyboard())
+        searchAutoComplete.perform(replaceText("bomb"), closeSoftKeyboard())
 
         val recyclerView2 = onView(
             Matchers.allOf(
@@ -114,15 +114,6 @@ class MainActivityTest {
                 click()
             )
         )
-
-        val button = onView(
-            Matchers.allOf(
-                withId(R.id.btn_favorite), withText("Añadir a favoritos"),
-                withParent(withParent(withId(R.id.detail_scrollview))),
-                isDisplayed()
-            )
-        )
-        button.check(ViewAssertions.matches(isDisplayed()))
 
         val materialButton = onView(
             Matchers.allOf(
@@ -171,29 +162,32 @@ class MainActivityTest {
         )
         tabView.perform(click())
 
-        val recyclerView3 = onView(
+        val appCompatImageView2 = onView(
             Matchers.allOf(
-                withId(R.id.character_list),
-                childAtPosition(
-                    withClassName(Matchers.`is`("androidx.constraintlayout.widget.ConstraintLayout")),
-                    1
-                )
-            )
-        )
-        recyclerView3.perform(
-            RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
-                0,
-                click()
-            )
-        )
-
-        val appCompatImageButton2 = onView(
-            Matchers.allOf(
+                withId(R.id.search_button), withContentDescription("Search"),
                 childAtPosition(
                     Matchers.allOf(
-                        withId(R.id.toolbar),
+                        withId(R.id.search_bar),
                         childAtPosition(
-                            withId(R.id.toolbar_layout),
+                            withId(R.id.search_character),
+                            0
+                        )
+                    ),
+                    1
+                ),
+                isDisplayed()
+            )
+        )
+        appCompatImageView2.perform(click())
+
+        val searchAutoComplete2 = onView(
+            Matchers.allOf(
+                withId(R.id.search_src_text),
+                childAtPosition(
+                    Matchers.allOf(
+                        withId(R.id.search_plate),
+                        childAtPosition(
+                            withId(R.id.search_edit_frame),
                             1
                         )
                     ),
@@ -202,7 +196,7 @@ class MainActivityTest {
                 isDisplayed()
             )
         )
-        appCompatImageButton2.perform(click())
+        searchAutoComplete2.perform(replaceText("bomb"), closeSoftKeyboard())
 
         val materialButton2 = onView(
             Matchers.allOf(

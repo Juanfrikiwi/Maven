@@ -14,20 +14,15 @@
  * limitations under the License.
  */
 
-package com.example.marvelcharacters.viewmodels
+package com.example.marvelcharacters.ui.viewmodels
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.test.filters.SmallTest
-import com.example.marvelcharacters.data.network.MarvelService
-import com.example.marvelcharacters.data.network.networkDataRepository.CharactersRepositoryImpl
 import com.example.marvelcharacters.domain.usecase.characters.GetListCharactersUseCase
-import com.example.marvelcharacters.domain.usecase.characters.GetListCharactersUseCase_Factory
 import com.example.marvelcharacters.ui.HomeAdapter
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
-import junit.framework.TestCase
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking

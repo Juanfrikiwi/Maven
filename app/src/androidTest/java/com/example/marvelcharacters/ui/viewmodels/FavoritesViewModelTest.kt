@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.example.marvelcharacters.viewmodels
+package com.example.marvelcharacters.ui.viewmodels
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.test.filters.SmallTest
@@ -23,23 +23,16 @@ import com.example.marvelcharacters.data.local.database.MarvelDatabase
 import com.example.marvelcharacters.data.local.localDataRepository.FavoritesRepositoryImpl
 import com.example.marvelcharacters.domain.usecase.favorites.AddFavoritesUseCase
 import com.example.marvelcharacters.domain.usecase.favorites.DeleteFavoritesUseCase
-import com.example.marvelcharacters.domain.usecase.favorites.GetFavoriteUseCase
 import com.example.marvelcharacters.domain.usecase.favorites.GetListFavoritesUseCase
-import com.example.marvelcharacters.ui.favorites.FavoritesViewModel
 import com.example.marvelcharacters.utils.characterA
 import com.example.marvelcharacters.utils.characterB
-import com.example.marvelcharacters.utils.characterC
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
-import hilt_aggregated_deps._dagger_hilt_android_internal_lifecycle_DefaultViewModelFactories_ActivityEntryPoint
 import junit.framework.TestCase
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.asFlow
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import org.junit.After
-import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test

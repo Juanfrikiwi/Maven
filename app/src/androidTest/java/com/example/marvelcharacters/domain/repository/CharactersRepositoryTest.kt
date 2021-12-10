@@ -17,23 +17,14 @@
 package com.example.marvelcharacters.domain.repository
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.lifecycle.SavedStateHandle
 import androidx.test.filters.SmallTest
 import com.example.marvelcharacters.MainCoroutineRule
-import com.example.marvelcharacters.data.local.database.MarvelDatabase
 import com.example.marvelcharacters.data.network.MarvelService
 import com.example.marvelcharacters.data.network.networkDataRepository.CharactersRepositoryImpl
-import com.example.marvelcharacters.domain.usecase.characters.GetCharacterUseCase
-import com.example.marvelcharacters.domain.usecase.characters.GetListCharactersUseCase
-import com.example.marvelcharacters.domain.usecase.favorites.AddFavoritesUseCase
-import com.example.marvelcharacters.domain.usecase.favorites.AddFavoritesUseCase_Factory
-import com.example.marvelcharacters.domain.usecase.favorites.IsFavoritesUseCase
 import com.example.marvelcharacters.ui.HomeAdapter
-import com.example.marvelcharacters.ui.detail.DetailViewModel
 import com.example.marvelcharacters.utils.characterA
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
-import junit.framework.TestCase
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
@@ -41,7 +32,6 @@ import kotlinx.coroutines.runBlocking
 import org.junit.*
 import org.junit.rules.RuleChain
 import javax.inject.Inject
-import javax.inject.Named
 
 @ExperimentalCoroutinesApi
 @SmallTest
@@ -58,7 +48,7 @@ class CharactersRepositoryTest {
 
 
     @get:Rule
-    val rule = RuleChain
+    val rule: RuleChain = RuleChain
         .outerRule(hiltRule)
         .around(instantTaskExecutorRule)
         .around(coroutineRule)

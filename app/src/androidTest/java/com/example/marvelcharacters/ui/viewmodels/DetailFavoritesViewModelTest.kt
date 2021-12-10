@@ -14,32 +14,25 @@
  * limitations under the License.
  */
 
-package com.example.marvelcharacters.viewmodels
+package com.example.marvelcharacters.ui.viewmodels
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.SavedStateHandle
 import androidx.test.filters.SmallTest
 import com.example.marvelcharacters.MainCoroutineRule
 import com.example.marvelcharacters.data.local.database.MarvelDatabase
 import com.example.marvelcharacters.data.local.localDataRepository.FavoritesRepositoryImpl
-import com.example.marvelcharacters.data.network.MarvelService
-import com.example.marvelcharacters.data.network.networkDataRepository.CharactersRepositoryImpl
-import com.example.marvelcharacters.domain.usecase.characters.GetCharacterUseCase
-import com.example.marvelcharacters.domain.usecase.characters.GetListCharactersUseCase
-import com.example.marvelcharacters.domain.usecase.favorites.AddFavoritesUseCase
-import com.example.marvelcharacters.domain.usecase.favorites.AddFavoritesUseCase_Factory
-import com.example.marvelcharacters.domain.usecase.favorites.IsFavoritesUseCase
-import com.example.marvelcharacters.ui.detail.DetailViewModel
+import com.example.marvelcharacters.domain.usecase.favorites.GetFavoriteUseCase
 import com.example.marvelcharacters.utils.characterA
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import junit.framework.TestCase
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
-import org.junit.*
+import org.junit.After
+import org.junit.Before
+import org.junit.Rule
+import org.junit.Test
 import org.junit.rules.RuleChain
 import javax.inject.Inject
 import javax.inject.Named
@@ -47,7 +40,7 @@ import javax.inject.Named
 @ExperimentalCoroutinesApi
 @SmallTest
 @HiltAndroidTest
-class DetailViewModelTest {
+class DetailFavoritesViewModelTest {
     @Inject
     @Named("test_db")
     lateinit var appDatabase: MarvelDatabase
@@ -55,7 +48,6 @@ class DetailViewModelTest {
     private val hiltRule = HiltAndroidRule(this)
     private val coroutineRule = MainCoroutineRule()
     private val instantTaskExecutorRule = InstantTaskExecutorRule()
-    lateinit var viewModel: DetailViewModel
 
 
     @get:Rule
@@ -68,17 +60,13 @@ class DetailViewModelTest {
     lateinit var favoritesRepositoryImpl: FavoritesRepositoryImpl
 
     @Inject
-    lateinit var getCharacterUseCase: GetCharacterUseCase
+    lateinit var getFavoriteUseCase: GetFavoriteUseCase
 
-    @Inject
-    lateinit var isFavoriteUseCase: IsFavoritesUseCase
-
-    @Inject
-    lateinit var addFavoritesUseCase: AddFavoritesUseCase
 
     @Before
     fun setUp() {
         hiltRule.inject()
+        favoritesRepositoryImpl = FavoritesRepositoryImpl(appDatabase.charactersDao())
     }
 
     @After
@@ -87,23 +75,11 @@ class DetailViewModelTest {
     }
 
     @Test
-    fun addFavoriteTest() = runBlocking {
+    fun getFavoriteTest() = runBlocking {
         val job = launch {
-            addFavoritesUseCase.invoke(characterA)
+            favoritesRepositoryImpl.insertFavoriteCharacter(characterA)
             TestCase.assertEquals(
-                getCharacterUseCase.invoke(characterA.idCharacter).first().name,
-                characterA.name
-            )
-        }
-        job.cancel()
-    }
-
-
-    @Test
-    fun getCharacterTest() = runBlocking {
-        val job = launch {
-            TestCase.assertEquals(
-                getCharacterUseCase.invoke(characterA.idCharacter).first().name,
+                getFavoriteUseCase.invoke(characterA.idCharacter).name,
                 characterA.name
             )
         }
@@ -111,17 +87,4 @@ class DetailViewModelTest {
         favoritesRepositoryImpl.deleteAllFavoriteCharacter()
     }
 
-    @Test
-    fun isFavoriteTest() = runBlocking {
-        val job = launch {
-            addFavoritesUseCase.invoke(characterA)
-            TestCase.assertEquals(
-                isFavoriteUseCase.invoke(characterA.idCharacter),
-                true
-            )
-        }
-        job.cancel()
-        favoritesRepositoryImpl.deleteAllFavoriteCharacter()
-    }
 }
-

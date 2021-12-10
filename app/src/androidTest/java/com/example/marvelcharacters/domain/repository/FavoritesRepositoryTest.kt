@@ -52,7 +52,7 @@ class FavoritesRepositoryTest {
 
 
     @get:Rule
-    val rule = RuleChain
+    val rule: RuleChain = RuleChain
         .outerRule(hiltRule)
         .around(instantTaskExecutorRule)
         .around(coroutineRule)
